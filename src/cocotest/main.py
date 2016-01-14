@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x7bc3fc09
+# __coconut_hash__ = 0xe928a02a
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -66,6 +66,7 @@ def main_test():
     assert (len)({"a", 5}) == 2
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 2))(5)) == -6
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5)) == 6 == (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2_((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5))
+    assert all(same((1, 2, 3), [1, 2, 3]))
     assert (prod)((range)(1, 5)) == 24
     assert (plus1)(2) == 3
     assert (sqrt)(16) == 4 == (sqrt_)(16)

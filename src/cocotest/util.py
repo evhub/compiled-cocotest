@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x3c55628b
+# __coconut_hash__ = 0x20c81d53
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -55,6 +55,7 @@ clean = lambda s: s.strip()
 add2 = lambda x: lambda y: x + y
 def swap2(f): return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
+def same(iter1, iter2): return map(__coconut__.operator.__eq__, iter1, iter2)
 
 # Partial Applications:
 sum_ = __coconut__.functools.partial(reduce, __coconut__.operator.__add__)
