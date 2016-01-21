@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x20c81d53
+# __coconut_hash__ = 0xef836f62
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -184,6 +184,16 @@ class preop(__coconut__.collections.namedtuple("preop", "x, y")):
         return self.x + self.y
 class vector(__coconut__.collections.namedtuple("vector", "x, y")):
     __slots__ = ()
+    def __new__(cls, x, y=None):
+        _coconut_match_check = False
+        _coconut_match_to = x
+        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 2):
+            x = _coconut_match_to[0]
+            y = _coconut_match_to[1]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            pass
+        return datamaker(cls)(x, y)
     def __abs__(self):
         return (self.x**2 + self.y**2)**.5
     def transform(self, other):

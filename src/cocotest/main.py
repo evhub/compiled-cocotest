@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x702de44b
+# __coconut_hash__ = 0x8d1536c
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -110,6 +110,7 @@ def main_test():
     assert (vector(1, 2).__eq__)(vector(1, 2))
     assert not (vector(3, 4).__eq__)(vector(1, 2))
     assert not (vector(1, 2).__eq__)((1, 2))
+    assert vector(vector(4, 3)) == vector(4, 3)
     assert triangle(3, 4, 5).is_right()
     assert __coconut__.getattr(triangle(3, 4, 5), "is_right")
     assert factorial1(3) == 6
