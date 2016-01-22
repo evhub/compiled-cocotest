@@ -26,6 +26,7 @@ tuple = tuple
 list = list
 slice = slice
 len = len
+iter = iter
 isinstance = isinstance
 getattr = getattr
 ascii = ascii

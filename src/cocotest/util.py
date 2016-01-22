@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xef836f62
+# __coconut_hash__ = 0xdbc7e7e9
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -89,7 +89,7 @@ def qsort3(l):
         tail = iter(l)
 # Since only iter is ever called on l, and next on tail, l only has to be an iterator
         head = next(tail)
-        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: iter((head,)), lambda: qsort3((x for x in tail if x > head))))))
+        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail if x > head))))))
     except (StopIteration):
         return iter(())
 def qsort4(l):
@@ -114,13 +114,13 @@ def qsort5(l):
         _coconut_match_check = False
         _coconut_match_to = l
         if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-            _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(_coconut_match_to, 0, 1))
-            tail = _coconut_match_to
-            if (__coconut__.len(_coconut_match_iter_0) >= 1):
+            tail = __coconut__.iter(_coconut_match_to)
+            _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(tail, 0, 1))
+            if (__coconut__.len(_coconut_match_iter_0) == 1):
                 head = _coconut_match_iter_0[0]
                 _coconut_match_check = True
         if _coconut_match_check:
-            return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: iter((head,)), lambda: qsort3((x for x in tail if x > head))))))
+            return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail if x > head))))))
     except (StopIteration):
         return iter(())
 
@@ -151,9 +151,9 @@ def map_iter(func, args):
     _coconut_match_check = False
     _coconut_match_to = args
     if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(_coconut_match_to, 0, 1))
-        xs = _coconut_match_to
-        if (__coconut__.len(_coconut_match_iter_0) >= 1):
+        xs = __coconut__.iter(_coconut_match_to)
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(xs, 0, 1))
+        if (__coconut__.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -532,9 +532,9 @@ def duplicate_first2(value):
     _coconut_match_to = value
     if (__coconut__.isinstance(_coconut_match_to, (list))) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         l = _coconut_match_to
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(_coconut_match_to, 0, 1))
-        xs = _coconut_match_to
-        if (__coconut__.len(_coconut_match_iter_0) >= 1):
+        xs = __coconut__.iter(_coconut_match_to)
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(xs, 0, 1))
+        if (__coconut__.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
