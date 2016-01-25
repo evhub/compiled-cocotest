@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xdbc7e7e9
+# __coconut_hash__ = 0x1af5a1d7
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -86,10 +86,10 @@ def qsort2(l):
 def qsort3(l):
     """Iterator Quick Sort."""
     try:
-        tail = iter(l)
+        tail, tail_ = (tee)((iter)(l))
 # Since only iter is ever called on l, and next on tail, l only has to be an iterator
         head = next(tail)
-        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail if x > head))))))
+        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
     except (StopIteration):
         return iter(())
 def qsort4(l):
@@ -120,7 +120,8 @@ def qsort5(l):
                 head = _coconut_match_iter_0[0]
                 _coconut_match_check = True
         if _coconut_match_check:
-            return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail if x > head))))))
+            tail, tail_ = tee(tail)
+            return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
     except (StopIteration):
         return iter(())
 
