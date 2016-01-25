@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8d1536c
+# __coconut_hash__ = 0x789eea98
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -82,10 +82,8 @@ def main_test():
     assert clean("   ab cd ef   ") == "ab cd ef" == (clean)("   ab cd ef   ")
     assert ((add2)(2))(3) == 5
     for qsort in [qsort1, qsort2, qsort3, qsort4, qsort5]:
-        last = 0
-        for x in qsort(rand_list(10)):
-            assert x >= last
-            last = x
+        to_sort = rand_list(10)
+        assert (tuple)((qsort)(to_sort)) == (tuple)((sorted)(to_sort))
     assert next(__coconut__.itertools.islice(repeat(3), 2, 2 + 1)) == 3 == next(__coconut__.itertools.islice(repeat_(3), 2, 2 + 1))
     assert sum_(__coconut__.itertools.islice(repeat(1), 0, 5)) == 5 == sum_(__coconut__.itertools.islice(repeat_(1), 0, 5))
     assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(__coconut__.itertools.islice(dropwhile(__coconut__.functools.partial(__coconut__.operator.__gt__, 0), (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), 0, 5)))
