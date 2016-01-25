@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1af5a1d7
+# __coconut_hash__ = 0x27cbfabc
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -67,7 +67,7 @@ def qsort1(l):
     if len(l) == 0:
         return []
     else:
-        split = l.pop(0)
+        split = l.pop()
         smalls = []
         larges = []
         for x in l:
@@ -78,7 +78,7 @@ def qsort1(l):
         return qsort1(smalls) + [split] + qsort1(larges)
 def qsort2(l):
     """Functional Quick Sort."""
-    if len(l) == 0:
+    if not l:
         return []
     else:
         head, tail = l[0], l[1:] # Python Pattern-Matching
@@ -107,22 +107,21 @@ def qsort4(l):
         head = _coconut_match_to[0]
         _coconut_match_check = True
     if _coconut_match_check:
-        return (qsort2([x for x in tail if x <= head]) + [head] + qsort2([x for x in tail if x > head]))
+        return (qsort4([x for x in tail if x <= head]) + [head] + qsort4([x for x in tail if x > head]))
 def qsort5(l):
     """Iterator Match Quick Sort."""
-    try:
-        _coconut_match_check = False
-        _coconut_match_to = l
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-            tail = __coconut__.iter(_coconut_match_to)
-            _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(tail, 0, 1))
-            if (__coconut__.len(_coconut_match_iter_0) == 1):
-                head = _coconut_match_iter_0[0]
-                _coconut_match_check = True
-        if _coconut_match_check:
-            tail, tail_ = tee(tail)
-            return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
-    except (StopIteration):
+    _coconut_match_check = False
+    _coconut_match_to = l
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
+        tail = __coconut__.iter(_coconut_match_to)
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(tail, 0, 1))
+        if (__coconut__.len(_coconut_match_iter_0) == 1):
+            head = _coconut_match_iter_0[0]
+            _coconut_match_check = True
+    if _coconut_match_check:
+        tail, tail_ = tee(tail)
+        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
+    else:
         return iter(())
 
 # Infinite Iterators:
