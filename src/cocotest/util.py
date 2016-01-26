@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x27cbfabc
+# __coconut_hash__ = 0xb0e663cc
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -67,6 +67,7 @@ def qsort1(l):
     if len(l) == 0:
         return []
     else:
+        l = list(l)
         split = l.pop()
         smalls = []
         larges = []
