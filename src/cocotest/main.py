@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa03eacc2
+# __coconut_hash__ = 0x3526cffb
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -311,6 +311,14 @@ def main_test():
         assert err
     else:
         assert False
+    import queue
+    import builtins
+    import email.mime.base
+    assert queue.Queue
+    assert builtins.len([1, 1]) == 2
+    assert email.mime.base
+    from email.mime import base
+    assert base
 
 def main(doc):
     """Executes Tests."""
