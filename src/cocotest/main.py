@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x789eea98
+# __coconut_hash__ = 0xa03eacc2
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -49,6 +49,8 @@ def main_test():
 
 """ == "\n\n"
     assert {"a": 5}["a"] == 5
+    a, = [24]
+    assert a == 24
     assert set((1, 2, 3)) == {1, 2, 3}
     olist = [0, 1, 2]
     olist[1] += 4

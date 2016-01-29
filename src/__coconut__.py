@@ -9,27 +9,13 @@
 
 version = "0.3.6-post_dev"
 
-import functools
-import operator
-import itertools
-import collections
+import imp, functools, operator, itertools, collections
 try:
     import collections.abc as abc
 except ImportError:
     abc = collections
 
-object = object
-int = int
-set = set
-frozenset = frozenset
-tuple = tuple
-list = list
-slice = slice
-len = len
-iter = iter
-isinstance = isinstance
-getattr = getattr
-ascii = ascii
+object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
 
 def recursive(func):
     """Returns tail-call-optimized function."""
