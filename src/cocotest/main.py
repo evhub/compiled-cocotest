@@ -1,12 +1,47 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xfe2f0f8e
+# __coconut_hash__ = 0xa6c2e373
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
 # Coconut Header: --------------------------------------------------------------
 
+from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys
+if _coconut_sys.version_info < (3,):
+    import os as _coconut_os    
+    py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, int, chr, str, print, input, raw_input
+    _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input = int, long, str, bytearray, print, unicode, raw_input
+    range, chr, str = xrange, unichr, unicode
+    from future_builtins import *
+    from io import open
+    class _coconut_metaint(type):
+        def __instancecheck__(cls, inst):
+            return isinstance(inst, (_coconut_int, _coconut_long))
+    class int(_coconut_int):
+        """Python 3 int."""
+        __metaclass__ = _coconut_metaint
+        __slots__ = ()
+    class _coconut_metabytes(type):
+        def __instancecheck__(cls, inst):
+            return isinstance(inst, _coconut_str)
+    class bytes(_coconut_str):
+        """Python 3 bytes."""
+        __metaclass__ = _coconut_metabytes
+        __slots__ = ()
+        def __new__(cls, *args, **kwargs):
+            """Python 3 bytes constructor."""
+            return _coconut_str.__new__(cls, _coconut_bytearray(*args, **kwargs))
+    def print(*args, **kwargs):
+        """Python 3 print."""
+        return _coconut_print(*(_coconut_unicode(x).encode(_coconut_sys.stdout.encoding) for x in args), **kwargs)
+    def input(*args, **kwargs):
+        """Python 3 input."""
+        return _coconut_raw_input(*args, **kwargs).decode(_coconut_sys.stdout.encoding)
+    def raw_input(*args):
+        """Raises NameError."""
+        raise NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
+
 import os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -51,7 +86,7 @@ def main_test():
     assert {"a": 5}["a"] == 5
     a, = [24]
     assert a == 24
-    assert set((1, 2, 3)) == {1, 2, 3}
+    assert set((1, 2, 3)) == __coconut__.set((1, 2, 3))
     olist = [0, 1, 2]
     olist[1] += 4
     assert olist == [0, 5, 2]
@@ -65,7 +100,7 @@ def main_test():
     assert __coconut__.int("10A", 12) == 154 == (int)("10A", 12)
     assert (join_with)(["1", "2"], ", ") == "1, 2"
     assert (join_with)(["a", "b", "c"]) == "abc"
-    assert (len)({"a", 5}) == 2
+    assert (len)(__coconut__.set(("a", 5))) == 2
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 2))(5)) == -6
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5)) == 6 == (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2_((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5))
     assert all(same((1, 2, 3), [1, 2, 3]))
@@ -131,8 +166,8 @@ def main_test():
     assert classify((1, 1, 1)) == "tuple"
     assert classify({}) == "empty dict"
     assert classify({"a": 1}) == "dict"
-    assert classify({0}) == "set of 0" == classify(__coconut__.frozenset((0,)))
-    assert classify({0, 1}) == "set" == classify(__coconut__.frozenset((1,)))
+    assert classify(__coconut__.set((0,))) == "set of 0" == classify(__coconut__.frozenset((0,)))
+    assert classify(__coconut__.set((0, 1))) == "set" == classify(__coconut__.frozenset((1,)))
     assert classify(__coconut__.set()) == "empty set" == classify(__coconut__.frozenset())
     assert classify_sequence(()) == "empty"
     assert classify_sequence((1,)) == "singleton"
@@ -165,7 +200,7 @@ def main_test():
         return x + y
     assert multiline_backslash_test(1, 2) == 3
     assert True
-    class one_line_class: pass
+    class one_line_class(__coconut__.object): pass
     assert isinstance(one_line_class(), one_line_class)
     assert is_null(null1())
     assert is_null(null2())
@@ -311,13 +346,30 @@ def main_test():
         assert err
     else:
         assert False
-    import queue as q
-    import builtins
-    import email.mime.base
+    try:
+        import Queue as q
+    except ImportError:
+        import queue as q
+    try:
+        import __builtin__ as builtins
+    except ImportError:
+        import builtins
+    try:
+        import email.MIMEBase as _coconut_import
+        email = __coconut__.imp.new_module("email")
+        email.mime = __coconut__.imp.new_module("email.mime")
+        email.mime.base = _coconut_import
+    except ImportError:
+        import email.mime.base
+
     assert q.Queue
     assert builtins.len([1, 1]) == 2
     assert email.mime.base
-    from email.mime import base as mimebase
+    try:
+        import email.MIMEBase as mimebase
+    except ImportError:
+        from email.mime import base as mimebase
+
     assert mimebase
 
 def main(doc):

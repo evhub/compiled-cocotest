@@ -1,12 +1,47 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb0e663cc
+# __coconut_hash__ = 0x8bfc39c5
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
 # Coconut Header: --------------------------------------------------------------
 
+from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys
+if _coconut_sys.version_info < (3,):
+    import os as _coconut_os    
+    py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, int, chr, str, print, input, raw_input
+    _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input = int, long, str, bytearray, print, unicode, raw_input
+    range, chr, str = xrange, unichr, unicode
+    from future_builtins import *
+    from io import open
+    class _coconut_metaint(type):
+        def __instancecheck__(cls, inst):
+            return isinstance(inst, (_coconut_int, _coconut_long))
+    class int(_coconut_int):
+        """Python 3 int."""
+        __metaclass__ = _coconut_metaint
+        __slots__ = ()
+    class _coconut_metabytes(type):
+        def __instancecheck__(cls, inst):
+            return isinstance(inst, _coconut_str)
+    class bytes(_coconut_str):
+        """Python 3 bytes."""
+        __metaclass__ = _coconut_metabytes
+        __slots__ = ()
+        def __new__(cls, *args, **kwargs):
+            """Python 3 bytes constructor."""
+            return _coconut_str.__new__(cls, _coconut_bytearray(*args, **kwargs))
+    def print(*args, **kwargs):
+        """Python 3 print."""
+        return _coconut_print(*(_coconut_unicode(x).encode(_coconut_sys.stdout.encoding) for x in args), **kwargs)
+    def input(*args, **kwargs):
+        """Python 3 input."""
+        return _coconut_raw_input(*args, **kwargs).decode(_coconut_sys.stdout.encoding)
+    def raw_input(*args):
+        """Raises NameError."""
+        raise NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
+
 import os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -161,15 +196,13 @@ def map_iter(func, args):
         return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
-_coconut_decorator_0 = recursive
-@_coconut_decorator_0
+@recursive
 def next_mul_of(n, x):
     if x % n == 0:
         return x
     else:
         return next_mul_of(n, x + 1)
-_coconut_decorator_0 = recursive
-@_coconut_decorator_0
+@recursive
 def collatz(n):
     if n == 1:
         return True
@@ -835,7 +868,7 @@ def strmul_ (*_coconut_match_to):
     return a * x
 
 # Lazy Lists:
-class lazy:
+class lazy(__coconut__.object):
     done = False
     def finish(self):
         self.done = True
@@ -871,7 +904,7 @@ class trilen(__coconut__.collections.namedtuple("trilen", "h")):
         return (datamaker(cls))((a**2 + b**2)**0.5)
 
 # Inheritance:
-class A:
+class A(__coconut__.object):
     def true(self):
         return True
 class B(A):
