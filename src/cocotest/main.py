@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa6c2e373
+# __coconut_hash__ = 0x1f333891
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -104,6 +104,7 @@ def main_test():
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 2))(5)) == -6
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5)) == 6 == (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2_((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5))
     assert all(same((1, 2, 3), [1, 2, 3]))
+    assert (list)(chain2((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
     assert (prod)((range)(1, 5)) == 24
     assert (plus1)(2) == 3 == plus1(2)
     assert plus1(plus1(5)) == 7
@@ -346,31 +347,40 @@ def main_test():
         assert err
     else:
         assert False
-    try:
+    if _coconut_sys.version_info < (3,):
         import Queue as q
-    except ImportError:
+    else:
         import queue as q
-    try:
+    if _coconut_sys.version_info < (3,):
         import __builtin__ as builtins
-    except ImportError:
+    else:
         import builtins
-    try:
+    if _coconut_sys.version_info < (3,):
         import email.MIMEBase as _coconut_import
         email = __coconut__.imp.new_module("email")
         email.mime = __coconut__.imp.new_module("email.mime")
         email.mime.base = _coconut_import
-    except ImportError:
+    else:
         import email.mime.base
 
     assert q.Queue
     assert builtins.len([1, 1]) == 2
     assert email.mime.base
-    try:
+    if _coconut_sys.version_info < (3,):
         import email.MIMEBase as mimebase
-    except ImportError:
+    else:
         from email.mime import base as mimebase
 
     assert mimebase
+    from_err = TypeError()
+    try:
+        _coconut_raise_from = ValueError()
+        _coconut_raise_from.__cause__ = from_err
+        raise _coconut_raise_from
+    except (ValueError) as err:
+        assert err.__cause__ is from_err
+    else:
+        assert False
 
 def main(doc):
     """Executes Tests."""

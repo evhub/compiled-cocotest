@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8bfc39c5
+# __coconut_hash__ = 0x509e509c
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -91,6 +91,15 @@ add2 = lambda x: lambda y: x + y
 def swap2(f): return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
 def same(iter1, iter2): return map(__coconut__.operator.__eq__, iter1, iter2)
+def chain2(a, b):
+    _coconut_yield_from = a
+    for _coconut_yield_item in _coconut_yield_from:
+        yield _coconut_yield_item
+
+    _coconut_yield_from = b
+    for _coconut_yield_item in _coconut_yield_from:
+        yield _coconut_yield_item
+
 
 # Partial Applications:
 sum_ = __coconut__.functools.partial(reduce, __coconut__.operator.__add__)

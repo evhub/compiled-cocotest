@@ -46,10 +46,10 @@ if _coconut_sys.version_info < (3,):
 version = "0.3.6-post_dev"
 
 import imp, functools, operator, itertools, collections
-try:
-    import collections.abc as abc
-except ImportError:
+if _coconut_sys.version_info < (3,3):
     abc = collections
+else:
+    import collections.abc as abc
 
 object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
 
