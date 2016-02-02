@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1f333891
+# __coconut_hash__ = 0x9d6932e0
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -299,6 +299,7 @@ def main_test():
     set_globs(2)
     assert glob_a == 2 == glob_b
     assert (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))(1) == -1 == __coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 1)(2)
+    assert pt.__doc__
     out0 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))(grid())
     assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]]
     out1 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(grid_map, abs))(grid()))
