@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x9d6932e0
+# __coconut_hash__ = 0x26bb6d93
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -382,6 +382,10 @@ def main_test():
         assert err.__cause__ is from_err
     else:
         assert False
+    class doc(__coconut__.collections.namedtuple("doc", "")):
+        "doc"
+        __slots__ = ()
+    assert doc.__doc__ == "doc"
 
 def main(doc):
     """Executes Tests."""
