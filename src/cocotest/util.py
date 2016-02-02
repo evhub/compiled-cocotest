@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x509e509c
+# __coconut_hash__ = 0x8af73557
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -211,8 +211,21 @@ def next_mul_of(n, x):
         return x
     else:
         return next_mul_of(n, x + 1)
-@recursive
+def maybe_recursive(cond):
+    if cond:
+        return recursive
+    else:
+        return lambda func: func
+@maybe_recursive(True)
 def collatz(n):
+    if n == 1:
+        return True
+    elif n % 2 == 0:
+        return collatz(n / 2)
+    else:
+        return collatz(3 * n + 1)
+@maybe_recursive(False)
+def collatz_(n):
     if n == 1:
         return True
     elif n % 2 == 0:

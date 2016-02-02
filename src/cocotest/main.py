@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x26bb6d93
+# __coconut_hash__ = 0xc92d00bf
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -138,7 +138,7 @@ def main_test():
     assert (list)(__coconut__.itertools.islice(map_iter(__coconut__.functools.partial(__coconut__.operator.__mul__, 2), N()), 0, 5)) == [0, 2, 4, 6, 8]
     assert (tuple)(__coconut__.itertools.islice(N(), 0, 100)) == (tuple)(__coconut__.itertools.islice(N_(), 0, 100)) == (tuple)(__coconut__.itertools.islice(N__(), 0, 100))
     assert (__coconut__.functools.partial(next_mul_of, 5))(12) == 15
-    assert collatz(27)
+    assert collatz(27) and collatz_(27)
     assert preop(1, 2).add() == 3
     assert (abs)(vector(3, 4)) == 5
     assert (tuple)(((lambda v: map(__coconut__.functools.partial(__coconut__.getattr, v), ("x", "y"))))(vector(1, 2))) == (1, 2)
