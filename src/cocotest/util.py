@@ -922,8 +922,8 @@ class B(A):
 # Infinite Grid:
 
 class pt(__coconut__.collections.namedtuple("pt", "x, y")):
-    __slots__ = ()
     """Cartesian point in the x-y plane. Immutable."""
+    __slots__ = ()
     def __abs__(self):
         return (self.x**2 + self.y**2)**0.5
 
