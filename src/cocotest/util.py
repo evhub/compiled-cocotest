@@ -265,10 +265,8 @@ class triangle(__coconut__.collections.namedtuple("triangle", "a, b, c")):
         return self.a**2 + self.b**2 == self.c**2
 class null1(__coconut__.collections.namedtuple("null1", "")):
     __slots__ = ()
-    pass
 class null2(__coconut__.collections.namedtuple("null2", "")):
     __slots__ = ()
-    pass
 null = (null1, null2)
 def is_null(item):
     _coconut_match_check = False
@@ -615,13 +613,10 @@ def chain(a, b):
 # Algebraic Data Types:
 class empty(__coconut__.collections.namedtuple("empty", "")):
     __slots__ = ()
-    pass
 class leaf(__coconut__.collections.namedtuple("leaf", "n")):
     __slots__ = ()
-    pass
 class node(__coconut__.collections.namedtuple("node", "l, r")):
     __slots__ = ()
-    pass
 tree = (empty, leaf, node)
 
 def depth(t):
