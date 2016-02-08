@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xd2ec54e2
+# __coconut_hash__ = 0xd2f7116
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -110,7 +110,7 @@ def main_test():
     assert plus1(plus1(5)) == 7
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
-    assert sqplus1(3) == 9 == (lambda *args, **kwargs: plus1((square)(*args, **kwargs)))(3)
+    assert sqplus1(3) == 10 == (lambda *args, **kwargs: plus1((square)(*args, **kwargs)))(3)
     assert (plus1sq)(3) == 16 == (plus1sq_)(3)
     assert (sqplus1)(3) == 10 == (sqplus1_)(3)
     assert (square)((plus1)(3)) == 16
