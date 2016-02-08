@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x58ec9c07
+# __coconut_hash__ = 0xd2ec54e2
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -398,4 +398,5 @@ def main(doc):
     else:
         from .py3_test import py3_test
         py3_test()
+    import tutorial
     print("<success>")
