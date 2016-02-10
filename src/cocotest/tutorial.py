@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xec592471
+# __coconut_hash__ = 0x8aa73514
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -361,6 +361,9 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             return (sum)(map(__coconut__.operator.__mul__, self.pts, other_pts)) # dot product
         else:
             return (vector)(*(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, other)))(self.pts)) # scalar multiplication
+    def __rmul__(self, other):
+        """Necessary to make vector multiplication commutative."""
+        return self * other
 
 # Test cases:
 assert (repr)(vector(1, 2, 3)) == "vector(pts=(1, 2, 3))"
@@ -460,6 +463,9 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             return (sum)(map(__coconut__.operator.__mul__, self.pts, other_pts)) # dot product
         else:
             return (vector)(*(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, other)))(self.pts)) # scalar multiplication
+    def __rmul__(self, other):
+        """Necessary to make vector multiplication commutative."""
+        return self * other
 
 def diagonal_line(n): return (__coconut__.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
 def linearized_plane(n=0): return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
