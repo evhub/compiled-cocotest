@@ -45,7 +45,7 @@ class __coconut__(object):
     version = "0.3.6-post_dev"
     import imp, functools, operator, itertools, collections
     abc = collections
-    object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
+    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
     @staticmethod
     def recursive(func):
         """Returns tail-call-optimized function."""

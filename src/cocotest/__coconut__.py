@@ -51,7 +51,7 @@ if _coconut_sys.version_info < (3,3):
 else:
     import collections.abc as abc
 
-object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, int, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
+object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
 
 def recursive(func):
     """Returns tail-call-optimized function."""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x3cb34f17
+# __coconut_hash__ = 0x593c4b7
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -96,8 +96,8 @@ def main_test():
     assert (mod)(3, 6) == 3 == (__coconut__.operator.__mod__)(3, 6)
     assert (mod)(5, 4) == 1 == (__coconut__.operator.__mod__)(5, 4)
     assert (mod)(5, (plus)(2, 2)) == 1 == (__coconut__.operator.__mod__)(5, (__coconut__.operator.__add__)(2, 2))
-    assert (base)("11", 2) == 3 == __coconut__.int("11", 2)
-    assert __coconut__.int("10A", 12) == 154 == (int)("10A", 12)
+    assert (base)("11", 2) == 3
+    assert (int)("10A", 12) == 154
     assert (join_with)(["1", "2"], ", ") == "1, 2"
     assert (join_with)(["a", "b", "c"]) == "abc"
     assert (len)(__coconut__.set(("a", 5))) == 2
@@ -387,6 +387,7 @@ def main_test():
         "doc"
         __slots__ = ()
     assert doc.__doc__ == "doc"
+    assert 10000000.0 == 10000000.0
 
 def main(doc):
     """Executes Tests."""
