@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8aa73514
+# __coconut_hash__ = 0x3cd041d3
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -362,7 +362,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
         else:
             return (vector)(*(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, other)))(self.pts)) # scalar multiplication
     def __rmul__(self, other):
-        """Necessary to make vector multiplication commutative."""
+        """Necessary to make scalar multiplication commutative."""
         return self * other
 
 # Test cases:
@@ -464,7 +464,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
         else:
             return (vector)(*(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, other)))(self.pts)) # scalar multiplication
     def __rmul__(self, other):
-        """Necessary to make vector multiplication commutative."""
+        """Necessary to make scalar multiplication commutative."""
         return self * other
 
 def diagonal_line(n): return (__coconut__.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
