@@ -95,7 +95,6 @@ def factorial(n):
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = n
         if (__coconut__.isinstance(_coconut_match_to, (int))):
             if (n > 0):
@@ -179,7 +178,6 @@ def factorial(n, acc=1):
     if _coconut_match_check:
         return acc
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = n
         if (__coconut__.isinstance(_coconut_match_to, (int))):
             if (n > 0):
@@ -214,7 +212,6 @@ def factorial(n):
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = n
         if (__coconut__.isinstance(_coconut_match_to, (int))):
             if (n > 0):

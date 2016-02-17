@@ -363,7 +363,6 @@ def factorial4(value):
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, (int))):
             n = _coconut_match_to
@@ -379,7 +378,6 @@ def factorial5(value):
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, (int))):
             n = _coconut_match_to
@@ -494,14 +492,12 @@ def classify_sequence(value):
     if _coconut_match_check:
         out += "empty"
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1):
             _coconut_match_check = True
         if _coconut_match_check:
             out += "singleton"
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
             x = _coconut_match_to[0]
@@ -509,14 +505,12 @@ def classify_sequence(value):
         if _coconut_match_check:
             out += "duplicate pair of " + str(x)
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2):
             _coconut_match_check = True
         if _coconut_match_check:
             out += "pair"
     if not _coconut_match_check:
-        _coconut_match_check = False
         _coconut_match_to = value
         if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 3):
             _coconut_match_check = True
