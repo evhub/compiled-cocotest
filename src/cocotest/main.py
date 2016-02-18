@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb51ec6db
+# __coconut_hash__ = 0xdad395b6
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -191,6 +191,8 @@ def main_test():
     iter1, iter2 = tee(iter1)
     assert (list)(__coconut__.itertools.islice(iter1, 2, 8)) == (list)(__coconut__.itertools.islice(iter2, 2, 8))
     data = 5
+    assert data == 5
+    data = 3
     assert data == 5
     def backslash_test():
         return lambda x: x
