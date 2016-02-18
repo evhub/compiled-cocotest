@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x593c4b7
+# __coconut_hash__ = 0xb51ec6db
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -388,6 +388,7 @@ def main_test():
         __slots__ = ()
     assert doc.__doc__ == "doc"
     assert 10000000.0 == 10000000.0
+    assert (tuple)(__coconut__.iter(())) == ()
 
 def main(doc):
     """Executes Tests."""
