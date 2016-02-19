@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xdad395b6
+# __coconut_hash__ = 0xd7e0265d
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -193,7 +193,7 @@ def main_test():
     data = 5
     assert data == 5
     data = 3
-    assert data == 5
+    assert data == 3
     def backslash_test():
         return lambda x: x
     assert 1 == 1 == backslash_test()(1)
