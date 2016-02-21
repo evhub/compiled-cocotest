@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x50ad8812
+# __coconut_hash__ = 0x7c602a76
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -565,14 +565,14 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
 
 
 # Test cases:
-assert (repr)(vector(3, 4) / 1) == "vector(pts=(3, 4))"
-assert (repr)(vector(2, 4) / 2) == "vector(pts=(1, 2))"
-assert (repr)(vector(0, 1).unit()) == "vector(pts=(0, 1))"
-assert (repr)(vector(5, 0).unit()) == "vector(pts=(1, 0))"
-assert vector(2, 0).angle(vector(3, 0)) == 0
+assert (repr)(vector(3, 4) / 1) == "vector(pts=(3.0, 4.0))"
+assert (repr)(vector(2, 4) / 2) == "vector(pts=(1.0, 2.0))"
+assert (repr)(vector(0, 1).unit()) == "vector(pts=(0.0, 1.0))"
+assert (repr)(vector(5, 0).unit()) == "vector(pts=(1.0, 0.0))"
+assert vector(2, 0).angle(vector(3, 0)) == 0.0
 assert vector(1, 0).angle(vector(0, 2)) == math.pi / 2
 try:
-    vector(1, 2).angle()
+    vector(1, 2).angle(5)
 except (MatchError):
     assert True
 else:
