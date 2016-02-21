@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xd7e0265d
+# __coconut_hash__ = 0xcd2bccdb
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -388,7 +388,10 @@ def main_test():
     class doc(__coconut__.collections.namedtuple("doc", "")):
         "doc"
         __slots__ = ()
-    assert doc.__doc__ == "doc"
+    class doc_(__coconut__.collections.namedtuple("doc_", "")):
+        """doc"""
+        __slots__ = ()
+    assert doc.__doc__ == "doc" == doc_.__doc__
     assert 10000000.0 == 10000000.0
     assert (tuple)(__coconut__.iter(())) == ()
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x3cd041d3
+# __coconut_hash__ = 0x50ad8812
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -476,3 +476,104 @@ assert next(__coconut__.itertools.islice(linearized_plane(), 0, 0 + 1)) == (0, 0
 assert (list)(__coconut__.itertools.islice(linearized_plane(), 0, 3)) == [(0, 0), (0, 1), (1, 0)]
 assert (repr)(next(__coconut__.itertools.islice(vector_field(), 0, 0 + 1))) == "vector(pts=(0, 0))"
 assert (repr)((list)(__coconut__.itertools.islice(vector_field(), 2, 3))) == "[vector(pts=(1, 0))]"
+
+import math # necessary for math.acos in .angle
+
+class vector(__coconut__.collections.namedtuple("vector", "pts")):
+    """Immutable n-vector."""
+    __slots__ = ()
+    def __new__(cls, *pts):
+        """Create a new vector from the given pts."""
+        if len(pts) == 1 and (isinstance)(pts[0], vector):
+            return pts[0] # vector(v) where v is a vector should return v
+        else:
+            return (datamaker(cls))((tuple)(pts)) # accesses base constructor
+    def __abs__(self):
+        """Return the magnitude of the vector."""
+        return ((lambda s: s**0.5))((sum)((__coconut__.functools.partial(map, lambda x: x**2))(self.pts)))
+    def __add__(self, other):
+        """Add two vectors together."""
+        _coconut_match_check = False
+        _coconut_match_to = other
+        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 1):
+            other_pts = _coconut_match_to[0]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+        assert len(other_pts) == len(self.pts)
+        return (vector)(*map(__coconut__.operator.__add__, self.pts, other_pts))
+    def __sub__(self, other):
+        """Subtract one vector from another."""
+        _coconut_match_check = False
+        _coconut_match_to = other
+        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 1):
+            other_pts = _coconut_match_to[0]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+        assert len(other_pts) == len(self.pts)
+        return (vector)(*map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), self.pts, other_pts))
+    def __neg__(self):
+        """Retrieve the negative of the vector."""
+        return (vector)(*(__coconut__.functools.partial(map, (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))))(self.pts))
+    def __eq__(self, other):
+        """Compare whether two vectors are equal."""
+        _coconut_match_check = False
+        _coconut_match_to = other
+        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == self.pts):
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return True
+        else:
+            return False
+    def __mul__(self, other):
+        """Scalar multiplication and dot product."""
+        _coconut_match_check = False
+        _coconut_match_to = other
+        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 1):
+            other_pts = _coconut_match_to[0]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            assert len(other_pts) == len(self.pts)
+            return (sum)(map(__coconut__.operator.__mul__, self.pts, other_pts)) # dot product
+        else:
+            return (vector)(*(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, other)))(self.pts)) # scalar multiplication
+    def __rmul__(self, other):
+        """Necessary to make scalar multiplication commutative."""
+        return self * other
+# New one-line functions necessary for finding the angle between vectors:
+    def __truediv__(self, other): return (vector)(*(__coconut__.functools.partial(map, lambda x: x / other))(self.pts))
+    def unit(self): return self / abs(self)
+    def angle (*_coconut_match_to):
+        _coconut_match_check = False
+        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[1], (vector))):
+            self = _coconut_match_to[0]
+            other = _coconut_match_to[1]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err.pattern = 'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+        return math.acos(self.unit() * other.unit())
+
+
+# Test cases:
+assert (repr)(vector(3, 4) / 1) == "vector(pts=(3, 4))"
+assert (repr)(vector(2, 4) / 2) == "vector(pts=(1, 2))"
+assert (repr)(vector(0, 1).unit()) == "vector(pts=(0, 1))"
+assert (repr)(vector(5, 0).unit()) == "vector(pts=(1, 0))"
+assert vector(2, 0).angle(vector(3, 0)) == 0
+assert vector(1, 0).angle(vector(0, 2)) == math.pi / 2
+try:
+    vector(1, 2).angle()
+except (MatchError):
+    assert True
+else:
+    assert False
