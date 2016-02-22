@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xcd2bccdb
+# __coconut_hash__ = 0xea124bd
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -394,6 +394,14 @@ def main_test():
     assert doc.__doc__ == "doc" == doc_.__doc__
     assert 10000000.0 == 10000000.0
     assert (tuple)(__coconut__.iter(())) == ()
+    if _coconut_sys.version_info < (3, 3):
+        import abc as _coconut_import
+        collections = __coconut__.imp.new_module("collections")
+        collections.abc = _coconut_import
+    else:
+        import collections.abc
+
+    assert isinstance([], collections.abc.Sequence)
 
 def main(doc):
     """Executes Tests."""
