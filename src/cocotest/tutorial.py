@@ -243,7 +243,7 @@ def quick_sort(l):
     _coconut_match_to = l
     if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         tail = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.itertools.islice(tail, 0, 1))
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(tail, __coconut__.slice(0, 1)))
         if (__coconut__.len(_coconut_match_iter_0) == 1):
             head = _coconut_match_iter_0[0]
             _coconut_match_check = True
@@ -386,14 +386,14 @@ def linearized_plane(n=0): return __coconut__.itertools.chain.from_iterable((_co
 # Note: these tests use $[] notation, which we haven't introduced yet
  #  but will introduce later in this case study; for now, just run the
  #  tests, and make sure you get the same result as is in the comment
-assert next(__coconut__.itertools.islice(linearized_plane(), 0, 0 + 1)) == (0, 0)
-assert (list)(__coconut__.itertools.islice(linearized_plane(), 0, 3)) == [(0, 0), (0, 1), (1, 0)]
+assert __coconut__.igetitem(linearized_plane(), 0) == (0, 0)
+assert (list)(__coconut__.igetitem(linearized_plane(), __coconut__.slice(0, 3))) == [(0, 0), (0, 1), (1, 0)]
 
 def vector_field(): return (__coconut__.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
 
  # You'll need to bring in the vector class from earlier to make these work
-assert (repr)(next(__coconut__.itertools.islice(vector_field(), 0, 0 + 1))) == "vector(pts=(0, 0))"
-assert (repr)((list)(__coconut__.itertools.islice(vector_field(), 2, 3))) == "[vector(pts=(1, 0))]"
+assert (repr)(__coconut__.igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
+assert (repr)((list)(__coconut__.igetitem(vector_field(), __coconut__.slice(2, 3)))) == "[vector(pts=(1, 0))]"
 
 class vector(__coconut__.collections.namedtuple("vector", "pts")):
     """Immutable n-vector."""
@@ -472,10 +472,10 @@ def vector_field(): return (__coconut__.functools.partial(map, lambda xy: vector
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
 assert (list)(diagonal_line(0)) == [(0, 0)]
 assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
-assert next(__coconut__.itertools.islice(linearized_plane(), 0, 0 + 1)) == (0, 0)
-assert (list)(__coconut__.itertools.islice(linearized_plane(), 0, 3)) == [(0, 0), (0, 1), (1, 0)]
-assert (repr)(next(__coconut__.itertools.islice(vector_field(), 0, 0 + 1))) == "vector(pts=(0, 0))"
-assert (repr)((list)(__coconut__.itertools.islice(vector_field(), 2, 3))) == "[vector(pts=(1, 0))]"
+assert __coconut__.igetitem(linearized_plane(), 0) == (0, 0)
+assert (list)(__coconut__.igetitem(linearized_plane(), __coconut__.slice(0, 3))) == [(0, 0), (0, 1), (1, 0)]
+assert (repr)(__coconut__.igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
+assert (repr)((list)(__coconut__.igetitem(vector_field(), __coconut__.slice(2, 3)))) == "[vector(pts=(1, 0))]"
 
 import math # necessary for math.acos in .angle
 

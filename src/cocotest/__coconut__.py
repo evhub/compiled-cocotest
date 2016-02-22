@@ -51,7 +51,14 @@ if _coconut_sys.version_info < (3,3):
 else:
     import collections.abc as abc
 
-object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii
+object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+
+def igetitem(iterable, index):
+    """Performs slicing on any iterable."""
+    if isinstance(index, slice):
+        return itertools.islice(iterable, index.start, index.stop, index.step)
+    else:
+        return next(itertools.islice(iterable, index, index+1))
 
 def recursive(func):
     """Returns tail-call-optimized function."""
