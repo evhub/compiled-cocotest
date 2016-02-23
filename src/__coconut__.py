@@ -45,13 +45,13 @@ if _coconut_sys.version_info < (3,):
 
 version = "0.3.6-post_dev"
 
-import imp, functools, operator, itertools, collections
+import imp, types, operator, functools, itertools, collections
 if _coconut_sys.version_info < (3, 3):
     abc = collections
 else:
     import collections.abc as abc
 
-object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
 
 def igetitem(iterable, index):
     """Performs slicing on any iterable."""

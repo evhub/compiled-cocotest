@@ -43,9 +43,9 @@ def raw_input(*args):
 class __coconut__(object):
     """Built-in Coconut functions."""
     version = "0.3.6-post_dev"
-    import imp, functools, operator, itertools, collections
+    import imp, types, operator, functools, itertools, collections
     abc = collections
-    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+    NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
     @staticmethod
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""

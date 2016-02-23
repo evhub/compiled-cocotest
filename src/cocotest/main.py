@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xea124bd
+# __coconut_hash__ = 0x8d588dc5
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -361,8 +361,21 @@ def main_test():
         import builtins
     if _coconut_sys.version_info < (3,):
         import email.MIMEBase as _coconut_import
-        email = __coconut__.imp.new_module("email")
-        email.mime = __coconut__.imp.new_module("email.mime")
+        try:
+            email
+        except __coconut__.NameError:
+            email = __coconut__.imp.new_module("email")
+        else:
+            if not __coconut__.isinstance(email, __coconut__.types.ModuleType):
+                email = __coconut__.imp.new_module("email")
+
+        try:
+            email
+        except __coconut__.NameError:
+            email.mime = __coconut__.imp.new_module("email.mime")
+        else:
+            if not __coconut__.isinstance(email, __coconut__.types.ModuleType):
+                email.mime = __coconut__.imp.new_module("email.mime")
         email.mime.base = _coconut_import
     else:
         import email.mime.base
@@ -394,14 +407,22 @@ def main_test():
     assert doc.__doc__ == "doc" == doc_.__doc__
     assert 10000000.0 == 10000000.0
     assert (tuple)(__coconut__.iter(())) == ()
+    import collections
     if _coconut_sys.version_info < (3, 3):
         import collections as _coconut_import
-        collections = __coconut__.imp.new_module("collections")
+        try:
+            collections
+        except __coconut__.NameError:
+            collections = __coconut__.imp.new_module("collections")
+        else:
+            if not __coconut__.isinstance(collections, __coconut__.types.ModuleType):
+                collections = __coconut__.imp.new_module("collections")
         collections.abc = _coconut_import
     else:
         import collections.abc
 
     assert isinstance([], collections.abc.Sequence)
+    assert collections.defaultdict(int)[5] == 0
 
 def main(doc):
     """Executes Tests."""
