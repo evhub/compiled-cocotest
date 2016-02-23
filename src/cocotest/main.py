@@ -370,11 +370,11 @@ def main_test():
                 email = __coconut__.imp.new_module("email")
 
         try:
-            email
+            email.mime
         except __coconut__.NameError:
             email.mime = __coconut__.imp.new_module("email.mime")
         else:
-            if not __coconut__.isinstance(email, __coconut__.types.ModuleType):
+            if not __coconut__.isinstance(email.mime, __coconut__.types.ModuleType):
                 email.mime = __coconut__.imp.new_module("email.mime")
         email.mime.base = _coconut_import
     else:
