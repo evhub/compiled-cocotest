@@ -45,7 +45,7 @@ class __coconut__(object):
     version = "0.3.6-post_dev"
     import imp, types, operator, functools, itertools, collections
     abc = collections
-    NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = NameError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
     @staticmethod
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""

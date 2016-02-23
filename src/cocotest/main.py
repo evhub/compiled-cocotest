@@ -363,7 +363,7 @@ def main_test():
         import email.MIMEBase as _coconut_import
         try:
             email
-        except __coconut__.NameError:
+        except:
             email = __coconut__.imp.new_module("email")
         else:
             if not __coconut__.isinstance(email, __coconut__.types.ModuleType):
@@ -371,7 +371,7 @@ def main_test():
 
         try:
             email.mime
-        except __coconut__.NameError:
+        except:
             email.mime = __coconut__.imp.new_module("email.mime")
         else:
             if not __coconut__.isinstance(email.mime, __coconut__.types.ModuleType):
@@ -412,7 +412,7 @@ def main_test():
         import collections as _coconut_import
         try:
             collections
-        except __coconut__.NameError:
+        except:
             collections = __coconut__.imp.new_module("collections")
         else:
             if not __coconut__.isinstance(collections, __coconut__.types.ModuleType):
