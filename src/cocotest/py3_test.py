@@ -27,7 +27,10 @@ class __coconut__(object):
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""
         if __coconut__.isinstance(iterable, __coconut__.imap):
-            return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
+            if __coconut__.isinstance(index, __coconut__.slice):
+                return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
+            else:
+                return iterable._func(*(__coconut__.igetitem(i, index) for i in iterable._iters))
         elif __coconut__.isinstance(iterable, __coconut__.range):
             return iterable[index]
         elif __coconut__.isinstance(index, __coconut__.slice):

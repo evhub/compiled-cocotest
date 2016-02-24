@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x21e9962e
+# __coconut_hash__ = 0xd5e49427
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -460,7 +460,7 @@ def main_test():
     assert __coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), -1) == 2
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(0, -2))) == (0, 1)
-    assert (tuple)(__coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == 22
+    assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
 
 def main(doc):
     """Executes Tests."""
