@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8d588dc5
+# __coconut_hash__ = 0x5e08c6a
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -11,26 +11,54 @@ import sys as _coconut_sys
 if _coconut_sys.version_info < (3,):
     import os as _coconut_os    
     py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, int, chr, str, print, input, raw_input
-    _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input = int, long, str, bytearray, print, unicode, raw_input
-    range, chr, str = xrange, unichr, unicode
+    _coconut_isinstance, _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input, _coconut_xrange, _coconut_slice, _coconut_reversed = isinstance, int, long, str, bytearray, print, unicode, raw_input, xrange, slice, reversed
+    chr, str = unichr, unicode
     from future_builtins import *
     from io import open
+    class range(object):
+        """Python 3 range."""
+        def __init__(self, *args):
+            self._xrange = _coconut_xrange(*args)
+        def __iter__(self):
+            return iter(self._xrange)
+        def __reversed__(self):
+            return _coconut_reversed(self._xrange)
+        def __len__(self):
+            return len(self._xrange)
+        def _slice(self, index):
+            start, stop, step = index.start, index.stop, index.step
+            if start is None:
+                start = 0
+            elif start < 0:
+                start += len(self._xrange)
+            if stop is None:
+                stop = len(self._xrange)
+            elif stop is not None and stop < 0:
+                stop += len(self._xrange)
+            if step is None:
+                step = 1
+            for i in _coconut_xrange(start, stop, step):
+                yield self._xrange[i]
+        def __getitem__(self, index):
+            if _coconut_isinstance(index, _coconut_slice):
+                return self._slice(index)
+            else:
+                return self._xrange[index]
     class _coconut_metaint(type):
         def __instancecheck__(cls, inst):
-            return isinstance(inst, (_coconut_int, _coconut_long))
+            return _coconut_isinstance(inst, (_coconut_int, _coconut_long))
     class int(_coconut_int):
         """Python 3 int."""
         __metaclass__ = _coconut_metaint
         __slots__ = ()
     class _coconut_metabytes(type):
         def __instancecheck__(cls, inst):
-            return isinstance(inst, _coconut_str)
+            return _coconut_isinstance(inst, _coconut_str)
     class bytes(_coconut_str):
         """Python 3 bytes."""
         __metaclass__ = _coconut_metabytes
         __slots__ = ()
         def __new__(cls, *args, **kwargs):
-            """Python 3 bytes constructor."""
             return _coconut_str.__new__(cls, _coconut_bytearray(*args, **kwargs))
     def print(*args, **kwargs):
         """Python 3 print."""
@@ -49,6 +77,7 @@ import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
 
 __coconut_version__ = __coconut__.version
+map = __coconut__.imap
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
@@ -423,6 +452,13 @@ def main_test():
 
     assert isinstance([], collections.abc.Sequence)
     assert collections.defaultdict(int)[5] == 0
+    assert len(range(10)) == 10
+    assert (tuple)((reversed)(range(4))) == (3, 2, 1, 0)
+    assert (tuple)(range(5)[1:]) == (1, 2, 3, 4) == (tuple)(__coconut__.igetitem(range(5), __coconut__.slice(1, None)))
+    assert (tuple)(range(10)[-3:-1]) == (7, 8) == __coconut__.igetitem(range(10), __coconut__.slice(-3, -1))
+    assert (tuple)(__coconut__.igetitem(map(abs, (1, -2, -5, 2)), __coconut__.slice(0, None))) == (1, 2, 5, 2)
+    assert __coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), -1) == 2
+    assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
 
 def main(doc):
     """Executes Tests."""

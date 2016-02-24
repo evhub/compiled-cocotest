@@ -9,26 +9,54 @@
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os as _coconut_os
 py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, int, chr, str, print, input, raw_input
-_coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input = int, long, str, bytearray, print, unicode, raw_input
-range, chr, str = xrange, unichr, unicode
+_coconut_isinstance, _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input, _coconut_xrange, _coconut_slice, _coconut_reversed = isinstance, int, long, str, bytearray, print, unicode, raw_input, xrange, slice, reversed
+chr, str = unichr, unicode
 from future_builtins import *
 from io import open
+class range(object):
+    """Python 3 range."""
+    def __init__(self, *args):
+        self._xrange = _coconut_xrange(*args)
+    def __iter__(self):
+        return iter(self._xrange)
+    def __reversed__(self):
+        return _coconut_reversed(self._xrange)
+    def __len__(self):
+        return len(self._xrange)
+    def _slice(self, index):
+        start, stop, step = index.start, index.stop, index.step
+        if start is None:
+            start = 0
+        elif start < 0:
+            start += len(self._xrange)
+        if stop is None:
+            stop = len(self._xrange)
+        elif stop is not None and stop < 0:
+            stop += len(self._xrange)
+        if step is None:
+            step = 1
+        for i in _coconut_xrange(start, stop, step):
+            yield self._xrange[i]
+    def __getitem__(self, index):
+        if _coconut_isinstance(index, _coconut_slice):
+            return self._slice(index)
+        else:
+            return self._xrange[index]
 class _coconut_metaint(type):
     def __instancecheck__(cls, inst):
-        return isinstance(inst, (_coconut_int, _coconut_long))
+        return _coconut_isinstance(inst, (_coconut_int, _coconut_long))
 class int(_coconut_int):
     """Python 3 int."""
     __metaclass__ = _coconut_metaint
     __slots__ = ()
 class _coconut_metabytes(type):
     def __instancecheck__(cls, inst):
-        return isinstance(inst, _coconut_str)
+        return _coconut_isinstance(inst, _coconut_str)
 class bytes(_coconut_str):
     """Python 3 bytes."""
     __metaclass__ = _coconut_metabytes
     __slots__ = ()
     def __new__(cls, *args, **kwargs):
-        """Python 3 bytes constructor."""
         return _coconut_str.__new__(cls, _coconut_bytearray(*args, **kwargs))
 def print(*args, **kwargs):
     """Python 3 print."""
@@ -45,14 +73,30 @@ class __coconut__(object):
     version = "0.3.6-post_dev"
     import imp, types, operator, functools, itertools, collections
     abc = collections
-    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
+    class imap(map):
+        """Optimized iterator map."""
+        __slots__ = ("_func", "_iters")
+        def __new__(cls, function, *iterables):
+            m = super(cls, cls).__new__(cls, function, *iterables)
+            m._func, m._iters = function, iterables
+            return m
     @staticmethod
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""
-        if isinstance(index, __coconut__.slice):
-            return __coconut__.itertools.islice(iterable, index.start, index.stop, index.step)
+        if __coconut__.isinstance(iterable, __coconut__.imap):
+            return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
+        elif __coconut__.isinstance(iterable, __coconut__.range):
+            return iterable[index]
+        elif __coconut__.isinstance(index, __coconut__.slice):
+            if index.start < 0:
+                return (x for x in __coconut__.list(__coconut__.collections.deque(iterable, maxlen=-index.start))[__coconut__.slice(None, index.stop, index.step)])
+            else:
+                return __coconut__.itertools.islice(iterable, index.start, index.stop, index.step)
+        elif index < 0:
+            return __coconut__.collections.deque(iterable, maxlen=-index)[0]
         else:
-            return __coconut__.next(__coconut__.itertools.islice(iterable, index, index+1))
+            return __coconut__.next(__coconut__.itertools.islice(iterable, index, index + 1))
     @staticmethod
     def recursive(func):
         """Returns tail-call-optimized function."""
@@ -89,6 +133,7 @@ class __coconut__(object):
         """Pattern-matching error."""
 
 __coconut_version__ = __coconut__.version
+map = __coconut__.imap
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile

@@ -15,14 +15,30 @@ class __coconut__(object):
         abc = collections
     else:
         import collections.abc as abc
-    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next
+    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
+    class imap(map):
+        """Optimized iterator map."""
+        __slots__ = ("_func", "_iters")
+        def __new__(cls, function, *iterables):
+            m = super(cls, cls).__new__(cls, function, *iterables)
+            m._func, m._iters = function, iterables
+            return m
     @staticmethod
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""
-        if isinstance(index, __coconut__.slice):
-            return __coconut__.itertools.islice(iterable, index.start, index.stop, index.step)
+        if __coconut__.isinstance(iterable, __coconut__.imap):
+            return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
+        elif __coconut__.isinstance(iterable, __coconut__.range):
+            return iterable[index]
+        elif __coconut__.isinstance(index, __coconut__.slice):
+            if index.start < 0:
+                return (x for x in __coconut__.list(__coconut__.collections.deque(iterable, maxlen=-index.start))[__coconut__.slice(None, index.stop, index.step)])
+            else:
+                return __coconut__.itertools.islice(iterable, index.start, index.stop, index.step)
+        elif index < 0:
+            return __coconut__.collections.deque(iterable, maxlen=-index)[0]
         else:
-            return __coconut__.next(__coconut__.itertools.islice(iterable, index, index+1))
+            return __coconut__.next(__coconut__.itertools.islice(iterable, index, index + 1))
     @staticmethod
     def recursive(func):
         """Returns tail-call-optimized function."""
@@ -59,6 +75,7 @@ class __coconut__(object):
         """Pattern-matching error."""
 
 __coconut_version__ = __coconut__.version
+map = __coconut__.imap
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
