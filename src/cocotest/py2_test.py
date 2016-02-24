@@ -8,7 +8,7 @@
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os as _coconut_os
-py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, int, chr, str, print, input, raw_input
+py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_xrange, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input = filter, hex, map, oct, zip, open, range, xrange, int, chr, str, print, input, raw_input
 _coconut_isinstance, _coconut_int, _coconut_long, _coconut_str, _coconut_bytearray, _coconut_print, _coconut_unicode, _coconut_raw_input, _coconut_xrange, _coconut_slice, _coconut_reversed = isinstance, int, long, str, bytearray, print, unicode, raw_input, xrange, slice, reversed
 chr, str = unichr, unicode
 from future_builtins import *
@@ -67,6 +67,9 @@ def input(*args, **kwargs):
 def raw_input(*args):
     """Raises NameError."""
     raise NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
+def xrange(*args):
+    """Raises NameError."""
+    raise NameError('Coconut uses Python 3 "range" instead of Python 2 "xrange"')
 
 class __coconut__(object):
     """Built-in Coconut functions."""
@@ -100,12 +103,12 @@ class __coconut__(object):
                 return start + index * step
             else:
                 raise __coconut__.IndexError("count indices must be positive")
-        elif __coconut__.isinstance(iterable, __coconut__.imap):
+        elif __coconut__.isinstance(iterable, __coconut__.map):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
                 return iterable._func(*(__coconut__.igetitem(i, index) for i in iterable._iters))
-        elif __coconut__.isinstance(iterable, __coconut__.izip):
+        elif __coconut__.isinstance(iterable, __coconut__.zip):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.izip(*(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:

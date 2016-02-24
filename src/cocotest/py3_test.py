@@ -42,12 +42,12 @@ class __coconut__(object):
                 return start + index * step
             else:
                 raise __coconut__.IndexError("count indices must be positive")
-        elif __coconut__.isinstance(iterable, __coconut__.imap):
+        elif __coconut__.isinstance(iterable, __coconut__.map):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
                 return iterable._func(*(__coconut__.igetitem(i, index) for i in iterable._iters))
-        elif __coconut__.isinstance(iterable, __coconut__.izip):
+        elif __coconut__.isinstance(iterable, __coconut__.zip):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.izip(*(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
