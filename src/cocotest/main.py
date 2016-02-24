@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xabae51f0
+# __coconut_hash__ = 0x124fe0a4
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -79,11 +79,11 @@ _coconut_sys.path.remove(_coconut_file_path)
 __coconut_version__ = __coconut__.version
 map = __coconut__.imap
 zip = __coconut__.izip
-count = __coconut__.icount
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
 tee = __coconut__.itertools.tee
+count = __coconut__.itertools.count
 recursive = __coconut__.recursive
 datamaker = __coconut__.datamaker
 consume = __coconut__.consume
@@ -463,11 +463,11 @@ def main_test():
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(0, -2))) == (0, 1)
     assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
-    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**100)), -1) == 10**100 == __coconut__.igetitem(count(), 10**100)
+    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**18)), -1) == 10**18 == __coconut__.igetitem(count(), 10**18)
     assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
     assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(0, None)))
     assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2)
-    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**100)) == (10**100, 10**100)
+    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**18)) == (10**18, 10**18)
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
 
