@@ -79,7 +79,7 @@ if _coconut_sys.version_info < (3, 3):
 else:
     import collections.abc as abc
 
-object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
+IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
 
 class imap(map):
     """Optimized iterator map."""
@@ -91,7 +91,12 @@ class imap(map):
 
 def igetitem(iterable, index):
     """Performs slicing on any iterable."""
-    if isinstance(iterable, imap):
+    if isinstance(iterable, itertools.count):
+        if isinstance(index, slice) and (index.start is None or index.start >= 0) and (index.stop is not None and index.stop >= 0):
+            return range(index.start if index.start is not None else 0, index.stop, index.step if index.step is not None else 1)
+        elif index >= 0:
+            return index
+    elif isinstance(iterable, imap):
         if isinstance(index, slice):
             return imap(iterable._func, *(igetitem(i, index) for i in iterable._iters))
         else:

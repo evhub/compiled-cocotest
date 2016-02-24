@@ -15,7 +15,7 @@ class __coconut__(object):
         abc = collections
     else:
         import collections.abc as abc
-    object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
+    IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range = IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, range
     class imap(map):
         """Optimized iterator map."""
         __slots__ = ("_func", "_iters")
@@ -26,7 +26,14 @@ class __coconut__(object):
     @staticmethod
     def igetitem(iterable, index):
         """Performs slicing on any iterable."""
-        if __coconut__.isinstance(iterable, __coconut__.imap):
+        if __coconut__.isinstance(iterable, __coconut__.itertools.count):
+            if __coconut__.isinstance(index, __coconut__.slice) and (index.start is None or index.start >= 0) and (index.stop is not None and index.stop >= 0):
+                return __coconut__.range(index.start if index.start is not None else 0, index.stop, index.step if index.step is not None else 1)
+            elif index >= 0:
+                return index
+            else:
+                raise __coconut__.IndexError("count indices must be greater than 0")
+        elif __coconut__.isinstance(iterable, __coconut__.imap):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
@@ -83,6 +90,7 @@ reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
 tee = __coconut__.itertools.tee
+count = __coconut__.itertools.count
 recursive = __coconut__.recursive
 datamaker = __coconut__.datamaker
 consume = __coconut__.consume

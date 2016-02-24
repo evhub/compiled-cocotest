@@ -88,6 +88,7 @@ reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
 tee = __coconut__.itertools.tee
+count = __coconut__.itertools.count
 recursive = __coconut__.recursive
 datamaker = __coconut__.datamaker
 consume = __coconut__.consume

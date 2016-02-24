@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb8ea8406
+# __coconut_hash__ = 0x2f7ed1fa
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -82,6 +82,7 @@ reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
 tee = __coconut__.itertools.tee
+count = __coconut__.itertools.count
 recursive = __coconut__.recursive
 datamaker = __coconut__.datamaker
 consume = __coconut__.consume
@@ -461,7 +462,8 @@ def main_test():
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(0, -2))) == (0, 1)
     assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
-    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**100)), -1) == 10**100
+    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**100)), -1) == 10**100 == __coconut__.igetitem(count(), 10**100)
+    assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
 
 def main(doc):
     """Executes Tests."""
