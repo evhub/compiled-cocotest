@@ -79,7 +79,7 @@ if _coconut_sys.version_info < (3, 3):
 else:
     import collections.abc as abc
 
-IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, zip, range = IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, zip, range
+IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, zip, range, hasattr = IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, map, zip, range, hasattr
 
 class imap(map):
     """Optimized iterator map."""
@@ -97,13 +97,24 @@ class izip(zip):
         z._iters = iterables
         return z
 
+class icount(itertools.count):
+    """Optimized count iterator."""
+    __slots__ = ("_start", "_step")
+    def __new__(cls, start=0, step=1):
+        c = super(cls, cls).__new__(cls, start, step)
+        c._start = start
+        c._step = step
+        return c
+
 def igetitem(iterable, index):
     """Performs slicing on any iterable."""
     if isinstance(iterable, itertools.count):
         if isinstance(index, slice) and (index.start is None or index.start >= 0) and (index.stop is not None and index.stop >= 0):
-            return range(index.start if index.start is not None else 0, index.stop, index.step if index.step is not None else 1)
+            return imap(lambda x: iterable._start + x * iterable._step, range(index.start if index.start is not None else 0, index.stop, index.step if index.step is not None else 1))
         elif index >= 0:
-            return index
+            return iterable._start + index * iterable._step
+        else:
+            raise IndexError("count indices must be greater than 0")
     elif isinstance(iterable, imap):
         if isinstance(index, slice):
             return imap(iterable._func, *(igetitem(i, index) for i in iterable._iters))
@@ -116,6 +127,8 @@ def igetitem(iterable, index):
             return (igetitem(i, index) for i in iterable._iters)
     elif isinstance(iterable, range):
         return iterable[index]
+    elif hasattr(iterable, "__getitem__"):
+        return (x for x in iterable[index])
     elif isinstance(index, slice):
         if (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0):
             return (x for x in tuple(iterable)[index])
