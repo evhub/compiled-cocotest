@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x124fe0a4
+# __coconut_hash__ = 0xf722cf34
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -337,7 +337,13 @@ def main_test():
     out0 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))(grid())
     assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]]
     out1 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(grid_map, abs))(grid()))
-    assert out1 == [[0.0, 1.0, 2.0, 3.0, 4.0], [1.0, 1.4142135623730951, 2.23606797749979, 3.1622776601683795, 4.123105625617661], [2.0, 2.23606797749979, 2.8284271247461903, 3.605551275463989, 4.47213595499958], [3.0, 3.1622776601683795, 3.605551275463989, 4.242640687119285, 5.0], [4.0, 4.123105625617661, 4.47213595499958, 5.0, 5.656854249492381]]
+    assert out1[0] == [0.0, 1.0, 2.0, 3.0, 4.0]
+    assert out1[1][0] == 1.0
+    assert out1[2][0] == 2.0
+    assert out1[3][0] == 3.0
+    assert out1[3][4] == 5.0
+    assert out1[4][0] == 4.0
+    assert out1[4][3] == 5.0
     assert (__coconut__.operator.__le__)(3, 3)
     assert (list)((consume)(range(10))) == []
     assert (list)((__coconut__.functools.partial(consume, keep_last=2))(range(10))) == [8, 9]
@@ -463,11 +469,11 @@ def main_test():
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(0, -2))) == (0, 1)
     assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
-    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**18)), -1) == 10**18 == __coconut__.igetitem(count(), 10**18)
+    assert __coconut__.igetitem(map(lambda x: x + 1, range(10**9)), -1) == 10**9 == __coconut__.igetitem(count(), 10**9)
     assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
     assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(0, None)))
     assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2)
-    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**18)) == (10**18, 10**18)
+    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9)
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
 
