@@ -8,7 +8,7 @@
 import sys as _coconut_sys
 
 class __coconut__(object):
-    """Built-in Coconut functions."""
+    """Built-in Coconut utilities."""
     version = "0.3.6-post_dev"
     import imp, types, operator, functools, itertools, collections
     if _coconut_sys.version_info < (3, 3):
@@ -42,12 +42,12 @@ class __coconut__(object):
                 return start + index * step
             else:
                 raise __coconut__.IndexError("count indices must be positive")
-        elif __coconut__.isinstance(iterable, __coconut__.map):
+        elif __coconut__.isinstance(iterable, __coconut__.imap):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.imap(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
                 return iterable._func(*(__coconut__.igetitem(i, index) for i in iterable._iters))
-        elif __coconut__.isinstance(iterable, __coconut__.zip):
+        elif __coconut__.isinstance(iterable, __coconut__.izip):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.izip(*(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
