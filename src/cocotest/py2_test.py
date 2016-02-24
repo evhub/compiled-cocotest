@@ -89,8 +89,8 @@ class __coconut__(object):
         elif __coconut__.isinstance(iterable, __coconut__.range):
             return iterable[index]
         elif __coconut__.isinstance(index, __coconut__.slice):
-            if index.start < 0:
-                return (x for x in __coconut__.list(__coconut__.collections.deque(iterable, maxlen=-index.start))[__coconut__.slice(None, index.stop, index.step)])
+            if (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0):
+                return (x for x in __coconut__.tuple(iterable)[index])
             else:
                 return __coconut__.itertools.islice(iterable, index.start, index.stop, index.step)
         elif index < 0:

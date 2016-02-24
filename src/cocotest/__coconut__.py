@@ -96,8 +96,8 @@ def igetitem(iterable, index):
     elif isinstance(iterable, range):
         return iterable[index]
     elif isinstance(index, slice):
-        if index.start < 0:
-            return (x for x in collections.deque(iterable, maxlen=-index.start)[slice(None, index.stop, index.step)])
+        if (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0):
+            return (x for x in tuple(iterable)[index])
         else:
             return itertools.islice(iterable, index.start, index.stop, index.step)
     elif index < 0:
