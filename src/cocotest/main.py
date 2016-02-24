@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x2f7ed1fa
+# __coconut_hash__ = 0xc88ef7a7
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -78,6 +78,7 @@ _coconut_sys.path.remove(_coconut_file_path)
 
 __coconut_version__ = __coconut__.version
 map = __coconut__.imap
+zip = __coconut__.izip
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
@@ -464,6 +465,9 @@ def main_test():
     assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
     assert __coconut__.igetitem(map(lambda x: x + 1, range(10**100)), -1) == 10**100 == __coconut__.igetitem(count(), 10**100)
     assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
+    assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == __coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(0, None))
+    assert __coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == (20, 2)
+    assert __coconut__.igetitem(zip(count(), count()), 10**100) == (10**100, 10**100)
 
 def main(doc):
     """Executes Tests."""

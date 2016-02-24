@@ -84,6 +84,7 @@ _coconut_sys.path.remove(_coconut_file_path)
 
 __coconut_version__ = __coconut__.version
 map = __coconut__.imap
+zip = __coconut__.izip
 reduce = __coconut__.functools.reduce
 takewhile = __coconut__.itertools.takewhile
 dropwhile = __coconut__.itertools.dropwhile
