@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xf722cf34
+# __coconut_hash__ = 0xb4404cd7
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
 # Coconut Header: --------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
-import sys, os.path as _coconut_sys, _coconut_os_path
+import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
 if _coconut_sys.version_info() < (3,):
@@ -58,6 +58,7 @@ def main_test():
     assert (join_with)(["1", "2"], ", ") == "1, 2"
     assert (join_with)(["a", "b", "c"]) == "abc"
     assert (len)(__coconut__.set(("a", 5))) == 2
+    assert repr(3) == "3" == ascii(3)
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 2))(5)) == -6
     assert (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5)) == 6 == (__coconut__.functools.partial(__coconut__.operator.__mul__, 2))((__coconut__.functools.partial(swap2_((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), 2))(5))
     assert all(same((1, 2, 3), [1, 2, 3]))
@@ -237,8 +238,8 @@ def main_test():
         first = _coconut_match_to["tags"][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"92": text, "93": [first] + rest} = {"94": "95", "96": [1, 2, 3]}\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
-        _coconut_match_err.pattern = '{"92": text, "93": [first] + rest} = {"94": "95", "96": [1, 2, 3]}'
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"93": text, "94": [first] + rest} = {"95": "96", "97": [1, 2, 3]}\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = '{"93": text, "94": [first] + rest} = {"95": "96", "97": [1, 2, 3]}'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert text == "abc"

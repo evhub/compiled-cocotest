@@ -13,7 +13,7 @@ Description: The Coconut test suite.
 # Coconut Header: --------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
-import sys, os.path as _coconut_sys, _coconut_os_path
+import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
 if _coconut_sys.version_info() < (3,):
