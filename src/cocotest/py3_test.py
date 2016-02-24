@@ -11,7 +11,7 @@ class __coconut__(object):
     """Built-in Coconut functions."""
     version = "0.3.6-post_dev"
     import imp, types, operator, functools, itertools, collections
-    if _coconut_sys.version_info < (3,3):
+    if _coconut_sys.version_info < (3, 3):
         abc = collections
     else:
         import collections.abc as abc
