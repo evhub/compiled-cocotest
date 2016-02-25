@@ -16,6 +16,7 @@ from io import open
 class range(object):
     __doc__ = _coconut_xrange.__doc__
     __slots__ = ("_xrange",)
+    __coconut_is_sliceable_iter__ = True
     def __init__(self, *args):
         self._xrange = _coconut_xrange(*args)
     def __iter__(self):
@@ -80,6 +81,7 @@ class __coconut__(object):
     class map(map):
         __doc__ = map.__doc__
         __slots__ = ("_func", "_iters")
+        __coconut_is_map__ = True
         def __new__(cls, function, *iterables):
             m = super(cls, cls).__new__(cls, function, *iterables)
             m._func, m._iters = function, iterables
@@ -87,6 +89,7 @@ class __coconut__(object):
     class zip(zip):
         __doc__ = zip.__doc__
         __slots__ = ("_iters",)
+        __coconut_is_zip__ = True
         def __new__(cls, *iterables):
             z = super(cls, cls).__new__(cls, *iterables)
             z._iters = iterables
@@ -94,6 +97,7 @@ class __coconut__(object):
     class count(object):
         """count(start, step) returns an infinite iterator starting at start and increasing by step."""
         __slots__ = ("_start", "_step")
+        __coconut_is_sliceable_iter__ = True
         def __init__(self, start=0, step=1):
             self._start, self._step = start, step
         def __iter__(self):
@@ -113,17 +117,17 @@ class __coconut__(object):
             return (count, (self._start, self._step))
     @staticmethod
     def igetitem(iterable, index):
-        if __coconut__.isinstance(iterable, __coconut__.map):
+        if __coconut__.hasattr(iterable, "__coconut_is_map__") and iterable.__coconut_is_map__:
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.map(iterable._func, *(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
                 return iterable._func(*(__coconut__.igetitem(i, index) for i in iterable._iters))
-        elif __coconut__.isinstance(iterable, __coconut__.zip):
+        elif __coconut__.hasattr(iterable, "__coconut_is_zip__") and iterable.__coconut_is_zip__:
             if __coconut__.isinstance(index, __coconut__.slice):
                 return __coconut__.zip(*(__coconut__.igetitem(i, index) for i in iterable._iters))
             else:
                 return (__coconut__.igetitem(i, index) for i in iterable._iters)
-        elif __coconut__.isinstance(iterable, (__coconut__.range, __coconut__.count)):
+        elif isinstance(iterable, __coconut__.range) or (__coconut__.hasattr(iterable, "__coconut_is_sliceable_iter__") and iterable.__coconut_is_sliceable_iter__):
             return iterable[index]
         elif __coconut__.hasattr(iterable, "__getitem__"):
             if __coconut__.isinstance(index, __coconut__.slice):
