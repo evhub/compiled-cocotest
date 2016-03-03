@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8af73557
+# __coconut_hash__ = 0x11fc638f
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -901,3 +901,13 @@ def grid_map(func, gridsample):
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
     return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(0, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(0, xmax))))
+
+# Physics functions:
+
+def SHOPeriodTerminate(X, t, params):
+    if X[1] > 0:
+        return -1 # passed the turning point, so go back
+    epsilon = params['epsilon'] if 'epsilon' in params else 1e-8
+    if abs(X[1]) < epsilon and X[0] < 0:
+        return 1 # we're done
+    return 0 # keep going

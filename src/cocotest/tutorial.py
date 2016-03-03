@@ -341,14 +341,14 @@ assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 def linearized_plane(n=0): return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 
 # Note: these tests use $[] notation, which we haven't introduced yet
- #  but will introduce later in this case study; for now, just run the
- #  tests, and make sure you get the same result as is in the comment
+#  but will introduce later in this case study; for now, just run the
+#  tests, and make sure you get the same result as is in the comment
 assert __coconut__.igetitem(linearized_plane(), 0) == (0, 0)
 assert (list)(__coconut__.igetitem(linearized_plane(), __coconut__.slice(0, 3))) == [(0, 0), (0, 1), (1, 0)]
 
 def vector_field(): return (__coconut__.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
 
- # You'll need to bring in the vector class from earlier to make these work
+# You'll need to bring in the vector class from earlier to make these work
 assert (repr)(__coconut__.igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
 assert (repr)((list)(__coconut__.igetitem(vector_field(), __coconut__.slice(2, 3)))) == "[vector(pts=(1, 0))]"
 
