@@ -14,7 +14,7 @@ class __coconut__(object):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, reversed, _map, _zip = IndexError, object, set, frozenset, tuple, list, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, reversed, map, zip
+    IndexError, object, set, frozenset, tuple, list, dict, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, reversed, _map, _zip = IndexError, object, set, frozenset, tuple, list, dict, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, reversed, map, zip
     class MatchError(Exception):
         """Pattern-matching error."""
     class map(_map):

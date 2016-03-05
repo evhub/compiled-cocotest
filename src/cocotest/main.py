@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x10773076
+# __coconut_hash__ = 0x61b6422f
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -407,6 +407,7 @@ def main_test():
     assert match(5) == 5
     assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, 2))) == (0, 2, 4)
     assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, -1))) == (4, 3, 2, 1, 0)
+    assert dict(((x), (x)) for x in range(5)) == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
 
 def main(doc):
     """Executes Tests."""
