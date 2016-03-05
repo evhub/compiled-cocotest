@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbfd090d2
+# __coconut_hash__ = 0x10773076
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -404,6 +404,9 @@ def main_test():
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
     assert SHOPeriodTerminate([-1, 0], 0, {"epsilon": 1})
+    assert match(5) == 5
+    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, 2))) == (0, 2, 4)
+    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, -1))) == (4, 3, 2, 1, 0)
 
 def main(doc):
     """Executes Tests."""
