@@ -5,6 +5,7 @@
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
 # Coconut Header: --------------------------------------------------------------
+
 import sys as _coconut_sys
 
 class __coconut__(object):
