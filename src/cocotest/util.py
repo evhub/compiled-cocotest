@@ -116,7 +116,7 @@ def qsort5(l):
     _coconut_match_to = l
     if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         tail = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(tail, __coconut__.slice(0, 1)))
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(tail, __coconut__.slice(None, 1)))
         if (__coconut__.len(_coconut_match_iter_0) == 1):
             head = _coconut_match_iter_0[0]
             _coconut_match_check = True
@@ -154,7 +154,7 @@ def map_iter(func, args):
     _coconut_match_to = args
     if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         xs = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(0, 1)))
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
         if (__coconut__.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
@@ -538,7 +538,7 @@ def duplicate_first2(value):
     if (__coconut__.isinstance(_coconut_match_to, (list))) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         l = _coconut_match_to
         xs = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(0, 1)))
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
         if (__coconut__.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
@@ -900,7 +900,7 @@ def grid_map(func, gridsample):
 
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
-    return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(0, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(0, xmax))))
+    return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
 
 # Physics function:
 

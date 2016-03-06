@@ -82,20 +82,20 @@ def main_test():
         to_sort = rand_list(10)
         assert (tuple)((qsort)(to_sort)) == (tuple)((sorted)(to_sort))
     assert __coconut__.igetitem(repeat(3), 2) == 3 == __coconut__.igetitem(repeat_(3), 2)
-    assert sum_(__coconut__.igetitem(repeat(1), __coconut__.slice(0, 5))) == 5 == sum_(__coconut__.igetitem(repeat_(1), __coconut__.slice(0, 5)))
-    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(__coconut__.igetitem(dropwhile(__coconut__.functools.partial(__coconut__.operator.__gt__, 0), (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), __coconut__.slice(0, 5))))
+    assert sum_(__coconut__.igetitem(repeat(1), __coconut__.slice(None, 5))) == 5 == sum_(__coconut__.igetitem(repeat_(1), __coconut__.slice(None, 5)))
+    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(__coconut__.igetitem(dropwhile(__coconut__.functools.partial(__coconut__.operator.__gt__, 0), (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), __coconut__.slice(None, 5))))
     assert (sum_)(((lambda s: map(__coconut__.functools.partial(__coconut__.operator.__getitem__, s), (1, 3, 5))))("ABCDEFG")) == "BDF"
     assert (list)(map(__coconut__.functools.partial(pow, 2), (range)(0, 5))) == [1, 2, 4, 8, 16]
     assert (list)(__coconut__.igetitem(N(), __coconut__.slice(10, 15))) == [10, 11, 12, 13, 14] == (list)(__coconut__.igetitem(N_(), __coconut__.slice(10, 15)))
-    assert ((list)((__coconut__.functools.partial(takewhile, __coconut__.functools.partial(__coconut__.operator.__gt__, 5)))(N())) == [0, 1, 2, 3, 4] == (list)(__coconut__.igetitem(range(0, 10), __coconut__.slice(0, 5, None))))
+    assert ((list)((__coconut__.functools.partial(takewhile, __coconut__.functools.partial(__coconut__.operator.__gt__, 5)))(N())) == [0, 1, 2, 3, 4] == (list)(__coconut__.igetitem(range(0, 10), __coconut__.slice(None, 5, None))))
     assert (sum)(__coconut__.igetitem((__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N())))), __coconut__.slice(5, 15))) == -5 == (sum)(__coconut__.igetitem(chain(range(-10, 0), N()), __coconut__.slice(5, 15)))
-    assert (list)(__coconut__.igetitem(add(repeat(1), N()), __coconut__.slice(0, 5))) == [1, 2, 3, 4, 5] == (list)(__coconut__.igetitem(add(repeat(1), N_()), __coconut__.slice(0, 5)))
-    assert sum(__coconut__.igetitem(__coconut__.igetitem(N(), __coconut__.slice(5, None)), __coconut__.slice(0, 5))) == 35 == sum(__coconut__.igetitem(__coconut__.igetitem(N_(), __coconut__.slice(5, None)), __coconut__.slice(0, 5)))
+    assert (list)(__coconut__.igetitem(add(repeat(1), N()), __coconut__.slice(None, 5))) == [1, 2, 3, 4, 5] == (list)(__coconut__.igetitem(add(repeat(1), N_()), __coconut__.slice(None, 5)))
+    assert sum(__coconut__.igetitem(__coconut__.igetitem(N(), __coconut__.slice(5, None)), __coconut__.slice(None, 5))) == 35 == sum(__coconut__.igetitem(__coconut__.igetitem(N_(), __coconut__.slice(5, None)), __coconut__.slice(None, 5)))
     assert (list)(__coconut__.functools.partial(__coconut__.igetitem, N())(slice(5, 10))) == [5, 6, 7, 8, 9] == __coconut__.functools.partial(__coconut__.operator.__getitem__, list(range(0, 15)))(slice(5, 10))
     assert (list)(__coconut__.igetitem(N(), slice(5, 10))) == [5, 6, 7, 8, 9] == list(range(0, 15))[slice(5, 10)]
     assert (list)(__coconut__.igetitem(preN(range(-5, 0)), __coconut__.slice(1, 10))) == [-4, -3, -2, -1, 0, 1, 2, 3, 4]
-    assert (list)(__coconut__.igetitem(map_iter(__coconut__.functools.partial(__coconut__.operator.__mul__, 2), N()), __coconut__.slice(0, 5))) == [0, 2, 4, 6, 8]
-    assert (tuple)(__coconut__.igetitem(N(), __coconut__.slice(0, 100))) == (tuple)(__coconut__.igetitem(N_(), __coconut__.slice(0, 100))) == (tuple)(__coconut__.igetitem(N__(), __coconut__.slice(0, 100)))
+    assert (list)(__coconut__.igetitem(map_iter(__coconut__.functools.partial(__coconut__.operator.__mul__, 2), N()), __coconut__.slice(None, 5))) == [0, 2, 4, 6, 8]
+    assert (tuple)(__coconut__.igetitem(N(), __coconut__.slice(None, 100))) == (tuple)(__coconut__.igetitem(N_(), __coconut__.slice(None, 100))) == (tuple)(__coconut__.igetitem(N__(), __coconut__.slice(None, 100)))
     assert (__coconut__.functools.partial(next_mul_of, 5))(12) == 15
     assert collatz(27) and collatz_(27)
     assert preop(1, 2).add() == 3
@@ -208,7 +208,7 @@ def main_test():
     laz = lazy()
     assert not laz.done
     lazl = laz.list()
-    assert (list)(__coconut__.igetitem(lazl, __coconut__.slice(0, 3))) == [1, 2, 3]
+    assert (list)(__coconut__.igetitem(lazl, __coconut__.slice(None, 3))) == [1, 2, 3]
     assert not laz.done
     assert (list)(lazl) == [None]
     assert laz.done
@@ -391,22 +391,22 @@ def main_test():
     assert (tuple)((reversed)(range(4))) == (3, 2, 1, 0)
     assert (tuple)(range(5)[1:]) == (1, 2, 3, 4) == (tuple)(__coconut__.igetitem(range(5), __coconut__.slice(1, None)))
     assert (tuple)(range(10)[-3:-1]) == (7, 8) == (tuple)(__coconut__.igetitem(range(10), __coconut__.slice(-3, -1)))
-    assert (tuple)(__coconut__.igetitem(map(abs, (1, -2, -5, 2)), __coconut__.slice(0, None))) == (1, 2, 5, 2)
+    assert (tuple)(__coconut__.igetitem(map(abs, (1, -2, -5, 2)), __coconut__.slice(None, None))) == (1, 2, 5, 2)
     assert __coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), -1) == 2
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
-    assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(0, -2))) == (0, 1)
+    assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(None, -2))) == (0, 1)
     assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
     assert __coconut__.igetitem(map(lambda x: x + 1, range(10**9)), -1) == 10**9 == __coconut__.igetitem(count(), 10**9)
     assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
-    assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(0, None)))
+    assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(None, None)))
     assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2)
     assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9)
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
     assert SHOPeriodTerminate([-1, 0], 0, {"epsilon": 1})
     assert match(5) == 5
-    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, 2))) == (0, 2, 4)
-    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(0, None, -1))) == (4, 3, 2, 1, 0)
+    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(None, None, 2))) == (0, 2, 4)
+    assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(None, None, -1))) == (4, 3, 2, 1, 0)
     assert dict(((x), (x)) for x in range(5)) == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
 
 def main(doc):
