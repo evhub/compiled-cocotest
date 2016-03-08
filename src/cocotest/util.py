@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x9877912d
+# __coconut_hash__ = 0xaedf14f
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -258,7 +258,7 @@ def factorial1(value):
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (int))):
+    if (__coconut__.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
         if (n > 0):
             _coconut_match_check = True
@@ -274,7 +274,7 @@ def factorial2(value):
     else:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -292,7 +292,7 @@ def factorial3(value):
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (int))):
+    if (__coconut__.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
         if (n > 0):
             _coconut_match_check = True
@@ -321,7 +321,7 @@ def factorial4(value):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -336,7 +336,7 @@ def factorial5(value):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -348,7 +348,7 @@ def factorial5(value):
 def classify(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (tuple))):
+    if (__coconut__.isinstance(_coconut_match_to, tuple)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -379,7 +379,7 @@ def classify(value):
         return "tuple"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (list))):
+    if (__coconut__.isinstance(_coconut_match_to, list)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -410,7 +410,7 @@ def classify(value):
         return "list"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (dict))):
+    if (__coconut__.isinstance(_coconut_match_to, dict)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -482,7 +482,7 @@ def classify_sequence(value):
 def dictpoint(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], (int))) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], int)):
         x = _coconut_match_to["x"]
         y = _coconut_match_to["y"]
         _coconut_match_check = True
@@ -535,7 +535,21 @@ def duplicate_first1(value):
 def duplicate_first2(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (list))) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
+    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
+        l = _coconut_match_to
+        xs = __coconut__.iter(_coconut_match_to)
+        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
+        if (__coconut__.len(_coconut_match_iter_0) == 1):
+            x = _coconut_match_iter_0[0]
+            _coconut_match_check = True
+    if _coconut_match_check:
+        return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+    else:
+        raise TypeError()
+def duplicate_first3(value):
+    _coconut_match_check = False
+    _coconut_match_to = value
+    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
         l = _coconut_match_to
         xs = __coconut__.iter(_coconut_match_to)
         _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
@@ -712,7 +726,7 @@ def expl_ident(x): return x
 def dictpoint_(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], (int))) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], int)):
         x = _coconut_match_to["x"]
         y = _coconut_match_to["y"]
         _coconut_match_check = True
@@ -724,7 +738,7 @@ def dictpoint_(value):
     return x, y
 def dictpoint__ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["x"], (int))) and ("y" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["y"], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["y"], int)):
         x = _coconut_match_to[0]["x"]
         y = _coconut_match_to[0]["y"]
         _coconut_match_check = True
@@ -786,7 +800,7 @@ def htsplit_ (*_coconut_match_to):
 
 def iadd (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], (int))) and (__coconut__.isinstance(_coconut_match_to[1], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], int)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
@@ -799,7 +813,7 @@ def iadd (*_coconut_match_to):
 
 def iadd_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], (int))) and (__coconut__.isinstance(_coconut_match_to[1], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], int)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
@@ -812,7 +826,7 @@ def iadd_ (*_coconut_match_to):
 
 def strmul (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], (str))) and (__coconut__.isinstance(_coconut_match_to[1], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], str)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True
@@ -824,7 +838,7 @@ def strmul (*_coconut_match_to):
     return a * x
 def strmul_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], (str))) and (__coconut__.isinstance(_coconut_match_to[1], (int))):
+    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], str)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True

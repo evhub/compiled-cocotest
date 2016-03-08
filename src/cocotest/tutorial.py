@@ -53,7 +53,7 @@ def factorial(n):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = n
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
@@ -93,7 +93,7 @@ def factorial(n):
         try:
             _coconut_match_check = False
             _coconut_match_to = n
-            if (__coconut__.isinstance(_coconut_match_to, (int))):
+            if (__coconut__.isinstance(_coconut_match_to, int)):
                 _coconut_match_check = True
             if not _coconut_match_check:
                 _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ is int = n #8'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
@@ -136,7 +136,7 @@ def factorial(n, acc=1):
         return acc
     if not _coconut_match_check:
         _coconut_match_to = n
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
@@ -170,7 +170,7 @@ def factorial(n):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = n
-        if (__coconut__.isinstance(_coconut_match_to, (int))):
+        if (__coconut__.isinstance(_coconut_match_to, int)):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
@@ -509,7 +509,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
     def unit(self): return self / abs(self)
     def angle (*_coconut_match_to):
         _coconut_match_check = False
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[1], (vector))):
+        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[1], vector)):
             self = _coconut_match_to[0]
             other = _coconut_match_to[1]
             _coconut_match_check = True

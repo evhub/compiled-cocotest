@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x9fc2a6e3
+# __coconut_hash__ = 0xa780fb2d
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -140,7 +140,8 @@ def main_test():
     assert map_(__coconut__.functools.partial(__coconut__.operator.__add__, 1), ()) == ()
     assert map_(__coconut__.functools.partial(__coconut__.operator.__add__, 1), [0, 1, 2, 3]) == [1, 2, 3, 4]
     assert map_(__coconut__.functools.partial(__coconut__.operator.__add__, 1), (0, 1, 2, 3)) == (1, 2, 3, 4)
-    assert duplicate_first1([1, 2, 3]) == [1, 1, 2, 3] == (list)(duplicate_first2([1, 2, 3]))
+    assert duplicate_first1([1, 2, 3]) == [1, 1, 2, 3]
+    assert (list)(dupcliate_first2([1, 2, 3])) == [1, 1, 2, 3] == (list)(duplicate_first3([1, 2, 3]))
     assert one_to_five([1, 2, 3, 4, 5]) == [2, 3, 4]
     assert not one_to_five([0, 1, 2, 3, 4, 5])
     assert one_to_five([1, 5]) == []
@@ -408,6 +409,28 @@ def main_test():
     assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(None, None, 2))) == (0, 2, 4)
     assert (tuple)(__coconut__.igetitem(iter((0, 1, 2, 3, 4)), __coconut__.slice(None, None, -1))) == (4, 3, 2, 1, 0)
     assert dict(((x), (x)) for x in range(5)) == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
+    _coconut_match_check = False
+    _coconut_match_to = 12
+    x = _coconut_match_to
+    _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match x = 12'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match x = 12'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    assert x == 12
+    get_int = lambda: int
+    _coconut_match_check = False
+    _coconut_match_to = 5
+    if (__coconut__.isinstance(_coconut_match_to, get_int())):
+        x = _coconut_match_to
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'x is get_int() = 5'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = 'x is get_int() = 5'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    assert x == 5
 
 def main(doc):
     """Executes Tests."""
