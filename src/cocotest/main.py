@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa780fb2d
+# __coconut_hash__ = 0x2f3c81de
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -141,7 +141,7 @@ def main_test():
     assert map_(__coconut__.functools.partial(__coconut__.operator.__add__, 1), [0, 1, 2, 3]) == [1, 2, 3, 4]
     assert map_(__coconut__.functools.partial(__coconut__.operator.__add__, 1), (0, 1, 2, 3)) == (1, 2, 3, 4)
     assert duplicate_first1([1, 2, 3]) == [1, 1, 2, 3]
-    assert (list)(dupcliate_first2([1, 2, 3])) == [1, 1, 2, 3] == (list)(duplicate_first3([1, 2, 3]))
+    assert (list)(duplicate_first2([1, 2, 3])) == [1, 1, 2, 3] == (list)(duplicate_first3([1, 2, 3]))
     assert one_to_five([1, 2, 3, 4, 5]) == [2, 3, 4]
     assert not one_to_five([0, 1, 2, 3, 4, 5])
     assert one_to_five([1, 5]) == []
