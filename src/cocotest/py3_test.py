@@ -124,7 +124,7 @@ import sys
 
 def py3_test():
     """Performs Python-3-specific tests."""
-    def p1(x :int) -> int:
+    def p1(x: int) -> int:
         return x + 1
     assert p1(2) == 3
     x = 5
