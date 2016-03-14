@@ -158,8 +158,8 @@ def main_test():
     assert 1 == 1 == backslash_test()(1)
     assert "hello" == "hello" == 'hello'
     def multiline_backslash_test(
-    x,
-    y):
+                                   x,
+                                   y):
         return x + y
     assert multiline_backslash_test(1, 2) == 3
     assert True
@@ -239,8 +239,8 @@ def main_test():
         first = _coconut_match_to["tags"][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"93": text, "94": [first] + rest} = {"95": "96", "97": [1, 2, 3]}\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
-        _coconut_match_err.pattern = '{"93": text, "94": [first] + rest} = {"95": "96", "97": [1, 2, 3]}'
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for '{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}' in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = "'{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}'"
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert text == "abc"
@@ -413,8 +413,8 @@ def main_test():
     x = _coconut_match_to
     _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match x = 12'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
-        _coconut_match_err.pattern = 'match x = 12'
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for 'match x = 12' in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = "'match x = 12'"
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert x == 12
@@ -425,8 +425,8 @@ def main_test():
         x = _coconut_match_to
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'x is get_int() = 5'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
-        _coconut_match_err.pattern = 'x is get_int() = 5'
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for 'x is get_int() = 5' in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err.pattern = "'x is get_int() = 5'"
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert x == 5
