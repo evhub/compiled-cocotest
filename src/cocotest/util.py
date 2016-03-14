@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xaedf14f
+# __coconut_hash__ = 0xbc073437
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -925,8 +925,3 @@ def SHOPeriodTerminate(X, t, params):
     if abs(X[1]) < epsilon and X[0] < 0:
         return 1 # we're done
     return 0 # keep going
-
-# Lack of backslash-escaped name function:
-
-def match(data):
-    return data
