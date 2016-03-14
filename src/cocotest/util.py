@@ -11,7 +11,9 @@ import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
 if _coconut_sys.version_info < (3,):
-    from __coconut__ import py2_filter, py2_hex, py2_map, py2_oct, py2_zip, py2_open, py2_range, py2_xrange, py2_int, py2_chr, py2_str, py2_print, py2_input, py2_raw_input, ascii, filter, hex, oct, open, range, int, chr, str, print, input, bytes, raw_input, xrange
+    from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
+else:
+    from __coconut__ import py3_map, py3_zip
 from __coconut__ import __coconut__, __coconut_version__, map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
 _coconut_sys.path.remove(_coconut_file_path)
 

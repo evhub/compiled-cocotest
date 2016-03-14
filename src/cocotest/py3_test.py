@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xc3c3c95f
+# __coconut_hash__ = 0x1c6cc0ef
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
 # Coconut Header: --------------------------------------------------------------
 
 import sys as _coconut_sys
+py3_map, py3_zip = map, zip
 
 class __coconut__(object):
     version = "0.3.6-post_dev"
-    import imp, types, operator, functools, itertools, collections
+    import collections, functools, imp, itertools, operator, types
     if _coconut_sys.version_info < (3, 3):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, object, set, frozenset, tuple, list, dict, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, _map, _zip = IndexError, object, set, frozenset, tuple, list, dict, slice, len, iter, isinstance, getattr, ascii, next, range, hasattr, super, map, zip
+    IndexError, NameError, _map, _zip, ascii, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, next, object, range, reversed, set, slice, super, tuple = IndexError, NameError, map, zip, ascii, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, next, object, range, reversed, set, slice, super, tuple
     class MatchError(Exception):
         """Pattern-matching error."""
     class map(_map):
@@ -146,3 +147,5 @@ def py3_test():
     assert isinstance(A(), A)
     assert isinstance("", A)
     assert isinstance(5, A)
+    assert (tuple)(py3_map(lambda x: x + 1, range(4))) == (1, 2, 3, 4)
+    assert (tuple)(py3_zip(range(3), range(3))) == ((0, 0), (1, 1), (2, 2))
