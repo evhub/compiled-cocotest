@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb383678d
+# __coconut_hash__ = 0xc9b06ccf
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -398,12 +398,12 @@ def main_test():
     assert __coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), -1) == 2
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(-2, None))) == (2, 3)
     assert (tuple)(__coconut__.igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), __coconut__.slice(None, -2))) == (0, 1)
-    assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22
+    assert __coconut__.igetitem(map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22 == map(__coconut__.operator.__add__, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)))[-1]
     assert __coconut__.igetitem(map(lambda x: x + 1, range(10**9)), -1) == 10**9 == __coconut__.igetitem(count(), 10**9)
-    assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14)
+    assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14) == (tuple)(count()[10:15])
     assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(None, None)))
-    assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2)
-    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9)
+    assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2) == (tuple)(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)))[-1])
+    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9) == zip(count(), count())[10**9]
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
     assert SHOPeriodTerminate([-1, 0], 0, {"epsilon": 1})
@@ -432,6 +432,9 @@ def main_test():
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert x == 5
+    assert (len)(map(__coconut__.operator.__add__, range(5), range(6))) == 5 == (len)(zip(range(5), range(6)))
+    assert map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._func(3) == -3
+    assert (tuple)(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._iters[0]) == (tuple)(range(5)) == (tuple)(zip(range(5), range(6))._iters[0])
 
 def main(doc):
     """Executes Tests."""
