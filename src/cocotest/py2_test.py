@@ -44,7 +44,7 @@ class range(object):
     def __repr__(self):
         return __coconut__.repr(self._xrange)[1:]
     def __reduce__(self):
-        return (self.__class__, self._xrange.__reduce__()[1])
+        return (self.__class__,) + self._xrange.__reduce__()[1:]
 class int(_coconut_int):
     __slots__ = ()
     __doc__ = _coconut_int.__doc__
@@ -104,7 +104,7 @@ class __coconut__(object):
         def __repr__(self):
             return "zip(" + ", ".join((__coconut__.repr(i) for i in self._iters)) + ")"
         def __reduce__(self):
-            return (self.__class__, __coconut__._zip.__reduce__(self)[1])
+            return (self.__class__,) + __coconut__._zip.__reduce__(self)[1:]
     class map(_map):
         __doc__ = map.__doc__
         __slots__ = ("_func", "_iters")
@@ -125,7 +125,7 @@ class __coconut__(object):
         def __repr__(self):
             return "map(" + __coconut__.repr(self._func) + ", " + ", ".join((__coconut__.repr(i) for i in self._iters)) + ")"
         def __reduce__(self):
-            return (self.__class__, __coconut__._map.__reduce__(self)[1])
+            return (self.__class__,) + __coconut__._map.__reduce__(self)[1:]
     class parallel_map(map):
         """Parallel implementation of map using concurrent.futures; requires arguments to be pickleable."""
         __slots__ = ()
@@ -135,7 +135,7 @@ class __coconut__(object):
                 for item in executor.map(self._func, *self._iters):
                     yield item
         def __repr__(self):
-            return "parallel_" + __coconut__.map.repr(self)
+            return "parallel_" + __coconut__.map.__repr__(self)
     class count(object):
         """count(start, step) returns an infinite iterator starting at start and increasing by step."""
         __slots__ = ("_start", "_step")
@@ -156,7 +156,7 @@ class __coconut__(object):
         def __repr__(self):
             return "count(" + str(self._start) + ", " + str(self._step) + ")"
         def __reduce__(self):
-            return (__coconut__.count, (self._start, self._step))
+            return (self.__class__, (self._start, self._step))
     @staticmethod
     def igetitem(iterable, index):
         if isinstance(iterable, __coconut__.range) or (__coconut__.hasattr(iterable, "__coconut_is_lazy__") and iterable.__coconut_is_lazy__):
