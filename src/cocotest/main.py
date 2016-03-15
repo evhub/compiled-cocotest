@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xae6e0441
+# __coconut_hash__ = 0xbd056036
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -439,6 +439,8 @@ def main_test():
     assert repr(zip((0, 1), (1, 2))) == "zip((0, 1), (1, 2))"
     assert repr(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))).startswith("map(")
     assert repr(parallel_map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))).startswith("parallel_map(")
+    assert (tuple)(parallel_map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))) == (0, -1, -2, -3, -4) == (tuple)(__coconut__.igetitem(parallel_map(__coconut__.functools.partial(map, (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))), (range(5),)), 0))
+    assert (tuple)(parallel_map(zip, (range(2),), (range(2),))) == (((0, 0), (1, 1)),)
 
 def main(doc):
     """Executes Tests."""
