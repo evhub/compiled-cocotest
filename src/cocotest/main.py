@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xc9b06ccf
+# __coconut_hash__ = 0x90ecdb3b
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -14,7 +14,7 @@ if _coconut_sys.version_info < (3,):
     from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
 else:
     from __coconut__ import py3_map, py3_zip
-from __coconut__ import __coconut__, __coconut_version__, map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
+from __coconut__ import __coconut__, __coconut_version__, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: ------------------------------------------------------------
@@ -265,15 +265,17 @@ def main_test():
     assert (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))(1) == -1 == __coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 1)(2)
     assert pt.__doc__
     out0 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))(grid())
-    assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]]
+    out0_ = (__coconut__.functools.partial(parallel_grid_trim, xmax=5, ymax=5))(grid())
+    assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]] == out0_
     out1 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(grid_map, abs))(grid()))
-    assert out1[0] == [0.0, 1.0, 2.0, 3.0, 4.0]
-    assert out1[1][0] == 1.0
-    assert out1[2][0] == 2.0
-    assert out1[3][0] == 3.0
-    assert out1[3][4] == 5.0
-    assert out1[4][0] == 4.0
-    assert out1[4][3] == 5.0
+    out1_ = (__coconut__.functools.partial(parallel_grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(parallel_grid_map, abs))(grid()))
+    assert out1[0] == [0.0, 1.0, 2.0, 3.0, 4.0] == out1_[0]
+    assert out1[1][0] == 1.0 == out1_[1][0]
+    assert out1[2][0] == 2.0 == out1_[2][0]
+    assert out1[3][0] == 3.0 == out1_[3][0]
+    assert out1[3][4] == 5.0 == out1_[3][4]
+    assert out1[4][0] == 4.0 == out1_[4][0]
+    assert out1[4][3] == 5.0 == out1_[4][3]
     assert (__coconut__.operator.__le__)(3, 3)
     assert (list)((consume)(range(10))) == []
     assert (list)((__coconut__.functools.partial(consume, keep_last=2))(range(10))) == [8, 9]
@@ -403,7 +405,7 @@ def main_test():
     assert (tuple)(__coconut__.igetitem(count(), __coconut__.slice(10, 15))) == (10, 11, 12, 13, 14) == (tuple)(count()[10:15])
     assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(__coconut__.igetitem(zip((1, 2), (3, 4)), __coconut__.slice(None, None)))
     assert (tuple)(__coconut__.igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2) == (tuple)(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)))[-1])
-    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9) == zip(count(), count())[10**9]
+    assert (tuple)(__coconut__.igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9) == (tuple)(zip(count(), count())[10**9])
     assert __coconut__.igetitem(count(1.5, 0.5), 0) == 1.5 == __coconut__.igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(__coconut__.igetitem(count(1.5, 0.5), __coconut__.slice(1, 3))) == (2, 2.5) == (tuple)(__coconut__.igetitem((1.5, 2, 2.5, 3), __coconut__.slice(1, 3)))
     assert SHOPeriodTerminate([-1, 0], 0, {"epsilon": 1})

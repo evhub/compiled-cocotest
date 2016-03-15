@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbc073437
+# __coconut_hash__ = 0xd03418e8
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -14,7 +14,7 @@ if _coconut_sys.version_info < (3,):
     from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
 else:
     from __coconut__ import py3_map, py3_zip
-from __coconut__ import __coconut__, __coconut_version__, map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
+from __coconut__ import __coconut__, __coconut_version__, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: ------------------------------------------------------------
@@ -901,6 +901,15 @@ class pt(__coconut__.collections.namedtuple("pt", "x, y")):
     __slots__ = ()
     def __abs__(self):
         return (self.x**2 + self.y**2)**0.5
+    def __eq__(self, other):
+        _coconut_match_check = False
+        _coconut_match_to = other
+        if (__coconut__.isinstance(_coconut_match_to, pt)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == self.x) and (_coconut_match_to[1] == self.y):
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return True
+        else:
+            return False
 
 def vertical_line(x=0, y=0):
     """Infinite iterator of pt representing a vertical line."""
@@ -912,11 +921,20 @@ def grid(x=0):
 
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    return (__coconut__.functools.partial(map, lambda l: (__coconut__.functools.partial(map, lambda p: func(p)))(l)))(gridsample)
+    return (__coconut__.functools.partial(map, __coconut__.functools.partial(map, func)))(gridsample)
+
+def parallel_grid_map(func, gridsample):
+    """Map a function over every point in a grid in parallel."""
+    return (__coconut__.functools.partial(parallel_map, __coconut__.functools.partial(parallel_map, func)))(gridsample)
 
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
     return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
+
+def _grid_cutter(ymax, l): return (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))
+def parallel_grid_trim(gridsample, xmax, ymax):
+    """Convert a grid to a list of lists up to xmax and ymax."""
+    return (list)((__coconut__.functools.partial(parallel_map, __coconut__.functools.partial(_grid_cutter, ymax)))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
 
 # Physics function:
 
