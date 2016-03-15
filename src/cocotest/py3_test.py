@@ -24,9 +24,9 @@ class __coconut__(object):
         __slots__ = ("_iters",)
         __coconut_is_lazy__ = True
         def __new__(cls, *iterables):
-            z = __coconut__._zip.__new__(cls, *iterables)
-            z._iters = iterables
-            return z
+            new_zip = __coconut__._zip.__new__(cls, *iterables)
+            new_zip._iters = iterables
+            return new_zip
         def __getitem__(self, index):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return self.__class__(*(__coconut__.igetitem(i, index) for i in self._iters))
@@ -38,16 +38,16 @@ class __coconut__(object):
             return __coconut__.min(*(__coconut__.len(i) for i in self._iters))
         def __repr__(self):
             return "zip(" + ", ".join((__coconut__.repr(i) for i in self._iters)) + ")"
-        def __reduce__(self):
-            return (self.__class__,) + __coconut__._zip.__reduce__(self)[1:]
+        def __reduce_ex__(self, _):
+            return (self.__class__, self._iters)
     class map(_map):
         __doc__ = map.__doc__
         __slots__ = ("_func", "_iters")
         __coconut_is_lazy__ = True
         def __new__(cls, function, *iterables):
-            m = __coconut__._map.__new__(cls, function, *iterables)
-            m._func, m._iters = function, iterables
-            return m
+            new_map = __coconut__._map.__new__(cls, function, *iterables)
+            new_map._func, new_map._iters = function, iterables
+            return new_map
         def __getitem__(self, index):
             if __coconut__.isinstance(index, __coconut__.slice):
                 return self.__class__(self._func, *(__coconut__.igetitem(i, index) for i in self._iters))
@@ -59,16 +59,16 @@ class __coconut__(object):
             return __coconut__.min(*(__coconut__.len(i) for i in self._iters))
         def __repr__(self):
             return "map(" + __coconut__.repr(self._func) + ", " + ", ".join((__coconut__.repr(i) for i in self._iters)) + ")"
-        def __reduce__(self):
-            return (self.__class__,) + __coconut__._map.__reduce__(self)[1:]
+        def __reduce_ex__(self, _):
+            return (self.__class__, (self._func,) + self._iters)
     class parallel_map(map):
         """Parallel implementation of map using concurrent.futures; requires arguments to be pickleable."""
         __slots__ = ()
         def __iter__(self):
             from concurrent.futures import ProcessPoolExecutor
             with ProcessPoolExecutor() as executor:
-                for item in executor.map(self._func, *self._iters):
-                    yield item
+                for x in executor.map(self._func, *self._iters):
+                    yield x
         def __repr__(self):
             return "parallel_" + __coconut__.map.__repr__(self)
     class count(object):
