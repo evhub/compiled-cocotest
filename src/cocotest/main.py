@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x90ecdb3b
+# __coconut_hash__ = 0xae6e0441
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -265,10 +265,9 @@ def main_test():
     assert (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))(1) == -1 == __coconut__.functools.partial((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), 1)(2)
     assert pt.__doc__
     out0 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))(grid())
-    out0_ = (__coconut__.functools.partial(parallel_grid_trim, xmax=5, ymax=5))(grid())
-    assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]] == out0_
+    assert out0 == [[pt(x=0, y=0), pt(x=0, y=1), pt(x=0, y=2), pt(x=0, y=3), pt(x=0, y=4)], [pt(x=1, y=0), pt(x=1, y=1), pt(x=1, y=2), pt(x=1, y=3), pt(x=1, y=4)], [pt(x=2, y=0), pt(x=2, y=1), pt(x=2, y=2), pt(x=2, y=3), pt(x=2, y=4)], [pt(x=3, y=0), pt(x=3, y=1), pt(x=3, y=2), pt(x=3, y=3), pt(x=3, y=4)], [pt(x=4, y=0), pt(x=4, y=1), pt(x=4, y=2), pt(x=4, y=3), pt(x=4, y=4)]]
     out1 = (__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(grid_map, abs))(grid()))
-    out1_ = (__coconut__.functools.partial(parallel_grid_trim, xmax=5, ymax=5))((__coconut__.functools.partial(parallel_grid_map, abs))(grid()))
+    out1_ = (list)((__coconut__.functools.partial(map, list))((__coconut__.functools.partial(parallel_grid_map, abs))((__coconut__.functools.partial(grid_trim, xmax=5, ymax=5))(grid()))))
     assert out1[0] == [0.0, 1.0, 2.0, 3.0, 4.0] == out1_[0]
     assert out1[1][0] == 1.0 == out1_[1][0]
     assert out1[2][0] == 2.0 == out1_[2][0]
@@ -437,6 +436,9 @@ def main_test():
     assert (len)(map(__coconut__.operator.__add__, range(5), range(6))) == 5 == (len)(zip(range(5), range(6)))
     assert map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._func(3) == -3
     assert (tuple)(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._iters[0]) == (tuple)(range(5)) == (tuple)(zip(range(5), range(6))._iters[0])
+    assert repr(zip((0, 1), (1, 2))) == "zip((0, 1), (1, 2))"
+    assert repr(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))).startswith("map(")
+    assert repr(parallel_map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))).startswith("parallel_map(")
 
 def main(doc):
     """Executes Tests."""

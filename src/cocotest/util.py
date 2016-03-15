@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xd03418e8
+# __coconut_hash__ = 0x3f4d9d3d
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -930,11 +930,6 @@ def parallel_grid_map(func, gridsample):
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
     return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
-
-def _grid_cutter(ymax, l): return (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))
-def parallel_grid_trim(gridsample, xmax, ymax):
-    """Convert a grid to a list of lists up to xmax and ymax."""
-    return (list)((__coconut__.functools.partial(parallel_map, __coconut__.functools.partial(_grid_cutter, ymax)))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
 
 # Physics function:
 
