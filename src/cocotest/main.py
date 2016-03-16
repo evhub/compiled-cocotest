@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x98577ff3
+# __coconut_hash__ = 0xbecf2706
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -435,7 +435,7 @@ def main_test():
         raise _coconut_match_err
     assert x == 5
     class a(get_int()): pass
-    assert isinstance(a, int)
+    assert isinstance(a(), int)
     assert (len)(map(__coconut__.operator.__add__, range(5), range(6))) == 5 == (len)(zip(range(5), range(6)))
     assert map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._func(3) == -3
     assert (tuple)(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._iters[0]) == (tuple)(range(5)) == (tuple)(zip(range(5), range(6))._iters[0])
@@ -445,7 +445,6 @@ def main_test():
     assert (tuple)(parallel_map(__coconut__.functools.partial(__coconut__.operator.__mul__, -1), range(5))) == (0, -1, -2, -3, -4) == (tuple)(__coconut__.igetitem(parallel_map(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, -1)), (range(5),)), 0))
     assert (tuple)((__coconut__.functools.partial(map, tuple))(parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)((__coconut__.functools.partial(map, __coconut__.operator.__add__))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert addone(5) == 6
 
 def main(doc):
     """Executes Tests."""

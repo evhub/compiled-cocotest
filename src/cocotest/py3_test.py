@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1c6cc0ef
+# __coconut_hash__ = 0xa32be0ca
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -175,3 +175,5 @@ def py3_test():
     assert isinstance(5, A)
     assert (tuple)(py3_map(lambda x: x + 1, range(4))) == (1, 2, 3, 4)
     assert (tuple)(py3_zip(range(3), range(3))) == ((0, 0), (1, 1), (2, 2))
+    class B(*()): pass
+    assert isinstance(B(), B)
