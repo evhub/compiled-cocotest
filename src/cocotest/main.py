@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x85facf63
+# __coconut_hash__ = 0x98577ff3
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -66,14 +66,15 @@ def main_test():
     assert all(same((1, 2, 3), [1, 2, 3]))
     assert (list)(chain2((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
     assert (prod)((range)(1, 5)) == 24
+    assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
-    assert plus1(plus1(5)) == 7
+    assert plus1(plus1(5)) == 7 == (lambda *args, **kwargs: plus1((plus1)(*args, **kwargs)))(5)
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
     assert sqplus1(3) == 10 == (lambda *args, **kwargs: plus1((square)(*args, **kwargs)))(3)
     assert (plus1sq)(3) == 16 == (plus1sq_)(3)
     assert (sqplus1)(3) == 10 == (sqplus1_)(3)
-    assert (square)((plus1)(3)) == 16
+    assert (square)((plus1)(3)) == 16 == (square)((plus1_)(3))
     assert reduce((lambda x, f: f(x)), [3, plus1, square]) == 16 == pipe(pipe(3, plus1), square)
     assert reduce((lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs))), [sqrt, square, plus1])(3) == 4 == compose(compose(sqrt, square), plus1)(3)
     assert sum_([1, 7, 3, 5]) == 16
@@ -433,6 +434,8 @@ def main_test():
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     assert x == 5
+    class a(get_int()): pass
+    assert isinstance(a, int)
     assert (len)(map(__coconut__.operator.__add__, range(5), range(6))) == 5 == (len)(zip(range(5), range(6)))
     assert map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._func(3) == -3
     assert (tuple)(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))._iters[0]) == (tuple)(range(5)) == (tuple)(zip(range(5), range(6))._iters[0])
@@ -440,7 +443,9 @@ def main_test():
     assert repr(map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), range(5))).startswith("map(")
     assert repr(parallel_map(__coconut__.functools.partial(__coconut__.operator.__mul__, -1), range(5))).startswith("parallel_map(")
     assert (tuple)(parallel_map(__coconut__.functools.partial(__coconut__.operator.__mul__, -1), range(5))) == (0, -1, -2, -3, -4) == (tuple)(__coconut__.igetitem(parallel_map(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, -1)), (range(5),)), 0))
-    assert (tuple)(parallel_map(zip, (range(2),), (range(2),))) == (((0, 0), (1, 1)),)
+    assert (tuple)((__coconut__.functools.partial(map, tuple))(parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
+    assert (tuple)((__coconut__.functools.partial(map, __coconut__.operator.__add__))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
+    assert addone(5) == 6
 
 def main(doc):
     """Executes Tests."""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x3f4d9d3d
+# __coconut_hash__ = 0xa50c0e7a
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -38,6 +38,10 @@ prod = __coconut__.functools.partial(reduce, __coconut__.operator.__mul__)
 def zipwith(f, *args): return map(lambda items: f(*items), zip(*args))
 zipsum = (lambda *args, **kwargs: __coconut__.functools.partial(map, sum)((zip)(*args, **kwargs)))
 plus1 = __coconut__.functools.partial(plus, 1)
+ident = lambda x: x
+_coconut_decorator_0 = (lambda *args, **kwargs: ident((ident)(*args, **kwargs)))
+@_coconut_decorator_0
+def plus1_(x): return x + 1
 def sqrt(x): return x**0.5
 def sqrt_(x): return x**0.5
 square = lambda x: x**2
