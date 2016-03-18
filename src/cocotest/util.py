@@ -14,7 +14,7 @@ if _coconut_sys.version_info < (3,):
     from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
 else:
     from __coconut__ import py3_map, py3_zip
-from __coconut__ import __coconut__, __coconut_version__, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
+from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: ------------------------------------------------------------
@@ -668,7 +668,7 @@ def head_tail(l):
         head = _coconut_match_to[0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match [head] + tail = l'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match [head] + tail = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match [head] + tail = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -681,7 +681,7 @@ def init_last(l):
         last = _coconut_match_to[-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'init + [last] = l'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'init + [last] = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'init + [last] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -695,7 +695,7 @@ def last_two(l):
         b = _coconut_match_to[-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ + [a, b] = l'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ + [a, b] = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '_ + [a, b] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -708,7 +708,7 @@ def delist2(l):
         b = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match list(a, b) = l'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match list(a, b) = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match list(a, b) = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -721,7 +721,7 @@ def delist2_(l):
         b = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'list(a, b)  = l'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'list(a, b)  = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'list(a, b)  = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -737,7 +737,7 @@ def dictpoint_(value):
         y = _coconut_match_to["y"]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '{"x":x is int, "y":y is int} = value'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -749,7 +749,7 @@ def dictpoint__ (*_coconut_match_to):
         y = _coconut_match_to[0]["y"]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def dictpoint__({"x":x is int, "y":y is int}):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -773,7 +773,7 @@ def last_two_ (*_coconut_match_to):
         b = _coconut_match_to[0][-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def last_two_(_ + [a, b]):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -785,7 +785,7 @@ def htsplit (*_coconut_match_to):
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def htsplit([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -798,7 +798,7 @@ def htsplit_ (*_coconut_match_to):
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def htsplit_([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -811,7 +811,7 @@ def iadd (*_coconut_match_to):
         y = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def (x is int) `iadd` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -824,7 +824,7 @@ def iadd_ (*_coconut_match_to):
         y = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def (x is int) `iadd_` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -837,7 +837,7 @@ def strmul (*_coconut_match_to):
         x = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def strmul(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -849,7 +849,7 @@ def strmul_ (*_coconut_match_to):
         x = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def strmul_(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err

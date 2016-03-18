@@ -14,7 +14,7 @@ if _coconut_sys.version_info < (3,):
     from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
 else:
     from __coconut__ import py3_map, py3_zip
-from __coconut__ import __coconut__, __coconut_version__, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
+from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: ------------------------------------------------------------
@@ -242,7 +242,7 @@ def main_test():
         first = _coconut_match_to["tags"][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}\'' " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}\'' " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -417,7 +417,7 @@ def main_test():
     x = _coconut_match_to
     _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match x = 12'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match x = 12'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match x = 12'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -429,7 +429,7 @@ def main_test():
         x = _coconut_match_to
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'x is get_int() = 5'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'x is get_int() = 5'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'x is get_int() = 5'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err

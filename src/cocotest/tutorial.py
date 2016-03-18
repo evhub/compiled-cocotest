@@ -14,7 +14,7 @@ if _coconut_sys.version_info < (3,):
     from __coconut__ import py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
 else:
     from __coconut__ import py3_map, py3_zip
-from __coconut__ import __coconut__, __coconut_version__, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, MatchError
+from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: ------------------------------------------------------------
@@ -87,7 +87,7 @@ def factorial(n):
         if (_coconut_match_to == 0):
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'0 = n  # destructuring assignment'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'0 = n  # destructuring assignment'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = '0 = n  # destructuring assignment'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -98,7 +98,7 @@ def factorial(n):
             if (__coconut__.isinstance(_coconut_match_to, int)):
                 _coconut_match_check = True
             if not _coconut_match_check:
-                _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ is int = n  # also destructuring assignment'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+                _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ is int = n  # also destructuring assignment'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
                 _coconut_match_err.pattern = '_ is int = n  # also destructuring assignment'
                 _coconut_match_err.value = _coconut_match_to
                 raise _coconut_match_err
@@ -272,7 +272,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -286,7 +286,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -374,7 +374,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -388,7 +388,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -458,7 +458,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -472,7 +472,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other_pts = _coconut_match_to[0]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -516,7 +516,7 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             other = _coconut_match_to[1]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'" " in " + __coconut__.ascii(__coconut__.ascii(_coconut_match_to)))
+            _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
             _coconut_match_err.pattern = 'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
