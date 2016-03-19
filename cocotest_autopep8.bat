@@ -1,10 +1,10 @@
-cp -r %~dp0..\cocotest\src\* %~dp0src
-coconut %~dp0src\cocotest\py2_test.coc -s -t2 --autopep8
-coconut %~dp0src\cocotest\py3_test.coc -s -t3 --autopep8
-rm %~dp0src\cocotest\py2_test.coc
-rm %~dp0src\cocotest\py3_test.coc
-coconut %~dp0src -s --autopep8
-rm %~dp0src\*.coc
-rm %~dp0src\cocotest\*.coc
-cp -r %~dp0src\* %~dp0..\cocotest\src
+cp -r ../cocotest/src/* ./src
+coconut ./src/cocotest/py2_test.coc -s -t2 --autopep8
+coconut ./src/cocotest/py3_test.coc -s -t3 --autopep8
+rm ./src/cocotest/py2_test.coc
+rm ./src/cocotest/py3_test.coc
+coconut ./src -s --autopep8
+rm ./src/*.coc
+rm ./src/cocotest/*.coc
+cp -r ./src/* ../cocotest/src
 PAUSE
