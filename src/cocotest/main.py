@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbecf2706
+# __coconut_hash__ = 0xe370c3ed
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -159,7 +159,11 @@ def main_test():
     def backslash_test():
         return lambda x: x
     assert 1 == 1 == backslash_test()(1)
-    assert "hello" == "hello" == 'hello'
+    assert (
+            "hello"
+         == "hello" == 
+            'hello'
+        )
     def multiline_backslash_test(
                                    x,
                                    y):
