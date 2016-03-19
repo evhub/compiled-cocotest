@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xe370c3ed
+# __coconut_hash__ = 0x17c18fa2
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -53,7 +53,7 @@ def main_test():
     assert (plus)(1, 1) == 2 == (__coconut__.operator.__add__)(1, 1)
     assert (plus)("1", "1") == "11" == (__coconut__.operator.__add__)("1", "1")
     assert (mod)(3, 6) == 3 == (__coconut__.operator.__mod__)(3, 6)
-    assert (mod)(5, 4) == 1 == (__coconut__.operator.__mod__)(5, 4)
+    assert (mod)(5, 4) == 1 == (mod_)(5, 4)
     assert (mod)(5, (plus)(2, 2)) == 1 == (__coconut__.operator.__mod__)(5, (__coconut__.operator.__add__)(2, 2))
     assert (base)("11", 2) == 3
     assert (int)("10A", 12) == 154

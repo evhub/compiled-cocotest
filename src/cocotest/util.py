@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xac8e9a16
+# __coconut_hash__ = 0x3d5bd455
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -30,8 +30,10 @@ def rand_list(n):
 # Infix Functions:
 plus = __coconut__.operator.__add__
 mod = __coconut__.operator.__mod__
+def mod_(a, b): return a % b
 base = int
-def join_with(a, b=""): return b.join(a)
+def join_with(a, b=""):
+    return b.join(a)
 
 # Basic Functions:
 prod = __coconut__.functools.partial(reduce, __coconut__.operator.__mul__)
