@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xab75863b
+# __coconut_hash__ = 0xcd1d544c
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
