@@ -340,7 +340,6 @@ def main_test():
         else:
             if not __coconut__.isinstance(email, __coconut__.types.ModuleType):
                 email = __coconut__.imp.new_module("email")
-
         try:
             email.mime
         except:
@@ -351,7 +350,6 @@ def main_test():
         email.mime.base = _coconut_import
     else:
         import email.mime.base
-
     assert q.Queue
     assert builtins.len([1, 1]) == 2
     assert email.mime.base
@@ -359,7 +357,6 @@ def main_test():
         import email.MIMEBase as mimebase
     else:
         from email.mime import base as mimebase
-
     assert mimebase
     from_err = TypeError()
     try:
@@ -392,7 +389,6 @@ def main_test():
         collections.abc = _coconut_import
     else:
         import collections.abc
-
     assert isinstance([], collections.abc.Sequence)
     assert collections.defaultdict(int)[5] == 0
     assert len(range(10)) == 10

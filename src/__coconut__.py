@@ -143,7 +143,7 @@ class __coconut__(object):
         def __reduce_ex__(self, _):
             return (self.__class__, (self._func,) + self._iters)
     class parallel_map(map):
-        """Parallel implementation of map using concurrent.futures; requires arguments to be pickleable."""
+        """Multiprocessing implementation of map using concurrent.futures; requires arguments to be pickleable."""
         __slots__ = ()
         def __iter__(self):
             from concurrent.futures import ProcessPoolExecutor
