@@ -1,11 +1,11 @@
-cp ../cocotest/extras.coc .
 cp -r ../cocotest/src/* ./src
-coconut ./src/cocotest/py2_test.coc -s -t2 --minify
-coconut ./src/cocotest/py3_test.coc -s -t3 --minify
+coconut ./src/cocotest/py2_test.coc -t2 -sm
 rm ./src/cocotest/py2_test.coc
+coconut ./src/cocotest/py3_test.coc -t3 -sm
 rm ./src/cocotest/py3_test.coc
-coconut ./extras.coc -s --minify
-coconut ./src -s --minify
+cp ../cocotest/extras.coc .
+coconut ./extras.coc -sm
+coconut ./src -sm
 rm *.coc
 rm ./src/*.coc
 rm ./src/cocotest/*.coc

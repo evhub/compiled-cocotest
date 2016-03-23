@@ -1,9 +1,9 @@
-cp ../cocotest/extras.coc .
 cp -r ../cocotest/src/* ./src
-coconut ./src/cocotest/py2_test.coc -s -t2
-coconut ./src/cocotest/py3_test.coc -s -t3
+coconut ./src/cocotest/py2_test.coc -t2 -s
 rm ./src/cocotest/py2_test.coc
+coconut ./src/cocotest/py3_test.coc -t3 -s
 rm ./src/cocotest/py3_test.coc
+cp ../cocotest/extras.coc .
 coconut ./extras.coc -s
 coconut ./src -s
 rm *.coc
