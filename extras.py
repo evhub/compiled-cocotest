@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xe14fe0a9
+# __coconut_hash__ = 0xe608234b
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -355,26 +355,20 @@ def main():
         assert False
     setup()
     try:
-        cmd("-qv")
-    except (CoconutException):
-        assert True
-    else:
-        assert False
-    try:
         cmd("-f")
-    except (CoconutException):
+    except (SystemExit):
         assert True
     else:
         assert False
     try:
         cmd("-pa .")
-    except (CoconutException):
+    except (SystemExit):
         assert True
     else:
         assert False
     try:
         cmd("-n . .")
-    except (CoconutException):
+    except (SystemExit):
         assert True
     else:
         assert False
