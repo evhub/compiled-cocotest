@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xd3ba640c
+# __coconut_hash__ = 0xe14fe0a9
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -266,7 +266,7 @@ def main():
     assert _block == parse("abc", "block")
     assert _eval == parse("abc", "eval")
     assert _debug == parse("abc", "debug")
-    assert parse(" abc")
+    assert parse(" abc", "eval")
     try:
         parse(" abc", "file")
     except (CoconutException):
@@ -297,10 +297,16 @@ def main():
         assert True
     else:
         assert False
+    try:
+        parse("$")
+    except (CoconutException):
+        assert True
+    else:
+        assert False
     assert parse("def f(x):\n \t pass")
     assert parse("lambda x: x")
     assert parse("u''")
-    assert parse("\\data")
+    assert parse("data")
     assert parse("__coconut__")
     assert parse("def f(x):\\\n pass")
     assert parse("abc ")
@@ -324,7 +330,7 @@ def main():
     else:
         assert False
     try:
-        parse("\\data")
+        parse("data")
     except (CoconutException):
         assert True
     else:
@@ -347,6 +353,7 @@ def main():
         assert True
     else:
         assert False
+    setup()
     try:
         cmd("-qv")
     except (CoconutException):
