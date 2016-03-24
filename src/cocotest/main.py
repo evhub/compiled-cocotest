@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1406415d
+# __coconut_hash__ = 0x4c90c7fa
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -444,17 +444,6 @@ def main_test():
     assert (tuple)(parallel_map(__coconut__.functools.partial(__coconut__.operator.__mul__, -1), range(5))) == (0, -1, -2, -3, -4) == (tuple)(__coconut__.igetitem(parallel_map(__coconut__.functools.partial(map, __coconut__.functools.partial(__coconut__.operator.__mul__, -1)), (range(5),)), 0))
     assert (tuple)((__coconut__.functools.partial(map, tuple))(parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)((__coconut__.functools.partial(map, __coconut__.operator.__add__))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    try:
-        try:
-            raise RuntimeError
-        except RuntimeError as err:
-            _coconut_raise_from = _coconut_sys.exc_info()[1]
-            _coconut_raise_from.__cause__ = err
-            raise _coconut_raise_from
-    except RuntimeError as err:
-        assert isinstance(err.__cause__, RuntimeError)
-    else:
-        assert False
 
 def main(doc):
     """Executes Tests."""
