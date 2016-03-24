@@ -205,7 +205,7 @@ def main_test():
     assert strmul("a", 3) == "aaa" == strmul_("a", 3)
     try:
         strmul("a", "b")
-    except (MatchError) as err:
+    except MatchError as err:
         assert err.pattern == "match def strmul(a is str, x is int):"
         assert err.value == ("a", "b")
     else:
@@ -299,27 +299,27 @@ def main_test():
     i = int()
     try:
         i.x = 12
-    except (AttributeError) as err:
+    except AttributeError as err:
         assert err
     else:
         assert False
     b = bytes()
     try:
         b.x = 12
-    except (AttributeError) as err:
+    except AttributeError as err:
         assert err
     else:
         assert False
     v = vector(1, 2)
     try:
         v.x = 3
-    except (AttributeError) as err:
+    except AttributeError as err:
         assert err
     else:
         assert False
     try:
         v.new_attr = True
-    except (AttributeError) as err:
+    except AttributeError as err:
         assert err
     else:
         assert False
@@ -363,7 +363,7 @@ def main_test():
         _coconut_raise_from = ValueError()
         _coconut_raise_from.__cause__ = from_err
         raise _coconut_raise_from
-    except (ValueError) as err:
+    except ValueError as err:
         assert err.__cause__ is from_err
     else:
         assert False

@@ -99,7 +99,7 @@ def qsort3(l):
 # Since only iter is ever called on l, and next on tail, l only has to be an iterator
         head = next(tail)
         return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
-    except (StopIteration):
+    except StopIteration:
         return iter(())
 def qsort4(l):
     """Match Quick Sort."""

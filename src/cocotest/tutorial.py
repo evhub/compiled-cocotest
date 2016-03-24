@@ -31,13 +31,13 @@ def factorial(n):
 # Test cases:
 try:
     (factorial)(-1)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
 try:
     (factorial)(0.5)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
@@ -65,13 +65,13 @@ def factorial(n):
 # Test cases:
 try:
     (factorial)(-1)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
 try:
     (factorial)(0.5)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
@@ -90,7 +90,7 @@ def factorial(n):
             _coconut_match_err.pattern = '0 = n  # destructuring assignment'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
-    except (MatchError):
+    except MatchError:
         try:
             _coconut_match_check = False
             _coconut_match_to = n
@@ -101,7 +101,7 @@ def factorial(n):
                 _coconut_match_err.pattern = '_ is int = n  # also destructuring assignment'
                 _coconut_match_err.value = _coconut_match_to
                 raise _coconut_match_err
-        except (MatchError):
+        except MatchError:
             pass
         else:
             if n > 0: # in Coconut, if, match, and try are allowed after else
@@ -113,13 +113,13 @@ def factorial(n):
 # Test cases:
 try:
     (factorial)(-1)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
 try:
     (factorial)(0.5)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
@@ -148,13 +148,13 @@ def factorial(n, acc=1):
 # Test cases:
 try:
     (factorial)(-1)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
 try:
     (factorial)(0.5)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
@@ -182,13 +182,13 @@ def factorial(n):
 # Test cases:
 try:
     (factorial)(-1)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
 try:
     (factorial)(0.5)
-except (TypeError):
+except TypeError:
     assert True
 else:
     assert False
@@ -232,7 +232,7 @@ assert (abs)(vector2(3, 4)) == 5
 v = vector2(2, 3)
 try:
     v.x = 7
-except (AttributeError):
+except AttributeError:
     assert True
 else:
     assert False
@@ -531,7 +531,7 @@ assert vector(2, 0).angle(vector(3, 0)) == 0.0
 assert vector(1, 0).angle(vector(0, 2)) == math.pi / 2
 try:
     vector(1, 2).angle(5)
-except (MatchError):
+except MatchError:
     assert True
 else:
     assert False

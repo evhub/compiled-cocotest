@@ -240,7 +240,7 @@ def main():
     assert version("-v")
     try:
         version("other")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
@@ -269,37 +269,37 @@ def main():
     assert parse(" abc", "eval")
     try:
         parse(" abc", "file")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("'")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("(")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("\\(")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("if a:\n  b\n c")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("$")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
@@ -313,62 +313,62 @@ def main():
     setup(None, True, False, False, True)
     try:
         parse("def f(x):\n \t pass")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("lambda x: x")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("u''")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("data")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("__coconut__")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("def f(x):\\\n pass")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     try:
         parse("abc ")
-    except (CoconutException):
+    except CoconutException:
         assert True
     else:
         assert False
     setup()
     try:
         cmd("-f")
-    except (SystemExit):
+    except SystemExit:
         assert True
     else:
         assert False
     try:
         cmd("-pa .")
-    except (SystemExit):
+    except SystemExit:
         assert True
     else:
         assert False
     try:
         cmd("-n . .")
-    except (SystemExit):
+    except SystemExit:
         assert True
     else:
         assert False
