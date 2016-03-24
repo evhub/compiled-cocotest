@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8c574a7a
+# __coconut_hash__ = 0xbf4f5263
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -146,8 +146,6 @@ class __coconut__(object):
 __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume = __coconut__.version, __coconut__.MatchError, __coconut__.map, __coconut__.parallel_map, __coconut__.zip, __coconut__.functools.reduce, __coconut__.itertools.takewhile, __coconut__.itertools.dropwhile, __coconut__.itertools.tee, __coconut__.count, __coconut__.recursive, __coconut__.datamaker, __coconut__.consume
 
 # Compiled Coconut: ------------------------------------------------------------
-
-import sys
 
 def py3_test():
     """Performs Python-3-specific tests."""

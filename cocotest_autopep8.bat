@@ -2,6 +2,7 @@ cp -r ../cocotest/src/* ./src
 coconut ./src/cocotest/py2_test.coc -t2 -s --autopep8
 rm ./src/cocotest/py2_test.coc
 coconut ./src/cocotest/py3_test.coc -t3 -s --autopep8
+coconut ./src/cocotest/py35_test.coc -t3 -s --autopep8
 rm ./src/cocotest/py3_test.coc
 cp ../cocotest/extras.coc .
 coconut ./extras.coc -s --autopep8
