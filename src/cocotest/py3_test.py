@@ -21,7 +21,7 @@ class _coconut_MatchError(Exception):
     """Pattern-matching error."""
     __slots__ = ("pattern", "value")
 class _coconut_zip(_coconut.zip):
-    __doc__ = zip.__doc__
+    __doc__ = _coconut.zip.__doc__
     __slots__ = ("_iters",)
     __coconut_is_lazy__ = True
     def __new__(cls, *iterables):
@@ -42,7 +42,7 @@ class _coconut_zip(_coconut.zip):
     def __reduce_ex__(self, _):
         return (self.__class__, self._iters)
 class _coconut_map(_coconut.map):
-    __doc__ = map.__doc__
+    __doc__ = _coconut.map.__doc__
     __slots__ = ("_func", "_iters")
     __coconut_is_lazy__ = True
     def __new__(cls, function, *iterables):

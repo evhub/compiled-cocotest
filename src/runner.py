@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xe1f2f0d2
+# __coconut_hash__ = 0x80e0463d
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -26,4 +26,5 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import cocotest
 from cocotest.main import main
 
-main(cocotest.__doc__)
+if __name__ == "__main__":
+    main(cocotest.__doc__)
