@@ -10,11 +10,12 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-if _coconut_sys.version_info < (3,):
-    from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
-else:
-    from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, py3_map, py3_zip
+import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
+__coconut_version__ = __coconut__.__coconut_version__
+for name in dir(__coconut__):
+    if not name.startswith("__"):
+        globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------------
 

@@ -10,11 +10,12 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-if _coconut_sys.version_info < (3,):
-    from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip, ascii, bytes, chr, filter, hex, input, int, oct, open, print, range, raw_input, str, xrange
-else:
-    from __coconut__ import __coconut__, __coconut_version__, MatchError, map, parallel_map, zip, reduce, takewhile, dropwhile, tee, count, recursive, datamaker, consume, py3_map, py3_zip
+import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
+__coconut_version__ = __coconut__.__coconut_version__
+for name in dir(__coconut__):
+    if not name.startswith("__"):
+        globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------------
 
@@ -27,34 +28,34 @@ def rand_list(n):
     return [random.randrange(10) for x in range(0, n)]
 
 # Infix Functions:
-plus = __coconut__.operator.__add__
-mod = __coconut__.operator.__mod__
+plus = _coconut.operator.__add__
+mod = _coconut.operator.__mod__
 def mod_(a, b): return a % b
 base = int
 def join_with(a, b=""):
     return b.join(a)
 
 # Basic Functions:
-prod = __coconut__.functools.partial(reduce, __coconut__.operator.__mul__)
+prod = _coconut.functools.partial(reduce, _coconut.operator.__mul__)
 def zipwith(f, *args): return map(lambda items: f(*items), zip(*args))
-zipsum = (lambda *args, **kwargs: __coconut__.functools.partial(map, sum)((zip)(*args, **kwargs)))
-plus1 = __coconut__.functools.partial(plus, 1)
+zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
+plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
-_coconut_decorator_0 = (lambda *args, **kwargs: ident((ident)(*args, **kwargs)))
+_coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
 def plus1_(x): return x + 1
 def sqrt(x): return x**0.5
 def sqrt_(x): return x**0.5
 square = lambda x: x**2
-plus1sq = (lambda *args, **kwargs: square((plus1)(*args, **kwargs)))
-sqplus1 = (lambda *args, **kwargs: plus1((square)(*args, **kwargs)))
+plus1sq = _coconut_compose(square, plus1)
+sqplus1 = _coconut_compose(plus1, square)
 plus1sq_ = lambda x: (square)((plus1)(x))
 sqplus1_ = lambda x: (plus1)((square)(x))
 clean = lambda s: s.strip()
 add2 = lambda x: lambda y: x + y
 def swap2(f): return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
-def same(iter1, iter2): return map(__coconut__.operator.__eq__, iter1, iter2)
+def same(iter1, iter2): return map(_coconut.operator.__eq__, iter1, iter2)
 def chain2(a, b):
     _coconut_yield_from = a
     for _coconut_yield_item in _coconut_yield_from:
@@ -66,8 +67,8 @@ def chain2(a, b):
 
 
 # Partial Applications:
-sum_ = __coconut__.functools.partial(reduce, __coconut__.operator.__add__)
-add = __coconut__.functools.partial(zipwith, __coconut__.operator.__add__)
+sum_ = _coconut.functools.partial(reduce, _coconut.operator.__add__)
+add = _coconut.functools.partial(zipwith, _coconut.operator.__add__)
 
 # Quick-Sorts:
 def qsort1(l):
@@ -98,21 +99,21 @@ def qsort3(l):
         tail, tail_ = (tee)((iter)(l))
 # Since only iter is ever called on l, and next on tail, l only has to be an iterator
         head = next(tail)
-        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
+        return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
     except StopIteration:
         return iter(())
 def qsort4(l):
     """Match Quick Sort."""
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
         _coconut_match_check = True
     if _coconut_match_check:
         return l
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        tail = __coconut__.list(_coconut_match_to[1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        tail = _coconut.list(_coconut_match_to[1:])
         head = _coconut_match_to[0]
         _coconut_match_check = True
     if _coconut_match_check:
@@ -121,15 +122,15 @@ def qsort5(l):
     """Iterator Match Quick Sort."""
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-        tail = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(tail, __coconut__.slice(None, 1)))
-        if (__coconut__.len(_coconut_match_iter_0) == 1):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        tail = _coconut.iter(_coconut_match_to)
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_iter_0) == 1):
             head = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         tail, tail_ = tee(tail)
-        return (__coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
+        return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
     else:
         return iter(())
 
@@ -139,34 +140,34 @@ def repeat(elem):
     while True:
         yield elem
 def repeat_(elem):
-    return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (elem,), lambda: repeat_(elem))))
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (elem,), lambda: repeat_(elem))))
 def N(n=0):
     """Natural Numbers."""
     while True:
         yield n
         n += 1
 def N_(n=0):
-    return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
 def N__(n=0):
     it = n,
     _coconut_lazy_chain_0 = it
-    it = __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_0, lambda: (N__(n + 1)))))
+    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_0, lambda: (N__(n + 1)))))
     return it
 def preN(it):
     _coconut_lazy_chain_1 = it
-    it = __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
+    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
     return it
 def map_iter(func, args):
     _coconut_match_check = False
     _coconut_match_to = args
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-        xs = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
-        if (__coconut__.len(_coconut_match_iter_0) == 1):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        xs = _coconut.iter(_coconut_match_to)
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
+        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
 @recursive
@@ -198,16 +199,16 @@ def collatz_(n):
         return collatz(3 * n + 1)
 
 # Data Blocks:
-class preop(__coconut__.collections.namedtuple("preop", "x, y")):
+class preop(_coconut.collections.namedtuple("preop", "x, y")):
     __slots__ = ()
     def add(self):
         return self.x + self.y
-class vector(__coconut__.collections.namedtuple("vector", "x, y")):
+class vector(_coconut.collections.namedtuple("vector", "x, y")):
     __slots__ = ()
     def __new__(cls, x, y=None):
         _coconut_match_check = False
         _coconut_match_to = x
-        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 2):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 2):
             x = _coconut_match_to[0]
             y = _coconut_match_to[1]
             _coconut_match_check = True
@@ -219,7 +220,7 @@ class vector(__coconut__.collections.namedtuple("vector", "x, y")):
     def transform(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
-        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 2):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 2):
             x = _coconut_match_to[0]
             y = _coconut_match_to[1]
             _coconut_match_check = True
@@ -230,25 +231,25 @@ class vector(__coconut__.collections.namedtuple("vector", "x, y")):
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
-        if (__coconut__.isinstance(_coconut_match_to, vector)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == self.x) and (_coconut_match_to[1] == self.y):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == self.x) and (_coconut_match_to[1] == self.y):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
         else:
             return False
-class triangle(__coconut__.collections.namedtuple("triangle", "a, b, c")):
+class triangle(_coconut.collections.namedtuple("triangle", "a, b, c")):
     __slots__ = ()
     def is_right(self):
         return self.a**2 + self.b**2 == self.c**2
-class null1(__coconut__.collections.namedtuple("null1", "")):
+class null1(_coconut.collections.namedtuple("null1", "")):
     __slots__ = ()
-class null2(__coconut__.collections.namedtuple("null2", "")):
+class null2(_coconut.collections.namedtuple("null2", "")):
     __slots__ = ()
 null = (null1, null2)
 def is_null(item):
     _coconut_match_check = False
     _coconut_match_to = item
-    if (__coconut__.isinstance(_coconut_match_to, null)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, null)) and (_coconut.len(_coconut_match_to) == 0):
         _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -265,7 +266,7 @@ def factorial1(value):
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, int)):
+    if (_coconut.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
         if (n > 0):
             _coconut_match_check = True
@@ -281,7 +282,7 @@ def factorial2(value):
     else:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, int)):
+        if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -299,7 +300,7 @@ def factorial3(value):
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, int)):
+    if (_coconut.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
         if (n > 0):
             _coconut_match_check = True
@@ -307,14 +308,14 @@ def factorial3(value):
         return n * factorial3(n - 1)
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
         _coconut_match_check = True
     if _coconut_match_check:
         return []
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        tail = __coconut__.list(_coconut_match_to[1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        tail = _coconut.list(_coconut_match_to[1:])
         head = _coconut_match_to[0]
         _coconut_match_check = True
     if _coconut_match_check:
@@ -328,7 +329,7 @@ def factorial4(value):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, int)):
+        if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -343,7 +344,7 @@ def factorial5(value):
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, int)):
+        if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
             if (n > 0):
                 _coconut_match_check = True
@@ -355,74 +356,74 @@ def factorial5(value):
 def classify(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, tuple)):
+    if (_coconut.isinstance(_coconut_match_to, tuple)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
             _coconut_match_check = True
         if _coconut_match_check:
             return "empty tuple"
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
             _coconut_match_check = True
         if _coconut_match_check:
             return "singleton tuple"
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
             x = _coconut_match_to[0]
             _coconut_match_check = True
         if _coconut_match_check:
             return "duplicate pair tuple of " + str(x)
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2):
             _coconut_match_check = True
         if _coconut_match_check:
             return "pair tuple"
         return "tuple"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, list)):
+    if (_coconut.isinstance(_coconut_match_to, list)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
             _coconut_match_check = True
         if _coconut_match_check:
             return "empty list"
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
             _coconut_match_check = True
         if _coconut_match_check:
             return "singleton list"
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
             x = _coconut_match_to[0]
             _coconut_match_check = True
         if _coconut_match_check:
             return "duplicate pair list of " + str(x)
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2):
             _coconut_match_check = True
         if _coconut_match_check:
             return "pair list"
         return "list"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, dict)):
+    if (_coconut.isinstance(_coconut_match_to, dict)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 0):
             _coconut_match_check = True
         if _coconut_match_check:
             return "empty dict"
@@ -430,18 +431,18 @@ def classify(value):
             return "dict"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, (set, frozenset))):
+    if (_coconut.isinstance(_coconut_match_to, (set, frozenset))):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Set)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Set)) and (_coconut.len(_coconut_match_to) == 0):
             _coconut_match_check = True
         if _coconut_match_check:
             return "empty set"
         _coconut_match_check = False
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Set)) and (__coconut__.len(_coconut_match_to) == 1) and (0 in _coconut_match_to):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Set)) and (_coconut.len(_coconut_match_to) == 1) and (0 in _coconut_match_to):
             _coconut_match_check = True
         if _coconut_match_check:
             return "set of 0"
@@ -451,35 +452,35 @@ def classify_sequence(value):
     out = ""
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
         _coconut_match_check = True
     if _coconut_match_check:
         out += "empty"
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
             _coconut_match_check = True
         if _coconut_match_check:
             out += "singleton"
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == _coconut_match_to[1]):
             x = _coconut_match_to[0]
             _coconut_match_check = True
         if _coconut_match_check:
             out += "duplicate pair of " + str(x)
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2):
             _coconut_match_check = True
         if _coconut_match_check:
             out += "pair"
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 3):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 3):
             _coconut_match_check = True
         if (not _coconut_match_check):
-            if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 4):
+            if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 4):
                 _coconut_match_check = True
         if _coconut_match_check:
             out += "few"
@@ -489,7 +490,7 @@ def classify_sequence(value):
 def dictpoint(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["y"], int)):
         x = _coconut_match_to["x"]
         y = _coconut_match_to["y"]
         _coconut_match_check = True
@@ -500,19 +501,19 @@ def dictpoint(value):
 def map_(func, args):
     _coconut_match_check = False
     _coconut_match_to = args
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
         l = _coconut_match_to
         _coconut_match_check = True
     if (not _coconut_match_check):
-        if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
             l = _coconut_match_to
             _coconut_match_check = True
     if _coconut_match_check:
         return l
     _coconut_match_check = False
     _coconut_match_to = args
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        xs = __coconut__.tuple(_coconut_match_to[1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        xs = _coconut.tuple(_coconut_match_to[1:])
         x = _coconut_match_to[0]
         if ((isinstance)(args, tuple)):
             _coconut_match_check = True
@@ -520,8 +521,8 @@ def map_(func, args):
         return (func(x),) + map_(func, xs)
     _coconut_match_check = False
     _coconut_match_to = args
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        xs = __coconut__.list(_coconut_match_to[1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        xs = _coconut.list(_coconut_match_to[1:])
         x = _coconut_match_to[0]
         if ((isinstance)(args, list)):
             _coconut_match_check = True
@@ -530,9 +531,9 @@ def map_(func, args):
 def duplicate_first1(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
         l = _coconut_match_to
-        xs = __coconut__.list(_coconut_match_to[1:])
+        xs = _coconut.list(_coconut_match_to[1:])
         x = _coconut_match_to[0]
         _coconut_match_check = True
     if _coconut_match_check:
@@ -542,36 +543,36 @@ def duplicate_first1(value):
 def duplicate_first2(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
+    if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         l = _coconut_match_to
-        xs = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
-        if (__coconut__.len(_coconut_match_iter_0) == 1):
+        xs = _coconut.iter(_coconut_match_to)
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
 def duplicate_first3(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
+    if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         l = _coconut_match_to
-        xs = __coconut__.iter(_coconut_match_to)
-        _coconut_match_iter_0 = __coconut__.tuple(__coconut__.igetitem(xs, __coconut__.slice(None, 1)))
-        if (__coconut__.len(_coconut_match_iter_0) == 1):
+        xs = _coconut.iter(_coconut_match_to)
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_iter_0) == 1):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
 def one_to_five(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 2) and (_coconut_match_to[0] == 1) and (_coconut_match_to[-1] == 5):
-        m = __coconut__.list(_coconut_match_to[1:-1])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 2) and (_coconut_match_to[0] == 1) and (_coconut_match_to[-1] == 5):
+        m = _coconut.list(_coconut_match_to[1:-1])
         _coconut_match_check = True
     if _coconut_match_check:
         return m
@@ -592,35 +593,35 @@ def compose(a, b):
     return a
 def chain(a, b):
     _coconut_lazy_chain_2 = a
-    a = __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_2, lambda: (b))))
+    a = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_2, lambda: (b))))
     return a
 
 # Algebraic Data Types:
-class empty(__coconut__.collections.namedtuple("empty", "")):
+class empty(_coconut.collections.namedtuple("empty", "")):
     __slots__ = ()
-class leaf(__coconut__.collections.namedtuple("leaf", "n")):
+class leaf(_coconut.collections.namedtuple("leaf", "n")):
     __slots__ = ()
-class node(__coconut__.collections.namedtuple("node", "l, r")):
+class node(_coconut.collections.namedtuple("node", "l, r")):
     __slots__ = ()
 tree = (empty, leaf, node)
 
 def depth(t):
     _coconut_match_check = False
     _coconut_match_to = t
-    if (__coconut__.isinstance(_coconut_match_to, tree)) and (__coconut__.len(_coconut_match_to) == 0):
+    if (_coconut.isinstance(_coconut_match_to, tree)) and (_coconut.len(_coconut_match_to) == 0):
         _coconut_match_check = True
     if _coconut_match_check:
         return 0
     _coconut_match_check = False
     _coconut_match_to = t
-    if (__coconut__.isinstance(_coconut_match_to, tree)) and (__coconut__.len(_coconut_match_to) == 1):
+    if (_coconut.isinstance(_coconut_match_to, tree)) and (_coconut.len(_coconut_match_to) == 1):
         n = _coconut_match_to[0]
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     _coconut_match_check = False
     _coconut_match_to = t
-    if (__coconut__.isinstance(_coconut_match_to, tree)) and (__coconut__.len(_coconut_match_to) == 2):
+    if (_coconut.isinstance(_coconut_match_to, tree)) and (_coconut.len(_coconut_match_to) == 2):
         l = _coconut_match_to[0]
         r = _coconut_match_to[1]
         _coconut_match_check = True
@@ -631,27 +632,27 @@ def depth(t):
 def base_maybe(x, f): return f(x) if x is not None else None
 def maybes(*fs): return reduce(base_maybe, fs)
 
-class Nothing(__coconut__.collections.namedtuple("Nothing", "")):
+class Nothing(_coconut.collections.namedtuple("Nothing", "")):
     __slots__ = ()
     def __call__(self, *args):
         return Nothing()
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
-        if (__coconut__.isinstance(_coconut_match_to, Nothing)) and (__coconut__.len(_coconut_match_to) == 0):
+        if (_coconut.isinstance(_coconut_match_to, Nothing)) and (_coconut.len(_coconut_match_to) == 0):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
         else:
             return False
-class Just(__coconut__.collections.namedtuple("Just", "item")):
+class Just(_coconut.collections.namedtuple("Just", "item")):
     __slots__ = ()
     def __call__(self, *args):
-        return (Just)(reduce(__coconut__.pipe, args, self.item))
+        return (Just)(reduce(_coconut_pipe, args, self.item))
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
-        if (__coconut__.isinstance(_coconut_match_to, Just)) and (__coconut__.len(_coconut_match_to) == 1):
+        if (_coconut.isinstance(_coconut_match_to, Just)) and (_coconut.len(_coconut_match_to) == 1):
             item = _coconut_match_to[0]
             _coconut_match_check = True
         if _coconut_match_check:
@@ -664,12 +665,12 @@ Maybe = (Nothing, Just)
 def head_tail(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        tail = __coconut__.list(_coconut_match_to[1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        tail = _coconut.list(_coconut_match_to[1:])
         head = _coconut_match_to[0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match [head] + tail = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match [head] + tail = l'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match [head] + tail = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -677,12 +678,12 @@ def head_tail(l):
 def init_last(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 1):
-        init = __coconut__.list(_coconut_match_to[:-1])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
+        init = _coconut.list(_coconut_match_to[:-1])
         last = _coconut_match_to[-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'init + [last] = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'init + [last] = l'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'init + [last] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -690,13 +691,13 @@ def init_last(l):
 def last_two(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) >= 2):
-        _ = __coconut__.list(_coconut_match_to[:-2])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 2):
+        _ = _coconut.list(_coconut_match_to[:-2])
         a = _coconut_match_to[-2]
         b = _coconut_match_to[-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'_ + [a, b] = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'_ + [a, b] = l'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '_ + [a, b] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -704,12 +705,12 @@ def last_two(l):
 def delist2(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.len(_coconut_match_to) == 2):
+    if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.len(_coconut_match_to) == 2):
         a = _coconut_match_to[0]
         b = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match list(a, b) = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match list(a, b) = l'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match list(a, b) = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -717,12 +718,12 @@ def delist2(l):
 def delist2_(l):
     _coconut_match_check = False
     _coconut_match_to = l
-    if (__coconut__.isinstance(_coconut_match_to, list)) and (__coconut__.len(_coconut_match_to) == 2):
+    if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.len(_coconut_match_to) == 2):
         a = _coconut_match_to[0]
         b = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'list(a, b)  = l'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'list(a, b)  = l'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'list(a, b)  = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -733,24 +734,24 @@ def expl_ident(x): return x
 def dictpoint_(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (__coconut__.isinstance(_coconut_match_to["y"], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["y"], int)):
         x = _coconut_match_to["x"]
         y = _coconut_match_to["y"]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '{"x":x is int, "y":y is int} = value'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return x, y
 def dictpoint__ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Mapping)) and (__coconut__.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (__coconut__.isinstance(_coconut_match_to[0]["y"], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["y"], int)):
         x = _coconut_match_to[0]["x"]
         y = _coconut_match_to[0]["y"]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def dictpoint__({"x":x is int, "y":y is int}):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -768,25 +769,25 @@ def dectest(x): return x
 # Match Function Definition:
 def last_two_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to[0]) >= 2):
-        _ = __coconut__.list(_coconut_match_to[0][:-2])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 2):
+        _ = _coconut.list(_coconut_match_to[0][:-2])
         a = _coconut_match_to[0][-2]
         b = _coconut_match_to[0][-1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def last_two_(_ + [a, b]):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return a, b
 def htsplit (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to[0]) >= 1):
-        tail = __coconut__.list(_coconut_match_to[0][1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+        tail = _coconut.list(_coconut_match_to[0][1:])
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def htsplit([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -794,12 +795,12 @@ def htsplit (*_coconut_match_to):
 
 def htsplit_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 1) and (__coconut__.isinstance(_coconut_match_to[0], __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to[0]) >= 1):
-        tail = __coconut__.list(_coconut_match_to[0][1:])
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+        tail = _coconut.list(_coconut_match_to[0][1:])
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def htsplit_([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -807,12 +808,12 @@ def htsplit_ (*_coconut_match_to):
 
 def iadd (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], int)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def (x is int) `iadd` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -820,12 +821,12 @@ def iadd (*_coconut_match_to):
 
 def iadd_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], int)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def (x is int) `iadd_` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
@@ -833,31 +834,31 @@ def iadd_ (*_coconut_match_to):
 
 def strmul (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], str)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match def strmul(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return a * x
 def strmul_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Sequence)) and (__coconut__.len(_coconut_match_to) == 2) and (__coconut__.isinstance(_coconut_match_to[0], str)) and (__coconut__.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = __coconut__.MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + __coconut__.repr(__coconut__.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'def strmul_(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return a * x
 
 # Lazy Lists:
-class lazy(__coconut__.object):
+class lazy(_coconut.object):
     done = False
     def finish(self):
         self.done = True
@@ -866,9 +867,9 @@ class lazy(__coconut__.object):
 def is_empty(i):
     _coconut_match_check = False
     _coconut_match_to = i
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-        _coconut_match_iter_0 = __coconut__.tuple(_coconut_match_to)
-        if (__coconut__.len(_coconut_match_iter_0) == 0):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to)
+        if (_coconut.len(_coconut_match_iter_0) == 0):
             _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -877,9 +878,9 @@ def is_empty(i):
 def is_one(i):
     _coconut_match_check = False
     _coconut_match_to = i
-    if (__coconut__.isinstance(_coconut_match_to, __coconut__.abc.Iterable)):
-        _coconut_match_iter_0 = __coconut__.tuple(_coconut_match_to)
-        if (__coconut__.len(_coconut_match_iter_0) == 1) and (_coconut_match_iter_0[0] == 1):
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to)
+        if (_coconut.len(_coconut_match_iter_0) == 1) and (_coconut_match_iter_0[0] == 1):
             _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -887,13 +888,13 @@ def is_one(i):
         return False
 
 # Constructed Data Types:
-class trilen(__coconut__.collections.namedtuple("trilen", "h")):
+class trilen(_coconut.collections.namedtuple("trilen", "h")):
     __slots__ = ()
     def __new__(cls, a, b):
         return (datamaker(cls))((a**2 + b**2)**0.5)
 
 # Inheritance:
-class A(__coconut__.object):
+class A(_coconut.object):
     def true(self):
         return True
 class B(A):
@@ -901,7 +902,7 @@ class B(A):
 
 # Infinite Grid:
 
-class pt(__coconut__.collections.namedtuple("pt", "x, y")):
+class pt(_coconut.collections.namedtuple("pt", "x, y")):
     """Cartesian point in the x-y plane. Immutable."""
     __slots__ = ()
     def __abs__(self):
@@ -909,7 +910,7 @@ class pt(__coconut__.collections.namedtuple("pt", "x, y")):
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
-        if (__coconut__.isinstance(_coconut_match_to, pt)) and (__coconut__.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == self.x) and (_coconut_match_to[1] == self.y):
+        if (_coconut.isinstance(_coconut_match_to, pt)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == self.x) and (_coconut_match_to[1] == self.y):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
@@ -918,23 +919,23 @@ class pt(__coconut__.collections.namedtuple("pt", "x, y")):
 
 def vertical_line(x=0, y=0):
     """Infinite iterator of pt representing a vertical line."""
-    return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
 
 def grid(x=0):
     """Infinite iterator of infinite iterators representing cartesian space."""
-    return __coconut__.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
 
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    return (__coconut__.functools.partial(map, __coconut__.functools.partial(map, func)))(gridsample)
+    return (_coconut.functools.partial(map, _coconut.functools.partial(map, func)))(gridsample)
 
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    return (__coconut__.functools.partial(parallel_map, __coconut__.functools.partial(parallel_map, func)))(gridsample)
+    return (_coconut.functools.partial(parallel_map, _coconut.functools.partial(parallel_map, func)))(gridsample)
 
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
-    return (list)((__coconut__.functools.partial(map, lambda l: (list)(__coconut__.igetitem(l, __coconut__.slice(None, ymax)))))(__coconut__.igetitem(gridsample, __coconut__.slice(None, xmax))))
+    return (list)((_coconut.functools.partial(map, lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax)))))(_coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
 
 # Physics function:
 
