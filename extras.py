@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x972a95ca
+# __coconut_hash__ = 0x4ff417b1
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -319,7 +319,7 @@ def main():
     assert parse("def f(x):\n \t pass")
     assert parse("lambda x: x")
     assert parse("u''")
-    assert parse("__coconut__")
+    assert parse("_coconut")
     assert parse("def f(x):\\\n pass")
     assert parse("abc ")
     setup(None, True, False, False, True)
@@ -342,7 +342,7 @@ def main():
     else:
         assert False
     try:
-        parse("__coconut__")
+        parse("_coconut")
     except CoconutException:
         assert True
     else:
