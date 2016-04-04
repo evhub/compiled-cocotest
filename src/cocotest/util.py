@@ -647,7 +647,7 @@ class Nothing(__coconut__.collections.namedtuple("Nothing", "")):
 class Just(__coconut__.collections.namedtuple("Just", "item")):
     __slots__ = ()
     def __call__(self, *args):
-        return (Just)(reduce((lambda x, f: f(x)), args, self.item))
+        return (Just)(reduce(__coconut__.pipe, args, self.item))
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other

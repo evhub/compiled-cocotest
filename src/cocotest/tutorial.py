@@ -290,10 +290,10 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), self.pts, other_pts))
+        return (vector)(*map(__coconut__.minus, self.pts, other_pts))
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(__coconut__.functools.partial(map, (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))))(self.pts))
+        return (vector)(*(__coconut__.functools.partial(map, __coconut__.minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -392,10 +392,10 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), self.pts, other_pts))
+        return (vector)(*map(__coconut__.minus, self.pts, other_pts))
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(__coconut__.functools.partial(map, (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))))(self.pts))
+        return (vector)(*(__coconut__.functools.partial(map, __coconut__.minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -476,10 +476,10 @@ class vector(__coconut__.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map((lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)), self.pts, other_pts))
+        return (vector)(*map(__coconut__.minus, self.pts, other_pts))
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(__coconut__.functools.partial(map, (lambda *args: __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args))))(self.pts))
+        return (vector)(*(__coconut__.functools.partial(map, __coconut__.minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False

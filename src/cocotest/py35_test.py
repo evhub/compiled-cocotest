@@ -94,6 +94,30 @@ class __coconut__(object):
         def __reduce__(self):
             return (self.__class__, (self._start, self._step))
     @staticmethod
+    def pipe(x, f):
+        return f(x)
+    @staticmethod
+    def starpipe(xs, f):
+        return f(*xs)
+    @staticmethod
+    def backpipe(f, x):
+        return f(x)
+    @staticmethod
+    def backstarpipe(f, xs):
+        return f(*xs)
+    @staticmethod
+    def compose(f, g):
+        return lambda *args, **kwargs: f(g(*args, **kwargs))
+    @staticmethod
+    def bool_and(a, b):
+        return a and b
+    @staticmethod
+    def bool_or(a, b):
+        return a or b
+    @staticmethod
+    def minus(*args):
+        return __coconut__.operator.__neg__(*args) if len(args) < 2 else __coconut__.operator.__sub__(*args)
+    @staticmethod
     def igetitem(iterable, index):
         if isinstance(iterable, __coconut__.range) or (__coconut__.hasattr(iterable, "__coconut_is_lazy__") and iterable.__coconut_is_lazy__):
             return iterable[index]
