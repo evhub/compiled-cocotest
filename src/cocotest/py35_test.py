@@ -10,7 +10,7 @@ from __future__ import generator_stop
 import sys as _coconut_sys
 py3_map, py3_zip = map, zip
 
-class __coconut__(object):
+class __coconut__:
     version = "0.3.6-post_dev"
     import collections, functools, imp, itertools, operator, types
     if _coconut_sys.version_info < (3, 3):
