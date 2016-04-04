@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbf351bf1
+# __coconut_hash__ = 0xfcc8c50f
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -27,10 +27,10 @@ def main_test():
     assert "\n" == ('''
 ''') == """
 """
-    assert __coconut__
+    assert _coconut
     assert __coconut_version__
-    assert "__coconut__" in globals()
-    assert "__coconut__" not in locals()
+    assert "_coconut" in globals()
+    assert "_coconut" not in locals()
     x = 5
     assert x == 5
     x == 6
