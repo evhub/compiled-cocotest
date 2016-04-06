@@ -90,7 +90,6 @@ if _coconut_sys.version_info < (3,):
 else:
     py3_map, py3_zip = map, zip
 
-__coconut_version__ = "0.3.6-post_dev"
 class _coconut(object):
     import collections, functools, imp, itertools, operator, types
     if _coconut_sys.version_info < (3, 3):

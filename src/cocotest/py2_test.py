@@ -85,7 +85,6 @@ if _coconut_sys.version_info < (2, 7):
         return (_coconut_new_partial, (self.func, self.args, self.keywords))
     _coconut_copy_reg.pickle(_coconut_functools.partial, _coconut_reduce_partial)
 
-__coconut_version__ = "0.3.6-post_dev"
 class _coconut(object):
     import collections, functools, imp, itertools, operator, types
     abc = collections

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xfcc8c50f
+# __coconut_hash__ = 0x404320d4
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -12,7 +12,6 @@ _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__)
 _coconut_sys.path.insert(0, _coconut_file_path)
 import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
-__coconut_version__ = __coconut__.__coconut_version__
 for name in dir(__coconut__):
     if not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
@@ -28,7 +27,6 @@ def main_test():
 ''') == """
 """
     assert _coconut
-    assert __coconut_version__
     assert "_coconut" in globals()
     assert "_coconut" not in locals()
     x = 5
