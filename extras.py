@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x76850147
+# __coconut_hash__ = 0x772baa8d
 
 # Compiled with Coconut version 0.3.6-post_dev [Odisha]
 
@@ -247,6 +247,7 @@ from coconut.convenience import parse
 from coconut.__coconut__ import consume as coc_consume
 
 def main():
+    assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
     assert version() == version("num")
     assert version("name")
     assert version("spec")
@@ -379,7 +380,14 @@ def main():
     else:
         assert False
     cmd("-v")
-    assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
+    try:
+        parse("f''")
+    except CoconutException:
+        assert True
+    else:
+        assert False
+    setup(target="3.6")
+    assert parse("f''")
     print("<success>")
 
 if __name__ == "__main__":
