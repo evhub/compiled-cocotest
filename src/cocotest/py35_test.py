@@ -23,7 +23,7 @@ class _coconut_MatchError(Exception):
 class _coconut_zip(_coconut.zip):
     __doc__ = _coconut.zip.__doc__
     __slots__ = ("_iters",)
-    __coconut_is_lazy__ = True
+    __coconut_is_lazy__ = True # tells $[] to use .__getitem__
     def __new__(cls, *iterables):
         new_zip = _coconut.zip.__new__(cls, *iterables)
         new_zip._iters = iterables
@@ -44,7 +44,7 @@ class _coconut_zip(_coconut.zip):
 class _coconut_map(_coconut.map):
     __doc__ = _coconut.map.__doc__
     __slots__ = ("_func", "_iters")
-    __coconut_is_lazy__ = True
+    __coconut_is_lazy__ = True # tells $[] to use .__getitem__
     def __new__(cls, function, *iterables):
         new_map = _coconut.map.__new__(cls, function, *iterables)
         new_map._func, new_map._iters = function, iterables
@@ -75,7 +75,7 @@ class _coconut_parallel_map(_coconut_map):
 class _coconut_count:
     """count(start, step) returns an infinite iterator starting at start and increasing by step."""
     __slots__ = ("_start", "_step")
-    __coconut_is_lazy__ = True
+    __coconut_is_lazy__ = True # tells $[] to use .__getitem__
     def __init__(self, start=0, step=1):
         self._start, self._step = start, step
     def __iter__(self):
@@ -129,7 +129,7 @@ def _coconut_bool_or(a, b): return a or b
 def _coconut_minus(*args): return _coconut.operator.__neg__(*args) if len(args) < 2 else _coconut.operator.__sub__(*args)
 def recursive(func):
     """Decorates a function by optimizing it for tail recursion."""
-    state = [True, None] # toplevel, (args, kwargs)
+    state = [True, None] # state = [is_top_level, (args, kwargs)]
     recurse = object()
     @_coconut.functools.wraps(func)
     def tailed_func(*args, **kwargs):
