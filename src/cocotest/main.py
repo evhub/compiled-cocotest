@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x404320d4
+# __coconut_hash__ = 0x35c6c1aa
 
-# Compiled with Coconut version 0.3.6-post_dev [Odisha]
+# Compiled with Coconut version 0.4.1-post_dev [Pinnate]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -389,6 +389,7 @@ def main_test():
     else:
         import collections.abc
     assert isinstance([], collections.abc.Sequence)
+    assert isinstance(range(1), collections.abc.Sequence)
     assert collections.defaultdict(int)[5] == 0
     assert len(range(10)) == 10
     assert (tuple)((reversed)(range(4))) == (3, 2, 1, 0)
@@ -444,6 +445,42 @@ def main_test():
     assert (tuple)((_coconut.functools.partial(map, tuple))(parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)((_coconut.functools.partial(map, _coconut.operator.__add__))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
     assert (tuple)(parallel_map(_coconut.functools.partial(_coconut_compose(_coconut.functools.partial(_coconut.operator.__mul__, 2), _coconut.operator.__add__), 1), range(5))) == (2, 4, 6, 8, 10)
+    assert 0 in range(1)
+    assert range(1).count(0) == 1
+    assert 2 in range(5)
+    assert range(5).count(2) == 1
+    assert 10 not in range(3)
+    assert range(3).count(10) == 0
+    assert 1 in range(1, 2, 3)
+    assert range(1, 2, 3).count(1) == 1
+    assert range(1, 2, 3).index(1) == 0
+    assert range(1, 2, 3)[0] == 1
+    assert range(1, 5, 3).index(4) == 1
+    assert range(1, 5, 3)[1] == 4
+    try:
+        range(1, 2, 3).index(2)
+    except ValueError as err:
+        assert err
+    else:
+        assert False
+    assert 0 in count()
+    assert count().count(0) == 1
+    assert -1 not in count()
+    assert count().count(-1) == 0
+    assert 1 not in count(5)
+    assert count(5).count(1) == 0
+    assert 2 not in count(1, 2)
+    assert count(1, 2).count(2) == 0
+    try:
+        count(1, 2).index(2)
+    except ValueError as err:
+        assert err
+    else:
+        assert False
+    assert count(1, 3).index(1) == 0
+    assert count(1, 3)[0] == 1
+    assert count(1, 3).index(4) == 1
+    assert count(1, 3)[1] == 4
 
 def main(doc):
     """Executes Tests."""
