@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x175d0b3d
+# __coconut_hash__ = 0x4c6f58aa
 
 # Compiled with Coconut version 0.4.1-post_dev [Pinnate]
 
@@ -266,7 +266,12 @@ from coconut.convenience import version
 from coconut.convenience import setup
 from coconut.convenience import parse
 from coconut.__coconut__ import consume as coc_consume
-from coconut.icoconut import kernel
+
+import sys
+if sys.version_info >= (3, 3) or (sys.version_info < (3,) and sys.version_info >= (2, 7)):
+    from coconut.icoconut import kernel
+else:
+    kernel = None
 
 def main():
     assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
@@ -411,23 +416,24 @@ def main():
         assert False
     setup(target="3.6")
     assert parse("f''")
-    k = kernel()
-    exec_result = k.do_execute("abcdefghi = True", False, True, {"two": "1+1"}, True)
-    assert exec_result["status"] == "ok"
-    assert exec_result["user_expressions"]["two"] == 2
-    assert k.do_is_complete("if abc:")["status"] == "incomplete"
-    assert k.do_is_complete("f(")["status"] == "incomplete"
-    assert k.do_is_complete("abc")["status"] == "complete"
-    inspect_result = k.do_inspect("abcdefghi", 4, 0)
-    assert inspect_result["status"] == "ok"
-    assert inspect_result["found"]
-    assert inspect_result["data"]["text/plain"]
-    complete_result = k.do_complete("abc", 1)
-    assert complete_result["status"] == "ok"
-    assert complete_result["matches"] == ["abcdefghi"]
-    assert complete_result["cursor_start"] == 0
-    assert complete_result["cursor_end"] == 3
-    assert not complete_result["metadata"]
+    if kernel is not None:
+        k = kernel()
+        exec_result = k.do_execute("abcdefghi = True", False, True, {"two": "1+1"}, True)
+        assert exec_result["status"] == "ok"
+        assert exec_result["user_expressions"]["two"] == 2
+        assert k.do_is_complete("if abc:")["status"] == "incomplete"
+        assert k.do_is_complete("f(")["status"] == "incomplete"
+        assert k.do_is_complete("abc")["status"] == "complete"
+        inspect_result = k.do_inspect("abcdefghi", 4, 0)
+        assert inspect_result["status"] == "ok"
+        assert inspect_result["found"]
+        assert inspect_result["data"]["text/plain"]
+        complete_result = k.do_complete("abc", 1)
+        assert complete_result["status"] == "ok"
+        assert complete_result["matches"] == ["abcdefghi"]
+        assert complete_result["cursor_start"] == 0
+        assert complete_result["cursor_end"] == 3
+        assert not complete_result["metadata"]
     print("<success>")
 
 if __name__ == "__main__":
