@@ -83,10 +83,10 @@ def input(*args, **kwargs):
         return _coconut_raw_input(*args, **kwargs).decode()
 print.__doc__, input.__doc__ = _coconut_print.__doc__, _coconut_raw_input.__doc__
 def raw_input(*args):
-    """Raises NameError."""
+    """Coconut uses Python 3 "input" instead of Python 2 "raw_input"."""
     raise _coconut.NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
 def xrange(*args):
-    """Raises NameError."""
+    """Coconut uses Python 3 "range" instead of Python 2 "xrange"."""
     raise _coconut.NameError('Coconut uses Python 3 "range" instead of Python 2 "xrange"')
 if _coconut_sys.version_info < (2, 7):
     import functools as _coconut_functools, copy_reg as _coconut_copy_reg
@@ -120,7 +120,7 @@ class _coconut_zip(_coconut.zip):
     def __reversed__(self):
         return self.__class__(*(_coconut.reversed(i) for i in self._iters))
     def __len__(self):
-        return _coconut.min(*(_coconut.len(i) for i in self._iters))
+        return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "zip(" + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
     def __reduce_ex__(self, _):
@@ -141,7 +141,7 @@ class _coconut_map(_coconut.map):
     def __reversed__(self):
         return self.__class__(self._func, *(_coconut.reversed(i) for i in self._iters))
     def __len__(self):
-        return _coconut.min(*(_coconut.len(i) for i in self._iters))
+        return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "map(" + _coconut.repr(self._func) + ", " + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
     def __reduce_ex__(self, _):

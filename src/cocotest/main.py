@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x35c6c1aa
+# __coconut_hash__ = 0x527d00ab
 
 # Compiled with Coconut version 0.4.1-post_dev [Pinnate]
 
@@ -481,6 +481,7 @@ def main_test():
     assert count(1, 3)[0] == 1
     assert count(1, 3).index(4) == 1
     assert count(1, 3)[1] == 4
+    assert (len)(map(lambda x: x, [1, 2])) == 2
 
 def main(doc):
     """Executes Tests."""
