@@ -1,15 +1,15 @@
 cp -r ../cocotest/src/* ./src
-coconut ./src/cocotest/py2_test.coc -t2 -s
-rm ./src/cocotest/py2_test.coc
-coconut ./src/cocotest/py3_test.coc -t3 -s
-rm ./src/cocotest/py3_test.coc
-coconut ./src/cocotest/py35_test.coc -t35 -s
-rm ./src/cocotest/py35_test.coc
-cp ../cocotest/extras.coc .
-coconut ./extras.coc -s
+coconut ./src/cocotest/py2_test.coco -t2 -s
+rm ./src/cocotest/py2_test.coco
+coconut ./src/cocotest/py3_test.coco -t3 -s
+rm ./src/cocotest/py3_test.coco
+coconut ./src/cocotest/py35_test.coco -t35 -s
+rm ./src/cocotest/py35_test.coco
+cp ../cocotest/extras.coco .
+coconut ./extras.coco -s
 coconut ./src -s
-rm *.coc
-rm ./src/*.coc
-rm ./src/cocotest/*.coc
+rm *.coco
+rm ./src/*.coco
+rm ./src/cocotest/*.coco
 cp -r ./src/* ../cocotest/src
 PAUSE
