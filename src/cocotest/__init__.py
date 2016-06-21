@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbb92cebe
+# __coconut_hash__ = 0xb850d9f
 
-# Compiled with Coconut version 0.4.1-post_dev [Pinnate]
+# Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
 """
 Author: Evan Hubinger

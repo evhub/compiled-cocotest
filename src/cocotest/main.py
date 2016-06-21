@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x527d00ab
+# __coconut_hash__ = 0x91a7fb1b
 
-# Compiled with Coconut version 0.4.1-post_dev [Pinnate]
+# Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -482,6 +482,7 @@ def main_test():
     assert count(1, 3).index(4) == 1
     assert count(1, 3)[1] == 4
     assert (len)(map(lambda x: x, [1, 2])) == 2
+    assert repr("hello") == "'hello'" == ascii("hello")
 
 def main(doc):
     """Executes Tests."""

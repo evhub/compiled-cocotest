@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# Compiled with Coconut version 0.4.1-post_dev [Pinnate]
+# Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
 """Built-in Coconut utilities."""
 
@@ -12,7 +12,7 @@ import sys as _coconut_sys
 if _coconut_sys.version_info < (3,):
     import os as _coconut_os
     py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip = chr, filter, hex, input, int, map, oct, open, print, range, raw_input, str, xrange, zip
-    _coconut_int, _coconut_long, _coconut_print, _coconut_raw_input, _coconut_str, _coconut_unicode, _coconut_xrange = int, long, print, raw_input, str, unicode, xrange
+    _coconut_int, _coconut_long, _coconut_print, _coconut_raw_input, _coconut_str, _coconut_unicode, _coconut_xrange, _coconut_repr = int, long, print, raw_input, str, unicode, xrange, repr
     from future_builtins import *
     chr, str = unichr, unicode
     from io import open
@@ -84,7 +84,13 @@ if _coconut_sys.version_info < (3,):
             return _coconut_raw_input(*args, **kwargs).decode(_coconut_sys.stdout.encoding)
         else:
             return _coconut_raw_input(*args, **kwargs).decode()
-    print.__doc__, input.__doc__ = _coconut_print.__doc__, _coconut_raw_input.__doc__
+    def repr(obj):
+        if isinstance(obj, _coconut_unicode):
+            return _coconut_repr(obj)[1:]
+        else:
+            return _coconut_repr(obj)
+    ascii = repr
+    print.__doc__, input.__doc__, repr.__doc__ = _coconut_print.__doc__, _coconut_raw_input.__doc__, _coconut_repr.__doc__
     def raw_input(*args):
         """Coconut uses Python 3 "input" instead of Python 2 "raw_input"."""
         raise _coconut.NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
@@ -108,7 +114,8 @@ class _coconut(object):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, repr, reversed, set, slice, super, tuple = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, repr, reversed, set, slice, super, tuple
+    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, staticmethod(repr)
+
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
     __slots__ = ("pattern", "value")
