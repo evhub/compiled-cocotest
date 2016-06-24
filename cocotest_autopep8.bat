@@ -11,5 +11,6 @@ coconut ./src -s --autopep8
 rm *.coco
 rm ./src/*.coco
 rm ./src/cocotest/*.coco
+rm ./src/cocotest/*.coc
 cp -r ./src/* ../cocotest/src
 PAUSE
