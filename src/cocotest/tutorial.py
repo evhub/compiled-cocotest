@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x84cafe1e
+# __coconut_hash__ = 0xedb90d25
 
 # Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
@@ -195,8 +195,126 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
+def factorial (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def factorial(0):'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return 1
+
+@addpattern(factorial)
+def factorial (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+        n = _coconut_match_to[0]
+        if (n > 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def factorial(n is int if n > 0):'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    """Compute n! where n is an integer >= 0."""
+    return (_coconut.functools.partial(reduce, _coconut.operator.__mul__))(range(1, n + 1))
+
+# Test cases:
+try:
+    (factorial)(-1)
+except MatchError:
+    assert True
+else:
+    assert False
+try:
+    (factorial)(0.5)
+except MatchError:
+    assert True
+else:
+    assert False
+assert (factorial)(0) == 1
+assert (factorial)(3) == 6
+
+def factorial (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def factorial(0) = 1'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return 1
+
+
+@addpattern(factorial)
+def factorial (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+        n = _coconut_match_to[0]
+        if (n > 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def factorial(n is int if n > 0):'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    """Compute n! where n is an integer >= 0."""
+    return n * factorial(n - 1)
+
+# Test cases:
+try:
+    (factorial)(-1)
+except MatchError:
+    assert True
+else:
+    assert False
+try:
+    (factorial)(0.5)
+except MatchError:
+    assert True
+else:
+    assert False
+assert (factorial)(0) == 1
+assert (factorial)(3) == 6
+
+def quick_sort (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 0):
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def quick_sort([]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def quick_sort([]):'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return []
+
+@addpattern(quick_sort)
+def quick_sort (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+        tail = _coconut.list(_coconut_match_to[0][1:])
+        head = _coconut_match_to[0][0]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def quick_sort([head] + tail):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def quick_sort([head] + tail):'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    """Sort the input sequence using the quick sort algorithm."""
+    return (quick_sort([x for x in tail if x < head]) + [head] + quick_sort([x for x in tail if x >= head]))
+
+# Test cases:
+assert (quick_sort)([]) == []
+assert (quick_sort)([3]) == [3]
+assert (quick_sort)([0, 1, 2, 3, 4]) == [0, 1, 2, 3, 4]
+assert (quick_sort)([4, 3, 2, 1, 0]) == [0, 1, 2, 3, 4]
+assert (quick_sort)([3, 0, 4, 2, 1]) == [0, 1, 2, 3, 4]
+
 def quick_sort(l):
-    """Return a sorted iterator of l, using the quick sort algorithm, and without using any data until necessary."""
+    """Sort the input iterator, using the quick sort algorithm, and without using any data until necessary."""
     _coconut_match_check = False
     _coconut_match_to = l
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):

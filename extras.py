@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x9c02813b
+# __coconut_hash__ = 0xab6b6885
 
 # Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
@@ -239,7 +239,7 @@ def recursive(func):
     state = [True, None] # state = [is_top_level, (args, kwargs)]
     recurse = object()
     @_coconut.functools.wraps(func)
-    def tailed_func(*args, **kwargs):
+    def recursive_func(*args, **kwargs):
         """Tail Recursion Wrapper."""
         if state[0]:
             state[0] = False
@@ -256,7 +256,29 @@ def recursive(func):
         else:
             state[1] = args, kwargs
             return recurse
-    return tailed_func
+    return recursive_func
+def addpattern(base_func):
+    """Decorator to add a new case to a pattern-matching function, where the new case is checked last."""
+    def pattern_adder(func):
+        @_coconut.functools.wraps(func)
+        def add_pattern_func(*args, **kwargs):
+            try:
+                return base_func(*args, **kwargs)
+            except _coconut_MatchError:
+                return func(*args, **kwargs)
+        return add_pattern_func
+    return pattern_adder
+def prepattern(base_func):
+    """Decorator to add a new case to a pattern-matching function, where the new case is checked first."""
+    def pattern_prepender(func):
+        @_coconut.functools.wraps(func)
+        def pre_pattern_func(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except _coconut_MatchError:
+                return base_func(*args, **kwargs)
+        return pre_pattern_func
+    return pattern_prepender
 def datamaker(data_type):
     """Returns base data constructor of passed data type."""
     return _coconut.functools.partial(_coconut.super(data_type, data_type).__new__, data_type)
@@ -276,9 +298,9 @@ from coconut.__coconut__ import consume as coc_consume
 
 import sys
 if sys.version_info >= (3, 3) or (sys.version_info < (3,) and sys.version_info >= (2, 7)):
-    from coconut.icoconut import kernel
+    from coconut.icoconut import CoconutKernel
 else:
-    kernel = None
+    CoconutKernel = None
 
 def main():
     assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
@@ -423,8 +445,8 @@ def main():
         assert False
     setup(target="3.6")
     assert parse("f''")
-    if kernel is not None:
-        k = kernel()
+    if CoconutKernel is not None:
+        k = CoconutKernel()
         exec_result = k.do_execute("abcdefghi = True", False, True, {"two": "1+1"}, True)
         assert exec_result["status"] == "ok"
         assert exec_result["user_expressions"]["two"] == 2

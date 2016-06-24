@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xeabc41bc
+# __coconut_hash__ = 0x992712ee
 
 # Compiled with Coconut version 1.0.0-post_dev [Albatross]
 
@@ -945,3 +945,99 @@ def SHOPeriodTerminate(X, t, params):
     if abs(X[1]) < epsilon and X[0] < 0:
         return 1 # we're done
     return 0 # keep going
+
+# Multiple dispatch:
+
+def add_int_or_str_1 (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+        x = _coconut_match_to[0]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def add_int_or_str_1(x is int) = x + 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def add_int_or_str_1(x is int) = x + 1'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return x + 1
+
+@addpattern(add_int_or_str_1)
+def add_int_or_str_1 (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], str)):
+        x = _coconut_match_to[0]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def add_int_or_str_1(x is str) = x + "1"\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def add_int_or_str_1(x is str) = x + "1"'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return x + "1"
+
+
+def coercive_add (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)):
+        a = _coconut_match_to[0]
+        b = _coconut_match_to[1]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is int, b) = a + int(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def coercive_add(a is int, b) = a + int(b)'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return a + int(b)
+
+@addpattern(coercive_add)
+def coercive_add (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)):
+        a = _coconut_match_to[0]
+        b = _coconut_match_to[1]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is str, b) = a + str(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def coercive_add(a is str, b) = a + str(b)'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return a + str(b)
+
+
+@addpattern(ident)
+def still_ident(x): return "foo"
+
+@prepattern(ident)
+def not_ident(x): return "bar"
+
+# Pattern-matching functions with guards
+
+def pattern_abs (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
+        x = _coconut_match_to[0]
+        if (x < 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def pattern_abs(x if x < 0) = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def pattern_abs(x if x < 0) = -x'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return -x
+
+@addpattern(pattern_abs)
+def pattern_abs(x): return x
+
+def pattern_abs_ (*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
+        x = _coconut_match_to[0]
+        if (x < 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def `pattern_abs_` (x) if x < 0 = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def `pattern_abs_` (x) if x < 0 = -x'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return -x
+
+@addpattern(pattern_abs_)
+def pattern_abs_(x): return x
