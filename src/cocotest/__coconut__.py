@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# Compiled with Coconut version 1.0.0-post_dev [Albatross]
+# Compiled with Coconut version 1.1.0-post_dev [Brontosaurus]
 
 """Built-in Coconut utilities."""
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa432ea99
+# __coconut_hash__ = 0x5e47cef2
 
-# Compiled with Coconut version 1.0.0-post_dev [Albatross]
+# Compiled with Coconut version 1.1.0-post_dev [Brontosaurus]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -489,3 +489,5 @@ def main_test():
     assert pattern_abs(4) == 4 == pattern_abs_(4)
     assert pattern_abs(0) == 0 == pattern_abs_(0)
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
+    assert (_coconut.operator.methodcaller("index", 1))(count(1, 3)) == 0
+    assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
