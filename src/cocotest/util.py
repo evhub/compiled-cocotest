@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x2a32d57f
+# __coconut_hash__ = 0x96a59458
 
-# Compiled with Coconut version 1.1.0-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -27,15 +27,15 @@ def rand_list(n):
     return [random.randrange(10) for x in range(0, n)]
 
 # Infix Functions:
-plus = _coconut.operator.__add__
-mod = _coconut.operator.__mod__
+plus = _coconut.operator.add
+mod = _coconut.operator.mod
 def mod_(a, b): return a % b
 base = int
 def join_with(a, b=""):
     return b.join(a)
 
 # Basic Functions:
-prod = _coconut.functools.partial(reduce, _coconut.operator.__mul__)
+prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
 def zipwith(f, *args): return map(lambda items: f(*items), zip(*args))
 zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
 plus1 = _coconut.functools.partial(plus, 1)
@@ -54,7 +54,7 @@ clean = lambda s: s.strip()
 add2 = lambda x: lambda y: x + y
 def swap2(f): return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
-def same(iter1, iter2): return map(_coconut.operator.__eq__, iter1, iter2)
+def same(iter1, iter2): return map(_coconut.operator.eq, iter1, iter2)
 def chain2(a, b):
     _coconut_yield_from = a
     for _coconut_yield_item in _coconut_yield_from:
@@ -66,8 +66,8 @@ def chain2(a, b):
 
 
 # Partial Applications:
-sum_ = _coconut.functools.partial(reduce, _coconut.operator.__add__)
-add = _coconut.functools.partial(zipwith, _coconut.operator.__add__)
+sum_ = _coconut.functools.partial(reduce, _coconut.operator.add)
+add = _coconut.functools.partial(zipwith, _coconut.operator.add)
 
 # Quick-Sorts:
 def qsort1(l):
@@ -745,7 +745,7 @@ def dictpoint_(value):
     return x, y
 def dictpoint__ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["y"], int)):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["y"], int)):
         x = _coconut_match_to[0]["x"]
         y = _coconut_match_to[0]["y"]
         _coconut_match_check = True
@@ -768,7 +768,7 @@ def dectest(x): return x
 # Match Function Definition:
 def last_two_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 2):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 2):
         _ = _coconut.list(_coconut_match_to[0][:-2])
         a = _coconut_match_to[0][-2]
         b = _coconut_match_to[0][-1]
@@ -781,7 +781,7 @@ def last_two_ (*_coconut_match_to):
     return a, b
 def htsplit (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
         tail = _coconut.list(_coconut_match_to[0][1:])
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
@@ -794,7 +794,7 @@ def htsplit (*_coconut_match_to):
 
 def htsplit_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
         tail = _coconut.list(_coconut_match_to[0][1:])
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
@@ -807,7 +807,7 @@ def htsplit_ (*_coconut_match_to):
 
 def iadd (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
@@ -820,7 +820,7 @@ def iadd (*_coconut_match_to):
 
 def iadd_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
@@ -833,7 +833,7 @@ def iadd_ (*_coconut_match_to):
 
 def strmul (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True
@@ -845,7 +845,7 @@ def strmul (*_coconut_match_to):
     return a * x
 def strmul_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
         a = _coconut_match_to[0]
         x = _coconut_match_to[1]
         _coconut_match_check = True
@@ -950,7 +950,7 @@ def SHOPeriodTerminate(X, t, params):
 
 def add_int_or_str_1 (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
         x = _coconut_match_to[0]
         _coconut_match_check = True
     if not _coconut_match_check:
@@ -963,7 +963,7 @@ def add_int_or_str_1 (*_coconut_match_to):
 @addpattern(add_int_or_str_1)
 def add_int_or_str_1 (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], str)):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], str)):
         x = _coconut_match_to[0]
         _coconut_match_check = True
     if not _coconut_match_check:
@@ -976,7 +976,7 @@ def add_int_or_str_1 (*_coconut_match_to):
 
 def coercive_add (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)):
         a = _coconut_match_to[0]
         b = _coconut_match_to[1]
         _coconut_match_check = True
@@ -990,7 +990,7 @@ def coercive_add (*_coconut_match_to):
 @addpattern(coercive_add)
 def coercive_add (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)):
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)):
         a = _coconut_match_to[0]
         b = _coconut_match_to[1]
         _coconut_match_check = True
@@ -1012,7 +1012,7 @@ def not_ident(x): return "bar"
 
 def pattern_abs (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
+    if (_coconut.len(_coconut_match_to) == 1):
         x = _coconut_match_to[0]
         if (x < 0):
             _coconut_match_check = True
@@ -1028,7 +1028,7 @@ def pattern_abs(x): return x
 
 def pattern_abs_ (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1):
+    if (_coconut.len(_coconut_match_to) == 1):
         x = _coconut_match_to[0]
         if (x < 0):
             _coconut_match_check = True
@@ -1041,3 +1041,8 @@ def pattern_abs_ (*_coconut_match_to):
 
 @addpattern(pattern_abs_)
 def pattern_abs_(x): return x
+
+# Recursive iterator
+
+@recursive_iterator
+def fib(): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))

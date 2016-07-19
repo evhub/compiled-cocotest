@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x643a3bc
+# __coconut_hash__ = 0xa62919ad
 
-# Compiled with Coconut version 1.1.0-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -175,7 +175,7 @@ def factorial(n):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
-            return (_coconut.functools.partial(reduce, _coconut.operator.__mul__))(range(1, n + 1))
+            return (_coconut.functools.partial(reduce, _coconut.operator.mul))(range(1, n + 1))
     if not _coconut_match_check:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
@@ -197,7 +197,7 @@ assert (factorial)(3) == 6
 
 def factorial (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
         _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -209,7 +209,7 @@ def factorial (*_coconut_match_to):
 @addpattern(factorial)
 def factorial (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
         n = _coconut_match_to[0]
         if (n > 0):
             _coconut_match_check = True
@@ -219,7 +219,7 @@ def factorial (*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     """Compute n! where n is an integer >= 0."""
-    return (_coconut.functools.partial(reduce, _coconut.operator.__mul__))(range(1, n + 1))
+    return (_coconut.functools.partial(reduce, _coconut.operator.mul))(range(1, n + 1))
 
 # Test cases:
 try:
@@ -239,7 +239,7 @@ assert (factorial)(3) == 6
 
 def factorial (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
         _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -252,7 +252,7 @@ def factorial (*_coconut_match_to):
 @addpattern(factorial)
 def factorial (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
         n = _coconut_match_to[0]
         if (n > 0):
             _coconut_match_check = True
@@ -282,7 +282,7 @@ assert (factorial)(3) == 6
 
 def quick_sort (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 0):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 0):
         _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def quick_sort([]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -294,7 +294,7 @@ def quick_sort (*_coconut_match_to):
 @addpattern(quick_sort)
 def quick_sort (*_coconut_match_to):
     _coconut_match_check = False
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
         tail = _coconut.list(_coconut_match_to[0][1:])
         head = _coconut_match_to[0][0]
         _coconut_match_check = True
@@ -394,7 +394,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.__add__, self.pts, other_pts))
+        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -431,9 +431,9 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
-            return (sum)(map(_coconut.operator.__mul__, self.pts, other_pts)) # dot product
+            return (sum)(map(_coconut.operator.mul, self.pts, other_pts)) # dot product
         else:
-            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.__mul__, other)))(self.pts)) # scalar multiplication
+            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts)) # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -496,7 +496,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.__add__, self.pts, other_pts))
+        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -533,9 +533,9 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
-            return (sum)(map(_coconut.operator.__mul__, self.pts, other_pts)) # dot product
+            return (sum)(map(_coconut.operator.mul, self.pts, other_pts)) # dot product
         else:
-            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.__mul__, other)))(self.pts)) # scalar multiplication
+            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts)) # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -580,7 +580,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.__add__, self.pts, other_pts))
+        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -617,9 +617,9 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
-            return (sum)(map(_coconut.operator.__mul__, self.pts, other_pts)) # dot product
+            return (sum)(map(_coconut.operator.mul, self.pts, other_pts)) # dot product
         else:
-            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.__mul__, other)))(self.pts)) # scalar multiplication
+            return (vector)(*(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts)) # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -628,7 +628,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     def unit(self): return self / abs(self)
     def angle (*_coconut_match_to):
         _coconut_match_check = False
-        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[1], vector)):
+        if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[1], vector)):
             self = _coconut_match_to[0]
             other = _coconut_match_to[1]
             _coconut_match_check = True

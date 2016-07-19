@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x3a2d5160
+# __coconut_hash__ = 0xbb08d0bb
 
-# Compiled with Coconut version 1.1.0-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
 """
 Author: Evan Hubinger
