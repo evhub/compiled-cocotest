@@ -127,6 +127,11 @@ def _coconut_igetitem(iterable, index):
             return _coconut.collections.deque(iterable, maxlen=-index)[0]
         else:
             return _coconut.next(_coconut.itertools.islice(iterable, index, index + 1))
+    elif index.start is not None and index.start < 0 and (index.stop is None or index.stop < 0) and index.step is None:
+        queue = _coconut.collections.deque(iterable, maxlen=-index.start)
+        if index.stop is not None:
+            queue = _coconut.tuple(queue)[:index.stop - index.start]
+        return queue
     elif (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0) or (index.step is not None and index.step < 0):
         return _coconut.tuple(iterable)[index]
     else:
@@ -235,7 +240,7 @@ class parallel_map(_coconut_map):
     def __iter__(self):
         from concurrent.futures import ProcessPoolExecutor
         with ProcessPoolExecutor() as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "parallel_" + _coconut_map.__repr__(self)
 class concurrent_map(_coconut_map):
@@ -245,7 +250,7 @@ class concurrent_map(_coconut_map):
         from concurrent.futures import ThreadPoolExecutor
         from multiprocessing import cpu_count  # cpu_count() * 5 is the default Python 3 thread count
         with ThreadPoolExecutor(cpu_count() * 5) as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "concurrent_" + _coconut_map.__repr__(self)
 def recursive(func):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8029814d
+# __coconut_hash__ = 0x7cbf57d5
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -29,6 +29,11 @@ def _coconut_igetitem(iterable, index):
             return _coconut.collections.deque(iterable, maxlen=-index)[0]
         else:
             return _coconut.next(_coconut.itertools.islice(iterable, index, index + 1))
+    elif index.start is not None and index.start < 0 and (index.stop is None or index.stop < 0) and index.step is None:
+        queue = _coconut.collections.deque(iterable, maxlen=-index.start)
+        if index.stop is not None:
+            queue = _coconut.tuple(queue)[:index.stop - index.start]
+        return queue
     elif (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0) or (index.step is not None and index.step < 0):
         return _coconut.tuple(iterable)[index]
     else:
@@ -137,7 +142,7 @@ class parallel_map(_coconut_map):
     def __iter__(self):
         from concurrent.futures import ProcessPoolExecutor
         with ProcessPoolExecutor() as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "parallel_" + _coconut_map.__repr__(self)
 class concurrent_map(_coconut_map):
@@ -146,7 +151,7 @@ class concurrent_map(_coconut_map):
     def __iter__(self):
         from concurrent.futures import ThreadPoolExecutor
         with ThreadPoolExecutor() as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "concurrent_" + _coconut_map.__repr__(self)
 def recursive(func):
@@ -276,4 +281,4 @@ def py35_test():
     else:
         assert False
     assert (1, *(2, 3), 4) == (1, 2, 3, 4)
-    assert {"a": 1, **{"b": 2}, "c": 3}["b"] == {"a": 1, "b": 2, "c": 3}
+    assert {"a": 1, **{"b": 2}, "c": 3} == {"a": 1, "b": 2, "c": 3}

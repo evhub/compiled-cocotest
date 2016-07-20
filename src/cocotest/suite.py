@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x69acd0c2
+# __coconut_hash__ = 0x7c394365
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -227,5 +227,5 @@ def main_test():
         return vars["_coconut_lambda_func"]
     assert (_coconut_lambda_0(_coconut.locals()))()(5, 3) == 2
     test = {}
-    exec("b = 5 `mod` 3", globals(), test)
+    exec("b = mod(5, 3)", globals(), test)
     assert test["b"] == 2

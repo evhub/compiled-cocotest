@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb0d7986
+# __coconut_hash__ = 0x45264357
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -28,6 +28,11 @@ def _coconut_igetitem(iterable, index):
             return _coconut.collections.deque(iterable, maxlen=-index)[0]
         else:
             return _coconut.next(_coconut.itertools.islice(iterable, index, index + 1))
+    elif index.start is not None and index.start < 0 and (index.stop is None or index.stop < 0) and index.step is None:
+        queue = _coconut.collections.deque(iterable, maxlen=-index.start)
+        if index.stop is not None:
+            queue = _coconut.tuple(queue)[:index.stop - index.start]
+        return queue
     elif (index.start is not None and index.start < 0) or (index.stop is not None and index.stop < 0) or (index.step is not None and index.step < 0):
         return _coconut.tuple(iterable)[index]
     else:
@@ -136,7 +141,7 @@ class parallel_map(_coconut_map):
     def __iter__(self):
         from concurrent.futures import ProcessPoolExecutor
         with ProcessPoolExecutor() as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "parallel_" + _coconut_map.__repr__(self)
 class concurrent_map(_coconut_map):
@@ -146,7 +151,7 @@ class concurrent_map(_coconut_map):
         from concurrent.futures import ThreadPoolExecutor
         from multiprocessing import cpu_count  # cpu_count() * 5 is the default Python 3 thread count
         with ThreadPoolExecutor(cpu_count() * 5) as executor:
-            return _coconut.tuple(executor.map(self._func, *self._iters))
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "concurrent_" + _coconut_map.__repr__(self)
 def recursive(func):
@@ -245,12 +250,7 @@ def py3_test():
     assert (tuple)(py3_zip(range(3), range(3))) == ((0, 0), (1, 1), (2, 2))
     class B(*()): pass
     assert isinstance(B(), B)
-    def _coconut_lambda_0(closure):
-        vars = _coconut.globals().copy()
-        vars.update(closure)
-        exec('def _coconut_lambda_func(_=None):\n    return x', vars)
-        return vars["_coconut_lambda_func"]
-    assert (list)((_coconut.functools.partial(map, lambda _=None: _()))(((_coconut_lambda_0(_coconut.locals())) for x in range(5)))) == [0, 1, 2, 3, 4]
     e = exec
-    e("a=1")
-    assert a == 1
+    test = {}
+    e("a=1", test)
+    assert test["a"] == 1
