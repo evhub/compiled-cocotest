@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x42cae892
+# __coconut_hash__ = 0x6d20428d
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -20,6 +20,11 @@ for name in dir(__coconut__):
 
 def non_py26_test():
     """Tests for any non-py26 version."""
+    test = {}
+    exec("a = 1", test)
+    assert test["a"] == 1
+    exec("a = 2", globals(), test)
+    assert test["a"] == 2
     def _coconut_lambda_0(closure):
         vars = _coconut.globals().copy()
         vars.update(closure)

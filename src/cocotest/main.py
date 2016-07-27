@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x6b97d21d
+# __coconut_hash__ = 0x8e6626c5
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -307,11 +307,6 @@ def basic_test():
     assert (all)((_coconut.functools.partial(map, lambda t: isinstance(t, list)))(tee([1, 2, 3])))
     assert (lambda _=None: 5)() == 5
     assert (lambda _=None: _[0])([1, 2, 3]) == 1
-    test = {}
-    exec("a = 1", test)
-    assert test["a"] == 1
-    exec("a = 2", globals(), test)
-    assert test["a"] == 2
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-5, -8))) == [5, 6]
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9]
 
