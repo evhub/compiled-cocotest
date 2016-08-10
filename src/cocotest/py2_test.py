@@ -15,7 +15,8 @@ chr, str = unichr, unicode
 from io import open
 class range(object):
     __slots__ = ("_xrange",)
-    __doc__ = _coconut_xrange.__doc__
+    if hasattr(_coconut_xrange, "__doc__"):
+        __doc__ = _coconut_xrange.__doc__
     def __init__(self, *args):
         self._xrange = _coconut_xrange(*args)
     def __iter__(self):
@@ -60,35 +61,40 @@ from collections import Sequence as _coconut_Sequence
 _coconut_Sequence.register(range)
 class int(_coconut_int):
     __slots__ = ()
-    __doc__ = _coconut_int.__doc__
+    if hasattr(_coconut_int, "__doc__"):
+        __doc__ = _coconut_int.__doc__
     class __metaclass__(type):
         def __instancecheck__(cls, inst):
             return _coconut.isinstance(inst, (_coconut_int, _coconut_long))
 class bytes(_coconut_str):
     __slots__ = ()
-    __doc__ = _coconut_str.__doc__
+    if hasattr(_coconut_str, "__doc__"):
+        __doc__ = _coconut_str.__doc__
     class __metaclass__(type):
         def __instancecheck__(cls, inst):
             return _coconut.isinstance(inst, _coconut_str)
     def __new__(cls, *args, **kwargs):
         return _coconut_str.__new__(cls, _coconut.bytearray(*args, **kwargs))
+from functools import wraps as _coconut_wraps
+@_coconut_wraps(_coconut_print)
 def print(*args, **kwargs):
     if _coconut.hasattr(_coconut_sys.stdout, "encoding") and _coconut_sys.stdout.encoding is not None:
         return _coconut_print(*(_coconut_unicode(x).encode(_coconut_sys.stdout.encoding) for x in args), **kwargs)
     else:
         return _coconut_print(*(_coconut_unicode(x).encode() for x in args), **kwargs)
+@_coconut_wraps(_coconut_raw_input)
 def input(*args, **kwargs):
     if _coconut.hasattr(_coconut_sys.stdout, "encoding") and _coconut_sys.stdout.encoding is not None:
         return _coconut_raw_input(*args, **kwargs).decode(_coconut_sys.stdout.encoding)
     else:
         return _coconut_raw_input(*args, **kwargs).decode()
+@_coconut_wraps(_coconut_repr)
 def repr(obj):
     if isinstance(obj, _coconut_unicode):
         return _coconut_repr(obj)[1:]
     else:
         return _coconut_repr(obj)
 ascii = repr
-print.__doc__, input.__doc__, repr.__doc__ = _coconut_print.__doc__, _coconut_raw_input.__doc__, _coconut_repr.__doc__
 def raw_input(*args):
     """Coconut uses Python 3 "input" instead of Python 2 "raw_input"."""
     raise _coconut.NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
@@ -107,7 +113,7 @@ if _coconut_sys.version_info < (2, 7):
 class _coconut(object):
     import collections, functools, imp, itertools, operator, types, copy
     abc = collections
-    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, globals, hasattr, isinstance, iter, len, list, locals, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, globals, hasattr, isinstance, iter, len, list, locals, min, next, object, range, reversed, set, slice, super, tuple, staticmethod(repr)
+    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, staticmethod(repr)
 
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
@@ -154,7 +160,8 @@ def _coconut_tee(iterable, n=2):
         return _coconut.itertools.tee(iterable, n)
 class _coconut_map(_coconut.map):
     __slots__ = ("_func", "_iters")
-    __doc__ = _coconut.map.__doc__
+    if hasattr(_coconut.map, "__doc__"):
+        __doc__ = _coconut.map.__doc__
     def __new__(cls, function, *iterables):
         new_map = _coconut.map.__new__(cls, function, *iterables)
         new_map._func, new_map._iters = function, iterables
@@ -176,7 +183,8 @@ class _coconut_map(_coconut.map):
         return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
 class zip(_coconut.zip):
     __slots__ = ("_iters",)
-    __doc__ = _coconut.zip.__doc__
+    if hasattr(_coconut.zip, "__doc__"):
+        __doc__ = _coconut.zip.__doc__
     def __new__(cls, *iterables):
         new_zip = _coconut.zip.__new__(cls, *iterables)
         new_zip._iters = iterables
@@ -185,7 +193,7 @@ class zip(_coconut.zip):
         if _coconut.isinstance(index, _coconut.slice):
             return self.__class__(*(_coconut_igetitem(i, index) for i in self._iters))
         else:
-            return (_coconut_igetitem(i, index) for i in self._iters)
+            return _coconut.tuple(_coconut_igetitem(i, index) for i in self._iters)
     def __reversed__(self):
         return self.__class__(*(_coconut.reversed(i) for i in self._iters))
     def __len__(self):

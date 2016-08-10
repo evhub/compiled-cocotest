@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x45264357
+# __coconut_hash__ = 0xa3c017d
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -15,7 +15,7 @@ class _coconut:
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, globals, hasattr, isinstance, iter, len, list, locals, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, globals, hasattr, isinstance, iter, len, list, locals, min, next, object, range, reversed, set, slice, super, tuple, repr
+    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr
 
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
@@ -62,7 +62,8 @@ def _coconut_tee(iterable, n=2):
         return _coconut.itertools.tee(iterable, n)
 class _coconut_map(_coconut.map):
     __slots__ = ("_func", "_iters")
-    __doc__ = _coconut.map.__doc__
+    if hasattr(_coconut.map, "__doc__"):
+        __doc__ = _coconut.map.__doc__
     def __new__(cls, function, *iterables):
         new_map = _coconut.map.__new__(cls, function, *iterables)
         new_map._func, new_map._iters = function, iterables
@@ -84,7 +85,8 @@ class _coconut_map(_coconut.map):
         return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
 class zip(_coconut.zip):
     __slots__ = ("_iters",)
-    __doc__ = _coconut.zip.__doc__
+    if hasattr(_coconut.zip, "__doc__"):
+        __doc__ = _coconut.zip.__doc__
     def __new__(cls, *iterables):
         new_zip = _coconut.zip.__new__(cls, *iterables)
         new_zip._iters = iterables
@@ -93,7 +95,7 @@ class zip(_coconut.zip):
         if _coconut.isinstance(index, _coconut.slice):
             return self.__class__(*(_coconut_igetitem(i, index) for i in self._iters))
         else:
-            return (_coconut_igetitem(i, index) for i in self._iters)
+            return _coconut.tuple(_coconut_igetitem(i, index) for i in self._iters)
     def __reversed__(self):
         return self.__class__(*(_coconut.reversed(i) for i in self._iters))
     def __len__(self):
@@ -254,3 +256,5 @@ def py3_test():
     test = {}
     e("a=1", test)
     assert test["a"] == 1
+    def keyword_only(*, a): return a
+    assert keyword_only(a=10) == 10
