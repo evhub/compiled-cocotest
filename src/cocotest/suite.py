@@ -4,7 +4,7 @@
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
@@ -16,7 +16,7 @@ for name in dir(__coconut__):
     if not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------
 
 from .util import *
 
@@ -220,12 +220,9 @@ def main_test():
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
     assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
     assert (sum)((_coconut.functools.partial(filter, lambda i: i % 2 == 0))((_coconut.functools.partial(takewhile, lambda i: i < 4000000))(fib()))) == 4613732
-    def _coconut_lambda_0(closure):
-        vars = _coconut.globals().copy()
-        vars.update(closure)
-        exec('def _coconut_lambda_func(_=None):\n    return mod', vars)
-        return vars["_coconut_lambda_func"]
-    assert (_coconut_lambda_0(_coconut.locals()))()(5, 3) == 2
+    def _coconut_lambda_0(_=None):
+        return mod
+    assert (_coconut_lambda_0)()(5, 3) == 2
     test = {}
     exec("b = mod(5, 3)", globals(), test)
     assert test["b"] == 2

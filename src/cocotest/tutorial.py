@@ -4,7 +4,7 @@
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
@@ -16,7 +16,7 @@ for name in dir(__coconut__):
     if not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------
 
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -195,7 +195,7 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
-def factorial (*_coconut_match_to):
+def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
         _coconut_match_check = True
@@ -207,7 +207,7 @@ def factorial (*_coconut_match_to):
     return 1
 
 @addpattern(factorial)
-def factorial (*_coconut_match_to):
+def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
         n = _coconut_match_to[0]
@@ -237,7 +237,7 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
-def factorial (*_coconut_match_to):
+def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
         _coconut_match_check = True
@@ -250,7 +250,7 @@ def factorial (*_coconut_match_to):
 
 
 @addpattern(factorial)
-def factorial (*_coconut_match_to):
+def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
         n = _coconut_match_to[0]
@@ -280,7 +280,7 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
-def quick_sort (*_coconut_match_to):
+def quick_sort(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 0):
         _coconut_match_check = True
@@ -292,7 +292,7 @@ def quick_sort (*_coconut_match_to):
     return []
 
 @addpattern(quick_sort)
-def quick_sort (*_coconut_match_to):
+def quick_sort(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
         tail = _coconut.list(_coconut_match_to[0][1:])
@@ -626,7 +626,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
 # New one-line functions necessary for finding the angle between vectors:
     def __truediv__(self, other): return (vector)(*(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
     def unit(self): return self / abs(self)
-    def angle (*_coconut_match_to):
+    def angle(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[1], vector)):
             self = _coconut_match_to[0]

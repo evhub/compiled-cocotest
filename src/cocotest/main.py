@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8e6626c5
+# __coconut_hash__ = 0x8e73144d
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
@@ -16,7 +16,7 @@ for name in dir(__coconut__):
     if not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------
 
 import sys
 
@@ -309,6 +309,81 @@ def basic_test():
     assert (lambda _=None: _[0])([1, 2, 3]) == 1
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-5, -8))) == [5, 6]
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9]
+    assert (_coconut.operator.itemgetter(1))(range(1, 5)) == 2 == (_coconut.functools.partial(_coconut_igetitem, index=1))(range(1, 5))
+    assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 5)))(range(10))) == [0, 1, 2, 3, 4] == (list)((_coconut.functools.partial(_coconut_igetitem, index=_coconut.slice(None, 5)))(range(10)))
+    def _coconut_lambda_0(x):
+        y = x
+    assert (list)((_coconut.functools.partial(map, _coconut_lambda_0))(range(10))) == [None] * 10
+    def _coconut_lambda_1(x):
+        yield x
+    assert (list)((_coconut.functools.partial(map, list))((_coconut.functools.partial(map, _coconut_lambda_1))(range(5)))) == [[0], [1], [2], [3], [4]]
+    def do_stuff(x): return True
+    def _coconut_lambda_2(x=3):
+        return do_stuff(x)
+    assert (_coconut_lambda_2)() is True
+    def _coconut_lambda_3(x=4):
+        do_stuff(x)
+        return x
+    assert (_coconut_lambda_3)() == 4
+    def _coconut_lambda_4(x=5):
+        do_stuff(x)
+    assert (_coconut_lambda_4)() is None
+    def _coconut_lambda_5(x=6):
+        do_stuff(x)
+        assert x
+    (_coconut_lambda_5)()
+    def _coconut_lambda_6(x=7):
+        do_stuff(x)
+        assert x
+        yield x
+    assert (list)((_coconut_lambda_6)()) == [7]
+    def _coconut_lambda_7(_=None):
+        do_stuff(_)
+        assert _
+        return _
+    assert (_coconut_lambda_7)(8) == 8
+    def _coconut_lambda_8(x=9):
+        return x
+    assert (_coconut_lambda_8)() == 9
+    def _coconut_lambda_9(x=10):
+        do_stuff(x)
+        return x
+    assert (_coconut_lambda_9)() == 10
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_11(_=None):
+        def _coconut_lambda_1(x):
+            yield x
+        def _coconut_lambda_10(_=None):
+            return 11
+        return _coconut_lambda_10
+    assert (_coconut_lambda_11)()() == 11
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_12(_=None):
+        return 12
+    def _coconut_lambda_13(_=None):
+        return 12
+    assert (_coconut_lambda_12)() == 12 == (_coconut_lambda_13)()
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_14(x):
+        return lambda _=None: x
+    assert (list)((_coconut.functools.partial(map, lambda _=None: _()))(((_coconut_lambda_14)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
+    herpaderp = 5
+    def derp():
+        herp = 10
+        def _coconut_lambda_1(x):
+            yield x
+        def _coconut_lambda_15(_=None):
+            return herpaderp + herp
+        return (_coconut_lambda_15)
+    assert derp()() == 15
+    class abc(_coconut.collections.namedtuple("abc", "xyz")):
+        __slots__ = ()
+    assert abc(10).xyz == 10
+    class aclass(_coconut.object): pass
+    assert isinstance(aclass, object)
 
 def main(*args):
     """Asserts arguments and executes tests."""

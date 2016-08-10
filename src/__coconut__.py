@@ -5,7 +5,7 @@
 
 """Built-in Coconut utilities."""
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys
@@ -235,7 +235,8 @@ class count(object):
         return int(elem in self)
     def index(self, elem):
         """Find the index of elem in the count."""
-        if elem not in self: raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
+        if elem not in self:
+            raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
         return (elem - self._start) // self._step
     def __repr__(self):
         return "count(" + str(self._start) + ", " + str(self._step) + ")"

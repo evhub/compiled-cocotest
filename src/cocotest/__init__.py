@@ -10,7 +10,7 @@ License: Apache 2.0
 Description: The Coconut test suite.
 """
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
@@ -22,4 +22,4 @@ for name in dir(__coconut__):
     if not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------

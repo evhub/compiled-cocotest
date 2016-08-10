@@ -4,7 +4,7 @@
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 from __future__ import generator_stop
 import sys as _coconut_sys
@@ -130,7 +130,8 @@ class count:
         return int(elem in self)
     def index(self, elem):
         """Find the index of elem in the count."""
-        if elem not in self: raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
+        if elem not in self:
+            raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
         return (elem - self._start) // self._step
     def __repr__(self):
         return "count(" + str(self._start) + ", " + str(self._step) + ")"
@@ -222,7 +223,7 @@ def consume(iterable, keep_last=0):
     return _coconut.collections.deque(iterable, maxlen=keep_last)  # fastest way to exhaust an iterator
 MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------
 
 import asyncio
 
@@ -231,7 +232,7 @@ def py35_test():
     async def async_map_0(args):
         return parallel_map(args[0], *args[1:])
     async def async_map_1(args): return parallel_map(args[0], *args[1:])
-    async def async_map_2 (*_coconut_match_to):
+    async def async_map_2(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
             iters = _coconut.list(_coconut_match_to[0][1:])
@@ -244,7 +245,7 @@ def py35_test():
             raise _coconut_match_err
         return parallel_map(func, *iters)
 
-    async def async_map_3 (*_coconut_match_to):
+    async def async_map_3(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
             iters = _coconut.list(_coconut_match_to[0][1:])
@@ -257,7 +258,7 @@ def py35_test():
             raise _coconut_match_err
         return parallel_map(func, *iters)
 
-    async def async_map_4 (*_coconut_match_to):
+    async def async_map_4(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
             iters = _coconut.list(_coconut_match_to[0][1:])

@@ -4,7 +4,7 @@
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: --------------------------------------------------------
 
 import sys as _coconut_sys
 py3_map, py3_zip = map, zip
@@ -129,7 +129,8 @@ class count:
         return int(elem in self)
     def index(self, elem):
         """Find the index of elem in the count."""
-        if elem not in self: raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
+        if elem not in self:
+            raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
         return (elem - self._start) // self._step
     def __repr__(self):
         return "count(" + str(self._start) + ", " + str(self._step) + ")"
@@ -222,7 +223,7 @@ def consume(iterable, keep_last=0):
     return _coconut.collections.deque(iterable, maxlen=keep_last)  # fastest way to exhaust an iterator
 MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------
 
 def py3_test():
     """Performs Python-3-specific tests."""
