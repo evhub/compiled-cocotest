@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8e73144d
+# __coconut_hash__ = 0x82a9da4e
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -10,17 +10,18 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
+from __coconut__ import *
 import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
 for name in dir(__coconut__):
-    if not name.startswith("__"):
+    if name.startswith("_") and not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------
 
 import sys
 
-def basic_test():
+def main_test():
     """Basic no-dependency tests."""
     assert "\n" == ('''
 ''') == """
@@ -388,12 +389,12 @@ def basic_test():
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
-    basic_test()
+    main_test()
     if sys.version_info >= (2, 7):
         from .non_py26_test import non_py26_test
         non_py26_test()
-    from .suite import main_test
-    main_test()
+    from .suite import suite_test
+    suite_test()
     if sys.version_info < (3,):
         from .py2_test import py2_test
         py2_test()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x96a59458
+# __coconut_hash__ = 0x1a52eb65
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -10,10 +10,11 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
+from __coconut__ import *
 import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
 for name in dir(__coconut__):
-    if not name.startswith("__"):
+    if name.startswith("_") and not name.startswith("__"):
         globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------
@@ -1046,3 +1047,36 @@ def pattern_abs_(x): return x
 
 @recursive_iterator
 def fib(): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
+
+
+# Sieve Example
+
+def sieve(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Iterable)):
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to[0])
+        if (_coconut.len(_coconut_match_iter_0) == 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve((||)) = []'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def sieve((||)) = []'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return []
+
+
+@prepattern(sieve)
+def sieve(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Iterable)):
+        tail = _coconut.iter(_coconut_match_to[0])
+        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_iter_0) == 1):
+            head = _coconut_match_iter_0[0]
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))

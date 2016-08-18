@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb681e458
+# __coconut_hash__ = 0xc63c56de
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -188,6 +188,25 @@ class _coconut_map(_coconut.map):
         return (self.__class__, (self._func,) + self._iters)
     def __copy__(self):
         return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
+class parallel_map(_coconut_map):
+    """Multiprocessing implementation of map using concurrent.futures; requires arguments to be pickleable."""
+    __slots__ = ()
+    def __iter__(self):
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor() as executor:
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
+    def __repr__(self):
+        return "parallel_" + _coconut_map.__repr__(self)
+class concurrent_map(_coconut_map):
+    """Multithreading implementation of map using concurrent.futures."""
+    __slots__ = ()
+    def __iter__(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from multiprocessing import cpu_count  # cpu_count() * 5 is the default Python 3 thread count
+        with ThreadPoolExecutor(cpu_count() * 5) as executor:
+            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
+    def __repr__(self):
+        return "concurrent_" + _coconut_map.__repr__(self)
 class zip(_coconut.zip):
     __slots__ = ("_iters",)
     if hasattr(_coconut.zip, "__doc__"):
@@ -243,25 +262,6 @@ class count(object):
         return (self.__class__, (self._start, self._step))
     def __copy__(self):
         return self.__class__(self._start, self._step)
-class parallel_map(_coconut_map):
-    """Multiprocessing implementation of map using concurrent.futures; requires arguments to be pickleable."""
-    __slots__ = ()
-    def __iter__(self):
-        from concurrent.futures import ProcessPoolExecutor
-        with ProcessPoolExecutor() as executor:
-            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
-    def __repr__(self):
-        return "parallel_" + _coconut_map.__repr__(self)
-class concurrent_map(_coconut_map):
-    """Multithreading implementation of map using concurrent.futures."""
-    __slots__ = ()
-    def __iter__(self):
-        from concurrent.futures import ThreadPoolExecutor
-        from multiprocessing import cpu_count  # cpu_count() * 5 is the default Python 3 thread count
-        with ThreadPoolExecutor(cpu_count() * 5) as executor:
-            return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
-    def __repr__(self):
-        return "concurrent_" + _coconut_map.__repr__(self)
 def recursive(func):
     """Decorates a function by optimizing it for tail recursion."""
     state = [True, None]  # state = [is_top_level, (args, kwargs)]
@@ -344,6 +344,7 @@ else:
     CoconutKernel = None
 
 def main():
+    import coconut.highlighter
     assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
     assert version() == version("num")
     assert version("name")
@@ -356,6 +357,7 @@ def main():
         assert True
     else:
         assert False
+    setup(quiet=True)
     _exec = parse("abc", "exec")
     assert _exec
     assert _exec == parse("abc")
@@ -371,7 +373,7 @@ def main():
     assert _eval
     _debug = parse("abc", "debug")
     assert _debug
-    setup(None, False, False, False, True)
+    setup(quiet=True)
     assert _single == parse("abc", "single")
     assert _file == parse("abc", "file")
     assert _module == parse("abc", "module")
@@ -426,7 +428,7 @@ def main():
     assert parse("u''")
     assert parse("def f(x):\\\n pass")
     assert parse("abc ")
-    setup(None, True, False, False, True)
+    setup(strict=True, quiet=True)
     try:
         parse("def f(x):\n \t pass")
     except CoconutException:
@@ -463,7 +465,7 @@ def main():
         assert True
     else:
         assert False
-    setup()
+    setup(quiet=True)
     try:
         cmd("-f")
     except SystemExit:
@@ -489,7 +491,7 @@ def main():
         assert True
     else:
         assert False
-    setup(target="3.6")
+    setup(target="3.6", quiet=True)
     assert parse("f''")
     if CoconutKernel is not None:
         k = CoconutKernel()
