@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa3c017d
+# __coconut_hash__ = 0x37789b4e
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -237,6 +237,10 @@ def py3_test():
         x = y
     set_x(3)
     assert x == 3
+    def set_x_again(y):
+        nonlocal x; x = y
+    set_x_again(10)
+    assert x == 10
     assert {x: x for x in range(5)} == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
     def head_tail(l):
         head, *tail = l

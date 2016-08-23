@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1a52eb65
+# __coconut_hash__ = 0x404aa95c
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -1048,7 +1048,6 @@ def pattern_abs_(x): return x
 @recursive_iterator
 def fib(): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
-
 # Sieve Example
 
 def sieve(*_coconut_match_to):
@@ -1080,3 +1079,10 @@ def sieve(*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
+
+# Shorthand function definition
+
+
+def double_plus_one(x):
+    x *= 2
+    return x + 1

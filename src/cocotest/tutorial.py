@@ -640,8 +640,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             raise _coconut_match_err
         return math.acos(self.unit() * other.unit())
 
-
 # Test cases:
+
 assert (repr)(vector(3, 4) / 1) == "vector(pts=(3.0, 4.0))"
 assert (repr)(vector(2, 4) / 2) == "vector(pts=(1.0, 2.0))"
 assert (repr)(vector(0, 1).unit()) == "vector(pts=(0.0, 1.0))"

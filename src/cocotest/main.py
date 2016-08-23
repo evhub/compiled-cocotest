@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x82a9da4e
+# __coconut_hash__ = 0x1596c05a
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -116,6 +116,10 @@ def main_test():
         glob_a, glob_b = x, x
     set_globs(2)
     assert glob_a == 2 == glob_b
+    def set_globs_again(x):
+        global glob_a, glob_b; glob_a, glob_b = (x, x)
+    set_globs_again(10)
+    assert glob_a == 10 == glob_b
     assert _coconut_minus(1) == -1 == _coconut.functools.partial(_coconut_minus, 1)(2)
     assert (_coconut.operator.le)(3, 3)
     assert (list)((consume)(range(10))) == []
@@ -352,33 +356,33 @@ def main_test():
     assert (_coconut_lambda_9)() == 10
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_11(_=None):
+    def _coconut_lambda_12(_=None):
         def _coconut_lambda_1(x):
             yield x
-        def _coconut_lambda_10(_=None):
+        def _coconut_lambda_11(_=None):
             return 11
-        return _coconut_lambda_10
-    assert (_coconut_lambda_11)()() == 11
+        return _coconut_lambda_11
+    assert (_coconut_lambda_12)()() == 11
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_12(_=None):
-        return 12
     def _coconut_lambda_13(_=None):
         return 12
-    assert (_coconut_lambda_12)() == 12 == (_coconut_lambda_13)()
+    def _coconut_lambda_14(_=None):
+        return 12
+    assert (_coconut_lambda_13)() == 12 == (_coconut_lambda_14)()
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_14(x):
+    def _coconut_lambda_15(x):
         return lambda _=None: x
-    assert (list)((_coconut.functools.partial(map, lambda _=None: _()))(((_coconut_lambda_14)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
+    assert (list)((_coconut.functools.partial(map, lambda _=None: _()))(((_coconut_lambda_15)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
     herpaderp = 5
     def derp():
         herp = 10
         def _coconut_lambda_1(x):
             yield x
-        def _coconut_lambda_15(_=None):
+        def _coconut_lambda_16(_=None):
             return herpaderp + herp
-        return (_coconut_lambda_15)
+        return (_coconut_lambda_16)
     assert derp()() == 15
     class abc(_coconut.collections.namedtuple("abc", "xyz")):
         __slots__ = ()

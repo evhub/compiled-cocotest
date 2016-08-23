@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xc63c56de
+# __coconut_hash__ = 0xbcb04359
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -338,13 +338,16 @@ from coconut.convenience import parse
 from coconut.__coconut__ import consume as coc_consume
 
 import sys
-if sys.version_info >= (3, 3) or (sys.version_info < (3,) and sys.version_info >= (2, 7)):
+
+NOT_PY_32 = sys.version_info >= (3, 3) or (sys.version_info < (3,) and sys.version_info >= (2, 7))
+if NOT_PY_32:
     from coconut.icoconut import CoconutKernel
 else:
     CoconutKernel = None
 
 def main():
-    import coconut.highlighter
+    if NOT_PY_32:
+        import coconut.highlighter
     assert consume(range(10), keep_last=1)[0] == 9 == coc_consume(range(10), keep_last=1)[0]
     assert version() == version("num")
     assert version("name")

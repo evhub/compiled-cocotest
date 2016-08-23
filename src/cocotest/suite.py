@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x4bdeef5a
+# __coconut_hash__ = 0xfcaede16
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -225,3 +225,4 @@ def suite_test():
         return mod
     assert (_coconut_lambda_0)()(5, 3) == 2
     assert (list)(sieve((2, 3, 4, 5))) == [2, 3, 5]
+    assert 11 == double_plus_one(5)
