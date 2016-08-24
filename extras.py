@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xbcb04359
+# __coconut_hash__ = 0x390ecba3
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -360,7 +360,7 @@ def main():
         assert True
     else:
         assert False
-    setup(quiet=True)
+    setup()
     _exec = parse("abc", "exec")
     assert _exec
     assert _exec == parse("abc")
@@ -376,7 +376,6 @@ def main():
     assert _eval
     _debug = parse("abc", "debug")
     assert _debug
-    setup(quiet=True)
     assert _single == parse("abc", "single")
     assert _file == parse("abc", "file")
     assert _module == parse("abc", "module")
@@ -431,7 +430,7 @@ def main():
     assert parse("u''")
     assert parse("def f(x):\\\n pass")
     assert parse("abc ")
-    setup(strict=True, quiet=True)
+    setup(strict=True)
     try:
         parse("def f(x):\n \t pass")
     except CoconutException:
@@ -468,7 +467,7 @@ def main():
         assert True
     else:
         assert False
-    setup(quiet=True)
+    setup()
     try:
         cmd("-f")
     except SystemExit:
@@ -494,7 +493,7 @@ def main():
         assert True
     else:
         assert False
-    setup(target="3.6", quiet=True)
+    setup(target="3.6")
     assert parse("f''")
     if CoconutKernel is not None:
         k = CoconutKernel()
