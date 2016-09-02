@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x404aa95c
+# __coconut_hash__ = 0xc826ea9c
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -30,22 +30,27 @@ def rand_list(n):
 # Infix Functions:
 plus = _coconut.operator.add
 mod = _coconut.operator.mod
-def mod_(a, b): return a % b
+def mod_(a, b):
+    return a % b
 base = int
 def join_with(a, b=""):
     return b.join(a)
 
 # Basic Functions:
 prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
-def zipwith(f, *args): return map(lambda items: f(*items), zip(*args))
+def zipwith(f, *args):
+    return map(lambda items: f(*items), zip(*args))
 zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
 plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
-def plus1_(x): return x + 1
-def sqrt(x): return x**0.5
-def sqrt_(x): return x**0.5
+def plus1_(x):
+    return x + 1
+def sqrt(x):
+    return x**0.5
+def sqrt_(x):
+    return x**0.5
 square = lambda x: x**2
 plus1sq = _coconut_compose(square, plus1)
 sqplus1 = _coconut_compose(plus1, square)
@@ -53,9 +58,11 @@ plus1sq_ = lambda x: (square)((plus1)(x))
 sqplus1_ = lambda x: (plus1)((square)(x))
 clean = lambda s: s.strip()
 add2 = lambda x: lambda y: x + y
-def swap2(f): return lambda x, y: f(y, x)
+def swap2(f):
+    return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
-def same(iter1, iter2): return map(_coconut.operator.eq, iter1, iter2)
+def same(iter1, iter2):
+    return map(_coconut.operator.eq, iter1, iter2)
 def chain2(a, b):
     _coconut_yield_from = a
     for _coconut_yield_item in _coconut_yield_from:
@@ -581,7 +588,8 @@ def one_to_five(l):
 
 # Unicode Functions:
 square_u = lambda x: x**2
-def neg_u(x): return -x
+def neg_u(x):
+    return -x
 neg_square_u = lambda x: (neg_u)((square_u)(x))
 
 # In-Place Functions:
@@ -629,8 +637,10 @@ def depth(t):
         return 1 + max([depth(l), depth(r)])
 
 # Monads:
-def base_maybe(x, f): return f(x) if x is not None else None
-def maybes(*fs): return reduce(base_maybe, fs)
+def base_maybe(x, f):
+    return f(x) if x is not None else None
+def maybes(*fs):
+    return reduce(base_maybe, fs)
 
 class Nothing(_coconut.collections.namedtuple("Nothing", "")):
     __slots__ = ()
@@ -730,7 +740,8 @@ def delist2_(l):
     return a, b
 
 # Optional Explicit Assignment:
-def expl_ident(x): return x
+def expl_ident(x):
+    return x
 def dictpoint_(value):
     _coconut_match_check = False
     _coconut_match_to = value
@@ -756,15 +767,20 @@ def dictpoint__(*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     return x, y
-def tuple1(a): return a,
-def tuple1_(a): return a,
-def tuple2(a, b): return a, b
-def tuple2_(a, b): return a, b
+def tuple1(a):
+    return a,
+def tuple1_(a):
+    return a,
+def tuple2(a, b):
+    return a, b
+def tuple2_(a, b):
+    return a, b
 
 # Enhanced Decorators:
 _coconut_decorator_0 = lambda f: f
 @_coconut_decorator_0
-def dectest(x): return x
+def dectest(x):
+    return x
 
 # Match Function Definition:
 def last_two_(*_coconut_match_to):
@@ -791,8 +807,8 @@ def htsplit(*_coconut_match_to):
         _coconut_match_err.pattern = 'match def htsplit([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return [head, tail]
 
+    return [head, tail]
 def htsplit_(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
@@ -804,8 +820,8 @@ def htsplit_(*_coconut_match_to):
         _coconut_match_err.pattern = 'def htsplit_([head] + tail) = [head, tail]'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return [head, tail]
 
+    return [head, tail]
 def iadd(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
@@ -817,8 +833,8 @@ def iadd(*_coconut_match_to):
         _coconut_match_err.pattern = 'match def (x is int) `iadd` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return x + y
 
+    return x + y
 def iadd_(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
@@ -830,8 +846,8 @@ def iadd_(*_coconut_match_to):
         _coconut_match_err.pattern = 'def (x is int) `iadd_` (y is int) = x + y'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return x + y
 
+    return x + y
 def strmul(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
@@ -959,8 +975,8 @@ def add_int_or_str_1(*_coconut_match_to):
         _coconut_match_err.pattern = 'def add_int_or_str_1(x is int) = x + 1'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return x + 1
 
+    return x + 1
 @addpattern(add_int_or_str_1)
 def add_int_or_str_1(*_coconut_match_to):
     _coconut_match_check = False
@@ -972,8 +988,8 @@ def add_int_or_str_1(*_coconut_match_to):
         _coconut_match_err.pattern = 'def add_int_or_str_1(x is str) = x + "1"'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return x + "1"
 
+    return x + "1"
 
 def coercive_add(*_coconut_match_to):
     _coconut_match_check = False
@@ -986,8 +1002,8 @@ def coercive_add(*_coconut_match_to):
         _coconut_match_err.pattern = 'def coercive_add(a is int, b) = a + int(b)'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return a + int(b)
 
+    return a + int(b)
 @addpattern(coercive_add)
 def coercive_add(*_coconut_match_to):
     _coconut_match_check = False
@@ -1000,14 +1016,16 @@ def coercive_add(*_coconut_match_to):
         _coconut_match_err.pattern = 'def coercive_add(a is str, b) = a + str(b)'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a + str(b)
 
-
 @addpattern(ident)
-def still_ident(x): return "foo"
+def still_ident(x):
+    return "foo"
 
 @prepattern(ident)
-def not_ident(x): return "bar"
+def not_ident(x):
+    return "bar"
 
 # Pattern-matching functions with guards
 
@@ -1022,10 +1040,11 @@ def pattern_abs(*_coconut_match_to):
         _coconut_match_err.pattern = 'def pattern_abs(x if x < 0) = -x'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return -x
 
+    return -x
 @addpattern(pattern_abs)
-def pattern_abs(x): return x
+def pattern_abs(x):
+    return x
 
 def pattern_abs_(*_coconut_match_to):
     _coconut_match_check = False
@@ -1038,15 +1057,17 @@ def pattern_abs_(*_coconut_match_to):
         _coconut_match_err.pattern = 'def `pattern_abs_` (x) if x < 0 = -x'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return -x
 
+    return -x
 @addpattern(pattern_abs_)
-def pattern_abs_(x): return x
+def pattern_abs_(x):
+    return x
 
 # Recursive iterator
 
 @recursive_iterator
-def fib(): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
+def fib():
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 # Sieve Example
 
@@ -1061,8 +1082,8 @@ def sieve(*_coconut_match_to):
         _coconut_match_err.pattern = 'def sieve((||)) = []'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return []
 
+    return []
 
 @prepattern(sieve)
 def sieve(*_coconut_match_to):
@@ -1078,11 +1099,49 @@ def sieve(*_coconut_match_to):
         _coconut_match_err.pattern = 'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
 
-# Shorthand function definition
-
+# "Assignment function" definitions
 
 def double_plus_one(x):
     x *= 2
     return x + 1
+
+def assign_func_1(f, x, y):
+    def inner_assign_func(*_coconut_match_to):
+        _coconut_match_check = False
+        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
+            a = _coconut_match_to[0][0]
+            b = _coconut_match_to[0][1]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) = f(a, b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'def inner_assign_func((a, b)) = f(a, b)'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+
+        return f(a, b)
+    return inner_assign_func((x, y))
+
+def assign_func_2(f, x, y):
+    def inner_assign_func(*_coconut_match_to):
+        _coconut_match_check = False
+        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
+            a = _coconut_match_to[0][0]
+            b = _coconut_match_to[0][1]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'def inner_assign_func((a, b)) ='
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+
+        return f(a, b)
+    return inner_assign_func((x, y))
+
+# Composable Method
+
+mul = _coconut.operator.mul
+def minus(a, b):
+    return b - a

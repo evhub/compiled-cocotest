@@ -144,15 +144,18 @@ def _coconut_igetitem(iterable, index):
     else:
         return _coconut.itertools.islice(iterable, index.start, index.stop, index.step)
 class _coconut_compose(object):
-    __slots__ = ("f", "g")
-    def __init__(self, f, g):
-        self.f, self.g = f, g
+    __slots__ = ("funcs")
+    def __init__(self, *funcs):
+        self.funcs = funcs
     def __call__(self, *args, **kwargs):
-        return self.f(self.g(*args, **kwargs))
+        arg = self.funcs[-1](*args, **kwargs)
+        for f in self.funcs[-2::-1]:
+            arg = f(arg)
+        return arg
     def __repr__(self):
-        return _coconut.repr(self.f) + ".." + _coconut.repr(self.g)
+        return "..".join(_coconut.repr(f) for f in self.funcs)
     def __reduce__(self):
-        return (_coconut_compose, (self.f, self.g))
+        return (_coconut_compose, self.funcs)
 def _coconut_pipe(x, f): return f(x)
 def _coconut_starpipe(xs, f): return f(*xs)
 def _coconut_backpipe(f, x): return f(x)
@@ -263,7 +266,7 @@ class count(object):
         return (self.__class__, (self._start, self._step))
     def __copy__(self):
         return self.__class__(self._start, self._step)
-def recursive(func):
+def tail_recursive(func):
     """Decorates a function by optimizing it for tail recursion."""
     state = [True, None]  # state = [is_top_level, (args, kwargs)]
     recurse = object()
@@ -327,4 +330,4 @@ def datamaker(data_type):
 def consume(iterable, keep_last=0):
     """Fully exhaust iterable and return the last keep_last elements."""
     return _coconut.collections.deque(iterable, maxlen=keep_last)  # fastest way to exhaust an iterator
-MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee
+MatchError, map, reduce, takewhile, dropwhile, tee, recursive = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee, tail_recursive

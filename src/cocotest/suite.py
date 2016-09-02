@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xfcaede16
+# __coconut_hash__ = 0xdd079f15
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -39,10 +39,10 @@ def suite_test():
     assert (prod)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
-    assert plus1(plus1(5)) == 7 == _coconut_compose(plus1, plus1)(5)
+    assert plus1(plus1(5)) == 7 == (_coconut_compose(plus1, plus1))(5)
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
-    assert sqplus1(3) == 10 == _coconut_compose(plus1, square)(3)
+    assert sqplus1(3) == 10 == (_coconut_compose(plus1, square))(3)
     assert (plus1sq)(3) == 16 == (plus1sq_)(3)
     assert (sqplus1)(3) == 10 == (sqplus1_)(3)
     assert (square)((plus1)(3)) == 16 == (square)((plus1_)(3))
@@ -226,3 +226,7 @@ def suite_test():
     assert (_coconut_lambda_0)()(5, 3) == 2
     assert (list)(sieve((2, 3, 4, 5))) == [2, 3, 5]
     assert 11 == double_plus_one(5)
+    assert 15 == assign_func_1(_coconut.operator.mul, 3, 5)
+    assert 15 == assign_func_2(_coconut.operator.mul, 3, 5)
+    assert 20 == _coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
+    assert 20 == (_coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1)))(10)

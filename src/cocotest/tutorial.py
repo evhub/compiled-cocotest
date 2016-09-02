@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xa62919ad
+# __coconut_hash__ = 0x9b55c479
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -247,8 +247,8 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.pattern = 'def factorial(0) = 1'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
-    return 1
 
+    return 1
 
 @addpattern(factorial)
 def factorial(*_coconut_match_to):
@@ -452,13 +452,15 @@ assert (vector(2, 4) == vector(2, 4)) is True
 assert (repr)(2 * vector(1, 2)) == "vector(pts=(2, 4))"
 assert vector(1, 2) * vector(1, 3) == 7
 
-def diagonal_line(n): return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
+def diagonal_line(n):
+    return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
 
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
 assert (list)(diagonal_line(0)) == [(0, 0)]
 assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 
-def linearized_plane(n=0): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+def linearized_plane(n=0):
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 
 # Note: these tests use $[] notation, which we haven't introduced yet
 #  but will introduce later in this case study; for now, just run the
@@ -466,7 +468,8 @@ def linearized_plane(n=0): return _coconut.itertools.chain.from_iterable((_cocon
 assert _coconut_igetitem(linearized_plane(), 0) == (0, 0)
 assert (list)(_coconut_igetitem(linearized_plane(), _coconut.slice(None, 3))) == [(0, 0), (0, 1), (1, 0)]
 
-def vector_field(): return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
+def vector_field():
+    return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
 
 # You'll need to bring in the vector class from earlier to make these work
 assert (repr)(_coconut_igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
@@ -541,9 +544,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 
-def diagonal_line(n): return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
-def linearized_plane(n=0): return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
-def vector_field(): return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
+def diagonal_line(n):
+    return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
+def linearized_plane(n=0):
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+def vector_field():
+    return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
 
 # Test cases:
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
@@ -625,8 +631,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 # New one-line functions necessary for finding the angle between vectors:
-    def __truediv__(self, other): return (vector)(*(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
-    def unit(self): return self / abs(self)
+    def __truediv__(self, other):
+        return (vector)(*(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
+    def unit(self):
+        return self / abs(self)
     def angle(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[1], vector)):
@@ -638,10 +646,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         return math.acos(self.unit() * other.unit())
 
 # Test cases:
-
 assert (repr)(vector(3, 4) / 1) == "vector(pts=(3.0, 4.0))"
 assert (repr)(vector(2, 4) / 2) == "vector(pts=(1.0, 2.0))"
 assert (repr)(vector(0, 1).unit()) == "vector(pts=(0.0, 1.0))"

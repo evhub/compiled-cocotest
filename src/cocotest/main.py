@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1596c05a
+# __coconut_hash__ = 0x1512be21
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -259,12 +259,12 @@ def main_test():
     assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)((_coconut.functools.partial(map, tuple))(parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)((_coconut.functools.partial(map, _coconut.operator.add))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(parallel_map(_coconut.functools.partial(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.operator.add), 1), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
     assert repr(concurrent_map(_coconut_minus, range(5))).startswith("concurrent_map(")
     assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)((_coconut.functools.partial(map, tuple))(concurrent_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)((_coconut.functools.partial(map, _coconut.operator.add))(*(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(concurrent_map(_coconut.functools.partial(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.operator.add), 1), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
     assert 0 in range(1)
     assert range(1).count(0) == 1
     assert 2 in range(5)
@@ -322,7 +322,8 @@ def main_test():
     def _coconut_lambda_1(x):
         yield x
     assert (list)((_coconut.functools.partial(map, list))((_coconut.functools.partial(map, _coconut_lambda_1))(range(5)))) == [[0], [1], [2], [3], [4]]
-    def do_stuff(x): return True
+    def do_stuff(x):
+        return True
     def _coconut_lambda_2(x=3):
         return do_stuff(x)
     assert (_coconut_lambda_2)() is True
