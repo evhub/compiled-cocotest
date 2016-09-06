@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xdd079f15
+# __coconut_hash__ = 0x105d1508
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -70,7 +70,7 @@ def suite_test():
     assert (list)(_coconut_igetitem(map_iter(_coconut.functools.partial(_coconut.operator.mul, 2), N()), _coconut.slice(None, 5))) == [0, 2, 4, 6, 8]
     assert (tuple)(_coconut_igetitem(N(), _coconut.slice(None, 100))) == (tuple)(_coconut_igetitem(N_(), _coconut.slice(None, 100))) == (tuple)(_coconut_igetitem(N__(), _coconut.slice(None, 100)))
     assert (_coconut.functools.partial(next_mul_of, 5))(12) == 15
-    assert collatz(27) and collatz_(27)
+    assert collatz(27)
     assert preop(1, 2).add() == 3
     assert (abs)(vector(3, 4)) == 5
     assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.getattr, v), ("x", "y"))))(vector(1, 2))) == (1, 2)
@@ -221,6 +221,10 @@ def suite_test():
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
     assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
     assert (sum)((_coconut.functools.partial(filter, lambda i: i % 2 == 0))((_coconut.functools.partial(takewhile, lambda i: i < 4000000))(fib()))) == 4613732
+    assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
+    assert recurse_n_times(10000)
+    assert is_even(5000)
+    assert is_odd(5001)
     def _coconut_lambda_0(_=None):
         return mod
     assert (_coconut_lambda_0)()(5, 3) == 2

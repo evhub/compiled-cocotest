@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xc826ea9c
+# __coconut_hash__ = 0x51f52cb3
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -33,13 +33,15 @@ mod = _coconut.operator.mod
 def mod_(a, b):
     return a % b
 base = int
+@_coconut_tco
 def join_with(a, b=""):
-    return b.join(a)
+    raise _coconut_tail_call(b.join, a)
 
 # Basic Functions:
 prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
+@_coconut_tco
 def zipwith(f, *args):
-    return map(lambda items: f(*items), zip(*args))
+    raise _coconut_tail_call(map, lambda items: f(*items), zip(*args))
 zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
 plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
@@ -61,8 +63,9 @@ add2 = lambda x: lambda y: x + y
 def swap2(f):
     return lambda x, y: f(y, x)
 swap2_ = lambda f: lambda x, y: f(y, x)
+@_coconut_tco
 def same(iter1, iter2):
-    return map(_coconut.operator.eq, iter1, iter2)
+    raise _coconut_tail_call(map, _coconut.operator.eq, iter1, iter2)
 def chain2(a, b):
     _coconut_yield_from = a
     for _coconut_yield_item in _coconut_yield_from:
@@ -100,6 +103,7 @@ def qsort2(l):
     else:
         head, tail = l[0], l[1:] # Python Pattern-Matching
         return (qsort2([x for x in tail if x <= head]) + [head] + qsort2([x for x in tail if x > head]))
+@_coconut_tco
 def qsort3(l):
     """Iterator Quick Sort."""
     try:
@@ -108,7 +112,7 @@ def qsort3(l):
         head = next(tail)
         return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
     except StopIteration:
-        return iter(())
+        raise _coconut_tail_call(iter, ())
 def qsort4(l):
     """Match Quick Sort."""
     _coconut_match_check = False
@@ -125,6 +129,7 @@ def qsort4(l):
         _coconut_match_check = True
     if _coconut_match_check:
         return (qsort4([x for x in tail if x <= head]) + [head] + qsort4([x for x in tail if x > head]))
+@_coconut_tco
 def qsort5(l):
     """Iterator Match Quick Sort."""
     _coconut_match_check = False
@@ -139,7 +144,7 @@ def qsort5(l):
         tail, tail_ = tee(tail)
         return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
     else:
-        return iter(())
+        raise _coconut_tail_call(iter, ())
 
 # Infinite Iterators:
 def repeat(elem):
@@ -177,33 +182,35 @@ def map_iter(func, args):
         return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
-@recursive
+@_coconut_tco
 def next_mul_of(n, x):
     if x % n == 0:
         return x
     else:
-        return next_mul_of(n, x + 1)
-def maybe_recursive(cond):
-    if cond:
-        return recursive
-    else:
-        return lambda func: func
-@maybe_recursive(True)
+        raise _coconut_tail_call(next_mul_of, n, x + 1)
+@_coconut_tco
 def collatz(n):
     if n == 1:
         return True
     elif n % 2 == 0:
-        return collatz(n / 2)
+        raise _coconut_tail_call(collatz, n / 2)
     else:
-        return collatz(3 * n + 1)
-@maybe_recursive(False)
-def collatz_(n):
-    if n == 1:
+        raise _coconut_tail_call(collatz, 3 * n + 1)
+@_coconut_tco
+def recurse_n_times(n):
+    if not n:
         return True
-    elif n % 2 == 0:
-        return collatz(n / 2)
-    else:
-        return collatz(3 * n + 1)
+    raise _coconut_tail_call(recurse_n_times, n - 1)
+@_coconut_tco
+def is_even(n):
+    if not n:
+        return True
+    raise _coconut_tail_call(is_odd, n - 1)
+@_coconut_tco
+def is_odd(n):
+    if not n:
+        return False
+    raise _coconut_tail_call(is_even, n - 1)
 
 # Data Blocks:
 class preop(_coconut.collections.namedtuple("preop", "x, y")):
@@ -224,6 +231,7 @@ class vector(_coconut.collections.namedtuple("vector", "x, y")):
         return datamaker(cls)(x, y)
     def __abs__(self):
         return (self.x**2 + self.y**2)**.5
+    @_coconut_tco
     def transform(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
@@ -232,7 +240,7 @@ class vector(_coconut.collections.namedtuple("vector", "x, y")):
             y = _coconut_match_to[1]
             _coconut_match_check = True
         if _coconut_match_check:
-            return vector(self.x + x, self.y + y)
+            raise _coconut_tail_call(vector, self.x + x, self.y + y)
         else:
             raise TypeError()
     def __eq__(self, other):
@@ -639,13 +647,15 @@ def depth(t):
 # Monads:
 def base_maybe(x, f):
     return f(x) if x is not None else None
+@_coconut_tco
 def maybes(*fs):
-    return reduce(base_maybe, fs)
+    raise _coconut_tail_call(reduce, base_maybe, fs)
 
 class Nothing(_coconut.collections.namedtuple("Nothing", "")):
     __slots__ = ()
+    @_coconut_tco
     def __call__(self, *args):
-        return Nothing()
+        raise _coconut_tail_call(Nothing)
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
@@ -657,8 +667,9 @@ class Nothing(_coconut.collections.namedtuple("Nothing", "")):
             return False
 class Just(_coconut.collections.namedtuple("Just", "item")):
     __slots__ = ()
+    @_coconut_tco
     def __call__(self, *args):
-        return (Just)(reduce(_coconut_pipe, args, self.item))
+        raise _coconut_tail_call((Just), reduce(_coconut_pipe, args, self.item))
     def __eq__(self, other):
         _coconut_match_check = False
         _coconut_match_to = other
@@ -906,8 +917,9 @@ def is_one(i):
 # Constructed Data Types:
 class trilen(_coconut.collections.namedtuple("trilen", "h")):
     __slots__ = ()
+    @_coconut_tco
     def __new__(cls, a, b):
-        return (datamaker(cls))((a**2 + b**2)**0.5)
+        raise _coconut_tail_call((datamaker(cls)), (a**2 + b**2)**0.5)
 
 # Inheritance:
 class A(_coconut.object):
@@ -941,17 +953,20 @@ def grid(x=0):
     """Infinite iterator of infinite iterators representing cartesian space."""
     return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
 
+@_coconut_tco
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    return (_coconut.functools.partial(map, _coconut.functools.partial(map, func)))(gridsample)
+    raise _coconut_tail_call((_coconut.functools.partial(map, _coconut.functools.partial(map, func))), gridsample)
 
+@_coconut_tco
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    return (_coconut.functools.partial(parallel_map, _coconut.functools.partial(parallel_map, func)))(gridsample)
+    raise _coconut_tail_call((_coconut.functools.partial(parallel_map, _coconut.functools.partial(parallel_map, func))), gridsample)
 
+@_coconut_tco
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
-    return (list)((_coconut.functools.partial(map, lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax)))))(_coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
+    raise _coconut_tail_call((list), (_coconut.functools.partial(map, lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax)))))(_coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
 
 # Physics function:
 
@@ -1069,6 +1084,10 @@ def pattern_abs_(x):
 def fib():
     return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
+@recursive_iterator
+def loop(it):
+    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: it, lambda: loop(it))))
+
 # Sieve Example
 
 def sieve(*_coconut_match_to):
@@ -1108,7 +1127,9 @@ def double_plus_one(x):
     x *= 2
     return x + 1
 
+@_coconut_tco
 def assign_func_1(f, x, y):
+    @_coconut_tco
     def inner_assign_func(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
@@ -1121,10 +1142,12 @@ def assign_func_1(f, x, y):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        return f(a, b)
-    return inner_assign_func((x, y))
+        raise _coconut_tail_call(f, a, b)
+    raise _coconut_tail_call(inner_assign_func, (x, y))
 
+@_coconut_tco
 def assign_func_2(f, x, y):
+    @_coconut_tco
     def inner_assign_func(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
@@ -1137,10 +1160,10 @@ def assign_func_2(f, x, y):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        return f(a, b)
-    return inner_assign_func((x, y))
+        raise _coconut_tail_call(f, a, b)
+    raise _coconut_tail_call(inner_assign_func, (x, y))
 
-# Composable Method
+# Composable Functions
 
 mul = _coconut.operator.mul
 def minus(a, b):

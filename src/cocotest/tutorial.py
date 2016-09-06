@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x9b55c479
+# __coconut_hash__ = 0x41bc8755
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -127,7 +127,7 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
-@recursive
+@_coconut_tco
 def factorial(n, acc=1):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
@@ -142,7 +142,7 @@ def factorial(n, acc=1):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
-            return factorial(n - 1, acc * n)
+            raise _coconut_tail_call(factorial, n - 1, acc * n)
     if not _coconut_match_check:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
@@ -162,6 +162,7 @@ else:
 assert (factorial)(0) == 1
 assert (factorial)(3) == 6
 
+@_coconut_tco
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
@@ -176,7 +177,7 @@ def factorial(n):
             if (n > 0):
                 _coconut_match_check = True
         if _coconut_match_check:
-            return (_coconut.functools.partial(reduce, _coconut.operator.mul))(range(1, n + 1))
+            raise _coconut_tail_call((_coconut.functools.partial(reduce, _coconut.operator.mul)), range(1, n + 1))
     if not _coconut_match_check:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
@@ -208,6 +209,7 @@ def factorial(*_coconut_match_to):
     return 1
 
 @addpattern(factorial)
+@_coconut_tco
 def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
@@ -220,7 +222,7 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     """Compute n! where n is an integer >= 0."""
-    return (_coconut.functools.partial(reduce, _coconut.operator.mul))(range(1, n + 1))
+    raise _coconut_tail_call((_coconut.functools.partial(reduce, _coconut.operator.mul)), range(1, n + 1))
 
 # Test cases:
 try:
@@ -379,9 +381,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             return pts[0] # vector(v) where v is a vector should return v
         else:
             return (datamaker(cls))((tuple)(pts)) # accesses base constructor
+    @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        return ((lambda s: s**0.5))((sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+    @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
         _coconut_match_check = False
@@ -395,7 +399,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
+    @_coconut_tco
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -409,10 +414,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut_minus, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
+    @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(_coconut.functools.partial(map, _coconut_minus))(self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -452,8 +458,9 @@ assert (vector(2, 4) == vector(2, 4)) is True
 assert (repr)(2 * vector(1, 2)) == "vector(pts=(2, 4))"
 assert vector(1, 2) * vector(1, 3) == 7
 
+@_coconut_tco
 def diagonal_line(n):
-    return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda i: (i, n - i))), range(n + 1))
 
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
 assert (list)(diagonal_line(0)) == [(0, 0)]
@@ -468,8 +475,9 @@ def linearized_plane(n=0):
 assert _coconut_igetitem(linearized_plane(), 0) == (0, 0)
 assert (list)(_coconut_igetitem(linearized_plane(), _coconut.slice(None, 3))) == [(0, 0), (0, 1), (1, 0)]
 
+@_coconut_tco
 def vector_field():
-    return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda xy: vector(*xy))), linearized_plane())
 
 # You'll need to bring in the vector class from earlier to make these work
 assert (repr)(_coconut_igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
@@ -484,9 +492,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             return pts[0] # vector(v) where v is a vector should return v
         else:
             return (datamaker(cls))((tuple)(pts)) # accesses base constructor
+    @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        return ((lambda s: s**0.5))((sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+    @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
         _coconut_match_check = False
@@ -500,7 +510,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
+    @_coconut_tco
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -514,10 +525,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut_minus, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
+    @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(_coconut.functools.partial(map, _coconut_minus))(self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -544,12 +556,14 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 
+@_coconut_tco
 def diagonal_line(n):
-    return (_coconut.functools.partial(map, lambda i: (i, n - i)))(range(n + 1))
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda i: (i, n - i))), range(n + 1))
 def linearized_plane(n=0):
     return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+@_coconut_tco
 def vector_field():
-    return (_coconut.functools.partial(map, lambda xy: vector(*xy)))(linearized_plane())
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda xy: vector(*xy))), linearized_plane())
 
 # Test cases:
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
@@ -571,9 +585,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             return pts[0] # vector(v) where v is a vector should return v
         else:
             return (datamaker(cls))((tuple)(pts)) # accesses base constructor
+    @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        return ((lambda s: s**0.5))((sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)((_coconut.functools.partial(map, lambda x: x**2))(self.pts)))
+    @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
         _coconut_match_check = False
@@ -587,7 +603,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut.operator.add, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
+    @_coconut_tco
     def __sub__(self, other):
         """Subtract one vector from another."""
         _coconut_match_check = False
@@ -601,10 +618,11 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         assert len(other_pts) == len(self.pts)
-        return (vector)(*map(_coconut_minus, self.pts, other_pts))
+        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
+    @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        return (vector)(*(_coconut.functools.partial(map, _coconut_minus))(self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -631,10 +649,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 # New one-line functions necessary for finding the angle between vectors:
+    @_coconut_tco
     def __truediv__(self, other):
-        return (vector)(*(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
     def unit(self):
         return self / abs(self)
+    @_coconut_tco
     def angle(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[1], vector)):
@@ -647,7 +667,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        return math.acos(self.unit() * other.unit())
+        raise _coconut_tail_call(math.acos, self.unit() * other.unit())
 
 # Test cases:
 assert (repr)(vector(3, 4) / 1) == "vector(pts=(3.0, 4.0))"
