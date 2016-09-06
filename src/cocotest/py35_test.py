@@ -226,13 +226,12 @@ MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _cocon
 
 import asyncio
 
-@_coconut_tco
 def py35_test():
     """Performs Python-3.5-specific tests."""
     async def async_map_0(args):
-        raise _coconut_tail_call(parallel_map, args[0], *args[1:])
+        return parallel_map(args[0], *args[1:])
     async def async_map_1(args):
-        raise _coconut_tail_call(parallel_map, args[0], *args[1:])
+        return parallel_map(args[0], *args[1:])
     async def async_map_2(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
@@ -245,7 +244,7 @@ def py35_test():
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        raise _coconut_tail_call(parallel_map, func, *iters)
+        return parallel_map(func, *iters)
     async def async_map_3(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
@@ -258,7 +257,7 @@ def py35_test():
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        raise _coconut_tail_call(parallel_map, func, *iters)
+        return parallel_map(func, *iters)
     async def async_map_4(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
@@ -271,7 +270,7 @@ def py35_test():
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        raise _coconut_tail_call(parallel_map, func, *iters)
+        return parallel_map(func, *iters)
     async def async_map_test():
         for async_map in (async_map_0, async_map_1, async_map_2, async_map_3, async_map_4):
             assert (tuple)((await ((async_map)((_coconut.functools.partial(pow, 2), range(5)))))) == (1, 2, 4, 8, 16)

@@ -209,7 +209,6 @@ def factorial(*_coconut_match_to):
     return 1
 
 @addpattern(factorial)
-@_coconut_tco
 def factorial(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
@@ -222,7 +221,7 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
     """Compute n! where n is an integer >= 0."""
-    raise _coconut_tail_call((_coconut.functools.partial(reduce, _coconut.operator.mul)), range(1, n + 1))
+    return (_coconut.functools.partial(reduce, _coconut.operator.mul))(range(1, n + 1))
 
 # Test cases:
 try:
