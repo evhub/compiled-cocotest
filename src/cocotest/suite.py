@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x105d1508
+# __coconut_hash__ = 0x9a681db
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -223,8 +223,8 @@ def suite_test():
     assert (sum)((_coconut.functools.partial(filter, lambda i: i % 2 == 0))((_coconut.functools.partial(takewhile, lambda i: i < 4000000))(fib()))) == 4613732
     assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
     assert recurse_n_times(10000)
-    assert is_even(5000)
-    assert is_odd(5001)
+    assert is_even(5000) and is_odd(5001)
+    assert is_even_(5000) and is_odd_(5001)
     def _coconut_lambda_0(_=None):
         return mod
     assert (_coconut_lambda_0)()(5, 3) == 2
@@ -234,3 +234,5 @@ def suite_test():
     assert 15 == assign_func_2(_coconut.operator.mul, 3, 5)
     assert 20 == _coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
     assert 20 == (_coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1)))(10)
+    assert does_raise_exc(raise_exc)
+    return True

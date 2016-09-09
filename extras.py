@@ -9,9 +9,9 @@
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys
 if _coconut_sys.version_info < (3,):
-    import os as _coconut_os
-    py2_chr, py2_filter, py2_hex, py2_input, py2_int, py2_map, py2_oct, py2_open, py2_print, py2_range, py2_raw_input, py2_str, py2_xrange, py2_zip = chr, filter, hex, input, int, map, oct, open, print, range, raw_input, str, xrange, zip
-    _coconut_int, _coconut_long, _coconut_print, _coconut_raw_input, _coconut_str, _coconut_unicode, _coconut_xrange, _coconut_repr = int, long, print, raw_input, str, unicode, xrange, repr
+    py_chr, py_filter, py_hex, py_input, py_int, py_map, py_oct, py_open, py_print, py_range, py_str, py_zip = chr, filter, hex, input, int, map, oct, open, print, range, str, zip
+    py_raw_input, py_xrange = raw_input, xrange
+    _coconut_raw_input, _coconut_xrange, _coconut_int, _coconut_long, _coconut_print, _coconut_str, _coconut_unicode, _coconut_repr = raw_input, xrange, int, long, print, str, unicode, repr
     from future_builtins import *
     chr, str = unichr, unicode
     from io import open
@@ -112,7 +112,7 @@ if _coconut_sys.version_info < (3,):
             return (_coconut_new_partial, (self.func, self.args, self.keywords))
         _coconut_copy_reg.pickle(_coconut_functools.partial, _coconut_reduce_partial)
 else:
-    py3_map, py3_zip = map, zip
+    py_chr, py_filter, py_hex, py_input, py_int, py_map, py_oct, py_open, py_print, py_range, py_str, py_zip = chr, filter, hex, input, int, map, oct, open, print, range, str, zip
 
 class _coconut(object):
     import collections, functools, imp, itertools, operator, types, copy, pickle
@@ -275,13 +275,16 @@ def _coconut_tco(func):
     def tail_call_optimized_func(*args, **kwargs):
         call_func = func
         while True:
+            if "_coconut_inside_tco" in kwargs:
+                del kwargs["_coconut_inside_tco"]
+                return call_func(*args, **kwargs)
+            if hasattr(call_func, "_coconut_is_tco"):
+                kwargs["_coconut_inside_tco"] = call_func._coconut_is_tco
             try:
                 return call_func(*args, **kwargs)
             except _coconut_tail_call as tail_call:
                 call_func, args, kwargs = tail_call.func, tail_call.args, tail_call.kwargs
-            if _coconut.hasattr(call_func, "_coconut_base_func"):
-                call_func = call_func._coconut_base_func
-    tail_call_optimized_func._coconut_base_func = func
+    tail_call_optimized_func._coconut_is_tco = True
     return tail_call_optimized_func
 def recursive_iterator(func):
     """Decorates a function by optimizing it for iterator recursion.
@@ -301,23 +304,18 @@ def addpattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked last."""
     def pattern_adder(func):
         @_coconut.functools.wraps(func)
+        @_coconut_tco
         def add_pattern_func(*args, **kwargs):
             try:
                 return base_func(*args, **kwargs)
             except _coconut_MatchError:
-                return func(*args, **kwargs)
+                raise _coconut_tail_call(func, *args, **kwargs)
         return add_pattern_func
     return pattern_adder
 def prepattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked first."""
     def pattern_prepender(func):
-        @_coconut.functools.wraps(func)
-        def pre_pattern_func(*args, **kwargs):
-            try:
-                return func(*args, **kwargs)
-            except _coconut_MatchError:
-                return base_func(*args, **kwargs)
-        return pre_pattern_func
+        return addpattern(func)(base_func)
     return pattern_prepender
 def datamaker(data_type):
     """Returns base data constructor of passed data type."""

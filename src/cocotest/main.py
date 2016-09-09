@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x1512be21
+# __coconut_hash__ = 0x72b636b0
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -390,24 +390,25 @@ def main_test():
     assert abc(10).xyz == 10
     class aclass(_coconut.object): pass
     assert isinstance(aclass, object)
+    return True
 
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
-    main_test()
+    assert main_test()
     if sys.version_info >= (2, 7):
         from .non_py26_test import non_py26_test
-        non_py26_test()
+        assert non_py26_test()
     from .suite import suite_test
-    suite_test()
+    assert suite_test()
     if sys.version_info < (3,):
         from .py2_test import py2_test
-        py2_test()
+        assert py2_test()
     else:
         from .py3_test import py3_test
-        py3_test()
+        assert py3_test()
         if sys.version_info >= (3, 5):
             from .py35_test import py35_test
-            py35_test()
+            assert py35_test()
     from . import tutorial
     print("<success>")

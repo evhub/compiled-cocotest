@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x51f52cb3
+# __coconut_hash__ = 0x16e19561
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -182,12 +182,14 @@ def map_iter(func, args):
         return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
+
 @_coconut_tco
 def next_mul_of(n, x):
     if x % n == 0:
         return x
     else:
         raise _coconut_tail_call(next_mul_of, n, x + 1)
+
 @_coconut_tco
 def collatz(n):
     if n == 1:
@@ -196,11 +198,13 @@ def collatz(n):
         raise _coconut_tail_call(collatz, n / 2)
     else:
         raise _coconut_tail_call(collatz, 3 * n + 1)
+
 @_coconut_tco
 def recurse_n_times(n):
     if not n:
         return True
     raise _coconut_tail_call(recurse_n_times, n - 1)
+
 @_coconut_tco
 def is_even(n):
     if not n:
@@ -211,6 +215,38 @@ def is_odd(n):
     if not n:
         return False
     raise _coconut_tail_call(is_even, n - 1)
+
+def is_even_(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_even_(0) = True'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def is_even_(0) = True'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    return True
+@addpattern(is_even_)
+@_coconut_tco
+def is_even_(n):
+    raise _coconut_tail_call(is_odd_, n - 1)
+
+def is_odd_(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_odd_(0) = False'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'def is_odd_(0) = False'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    return False
+@addpattern(is_odd_)
+@_coconut_tco
+def is_odd_(n):
+    raise _coconut_tail_call(is_even_, n - 1)
 
 # Data Blocks:
 class preop(_coconut.collections.namedtuple("preop", "x, y")):
@@ -1168,3 +1204,14 @@ def assign_func_2(f, x, y):
 mul = _coconut.operator.mul
 def minus(a, b):
     return b - a
+
+# Exception Functions
+
+def raise_exc():
+    raise Exception()
+
+def does_raise_exc(func):
+    try:
+        return func()
+    except Exception:
+        return True

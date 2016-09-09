@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0xb2ceec32
+# __coconut_hash__ = 0xc4458e16
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -31,3 +31,4 @@ def non_py26_test():
     test = {}
     exec("b = mod(5, 3)", globals(), test)
     assert test["b"] == 2
+    return True
