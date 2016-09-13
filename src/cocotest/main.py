@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x72b636b0
+# __coconut_hash__ = 0x2967020
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -390,6 +390,9 @@ def main_test():
     assert abc(10).xyz == 10
     class aclass(_coconut.object): pass
     assert isinstance(aclass, object)
+    assert (_coconut.operator.is_)(*tee((1, 2)))
+    assert (_coconut.operator.is_)(*tee(_coconut.frozenset((1, 2))))
+    assert (lambda x: 2 / x)(4) == 1 / 2
     return True
 
 def main(*args):

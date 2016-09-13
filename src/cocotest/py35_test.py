@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x4f523b3b
+# __coconut_hash__ = 0xc75d8970
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -60,7 +60,9 @@ def _coconut_bool_or(a, b): return a or b
 def _coconut_minus(*args): return _coconut.operator.neg(*args) if len(args) < 2 else _coconut.operator.sub(*args)
 @_coconut.functools.wraps(_coconut.itertools.tee)
 def _coconut_tee(iterable, n=2):
-    if n > 0 and (_coconut.hasattr(iterable, "__copy__") or _coconut.isinstance(iterable, _coconut.abc.Sequence)):
+    if n >= 0 and _coconut.isinstance(iterable, (_coconut.tuple, _coconut.frozenset)):
+        return (iterable,)*n
+    elif n > 0 and (_coconut.hasattr(iterable, "__copy__") or _coconut.isinstance(iterable, _coconut.abc.Sequence)):
         return (iterable,) + _coconut.tuple(_coconut.copy.copy(iterable) for i in range(n - 1))
     else:
         return _coconut.itertools.tee(iterable, n)
@@ -272,7 +274,7 @@ def py35_test():
     async def async_map_test():
         for async_map in (async_map_0, async_map_1, async_map_2, async_map_3, async_map_4):
             assert (tuple)((await ((async_map)((_coconut.functools.partial(pow, 2), range(5)))))) == (1, 2, 4, 8, 16)
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(async_map_test())
     loop.close()
     try:
