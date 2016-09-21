@@ -237,7 +237,8 @@ def py3_test():
     set_x(3)
     assert x == 3
     def set_x_again(y):
-        nonlocal x; x = y
+        nonlocal x
+        x = y
     set_x_again(10)
     assert x == 10
     assert {x: x for x in range(5)} == {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
@@ -248,13 +249,15 @@ def py3_test():
     class metaA(type):
         def __instancecheck__(cls, inst):
             return True
-    class A(metaclass=metaA): pass
+    class A(metaclass=metaA):
+        pass
     assert isinstance(A(), A)
     assert isinstance("", A)
     assert isinstance(5, A)
     assert (tuple)(py_map(lambda x: x + 1, range(4))) == (1, 2, 3, 4)
     assert (tuple)(py_zip(range(3), range(3))) == ((0, 0), (1, 1), (2, 2))
-    class B(*()): pass
+    class B(*()):
+        pass
     assert isinstance(B(), B)
     e = exec
     test = {}

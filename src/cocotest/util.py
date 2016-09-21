@@ -731,6 +731,7 @@ def head_tail(l):
         _coconut_match_err.pattern = 'match [head] + tail = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return head, tail
 def init_last(l):
     _coconut_match_check = False
@@ -744,6 +745,7 @@ def init_last(l):
         _coconut_match_err.pattern = 'init + [last] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return init, last
 def last_two(l):
     _coconut_match_check = False
@@ -758,6 +760,7 @@ def last_two(l):
         _coconut_match_err.pattern = '_ + [a, b] = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a, b
 def delist2(l):
     _coconut_match_check = False
@@ -771,6 +774,7 @@ def delist2(l):
         _coconut_match_err.pattern = 'match list(a, b) = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a, b
 def delist2_(l):
     _coconut_match_check = False
@@ -784,6 +788,7 @@ def delist2_(l):
         _coconut_match_err.pattern = 'list(a, b)  = l'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a, b
 
 # Optional Explicit Assignment:
@@ -801,6 +806,7 @@ def dictpoint_(value):
         _coconut_match_err.pattern = '{"x":x is int, "y":y is int} = value'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return x, y
 def dictpoint__(*_coconut_match_to):
     _coconut_match_check = False
@@ -813,6 +819,7 @@ def dictpoint__(*_coconut_match_to):
         _coconut_match_err.pattern = 'def dictpoint__({"x":x is int, "y":y is int}):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return x, y
 def tuple1(a):
     return a,
@@ -842,6 +849,7 @@ def last_two_(*_coconut_match_to):
         _coconut_match_err.pattern = 'def last_two_(_ + [a, b]):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a, b
 def htsplit(*_coconut_match_to):
     _coconut_match_check = False
@@ -906,6 +914,7 @@ def strmul(*_coconut_match_to):
         _coconut_match_err.pattern = 'match def strmul(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a * x
 def strmul_(*_coconut_match_to):
     _coconut_match_check = False
@@ -918,6 +927,7 @@ def strmul_(*_coconut_match_to):
         _coconut_match_err.pattern = 'def strmul_(a is str, x is int):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return a * x
 
 # Lazy Lists:

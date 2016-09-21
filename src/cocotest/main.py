@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x2967020
+# __coconut_hash__ = 0x48aaf76
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -72,7 +72,8 @@ def main_test():
         return x + y
     assert multiline_backslash_test(1, 2) == 3
     assert True
-    class one_line_class(_coconut.object): pass
+    class one_line_class(_coconut.object):
+        pass
     assert isinstance(one_line_class(), one_line_class)
     assert ((_coconut.operator.attrgetter("join"))(""))(["1", "2", "3"]) == "123" == ((_coconut.functools.partial(_coconut.getattr, ""))("join"))(["1", "2", "3"])
     assert (_coconut.functools.partial(_coconut.operator.getitem, [1, 2, 3]))(1) == 2 == (_coconut.functools.partial(_coconut_igetitem, [1, 2, 3]))(1)
@@ -102,6 +103,7 @@ def main_test():
         _coconut_match_err.pattern = '{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     assert text == "abc"
     assert first == 1
     assert rest == [2, 3]
@@ -117,7 +119,8 @@ def main_test():
     set_globs(2)
     assert glob_a == 2 == glob_b
     def set_globs_again(x):
-        global glob_a, glob_b; glob_a, glob_b = (x, x)
+        global glob_a, glob_b
+        glob_a, glob_b = (x, x)
     set_globs_again(10)
     assert glob_a == 10 == glob_b
     assert _coconut_minus(1) == -1 == _coconut.functools.partial(_coconut_minus, 1)(2)
@@ -235,6 +238,7 @@ def main_test():
         _coconut_match_err.pattern = 'match x = 12'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     assert x == 12
     get_int = lambda: int
     _coconut_match_check = False
@@ -247,8 +251,10 @@ def main_test():
         _coconut_match_err.pattern = 'x is get_int() = 5'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     assert x == 5
-    class a(get_int()): pass
+    class a(get_int()):
+        pass
     assert isinstance(a(), int)
     assert (len)(map(_coconut.operator.add, range(5), range(6))) == 5 == (len)(zip(range(5), range(6)))
     assert map(_coconut_minus, range(5))._func(3) == -3
@@ -393,6 +399,39 @@ def main_test():
     assert (_coconut.operator.is_)(*tee((1, 2)))
     assert (_coconut.operator.is_)(*tee(_coconut.frozenset((1, 2))))
     assert (lambda x: 2 / x)(4) == 1 / 2
+    _coconut_match_check = False
+    _coconut_match_to = range(10)
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        _coconut_match_iter_0 = _coconut.list(_coconut_match_to)
+        if (_coconut.len(_coconut_match_iter_0) >= 2):
+            b = _coconut_match_iter_0[1:-1]
+            a = _coconut_match_iter_0[0]
+            c = _coconut_match_iter_0[-1]
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match [a, *b, c] = range(10)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match [a, *b, c] = range(10)'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert a == 0
+    assert b == [1, 2, 3, 4, 5, 6, 7, 8]
+    assert c == 9
+    _coconut_match_check = False
+    _coconut_match_to = range(10)
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        _coconut_match_iter_0 = _coconut.list(_coconut_match_to)
+        if (_coconut.len(_coconut_match_iter_0) >= 2) and (_coconut_match_iter_0[0] == _coconut_match_iter_0[-1]):
+            b = _coconut_match_iter_0[1:-1]
+            a = _coconut_match_iter_0[0]
+            _coconut_match_check = True
+    if _coconut_match_check:
+        assert False
+    else:
+        assert True
+    a = 1
+    b = 1
+    assert a == 1 == b
     return True
 
 def main(*args):

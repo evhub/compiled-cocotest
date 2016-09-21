@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-# __coconut_hash__ = 0x8b162321
+# __coconut_hash__ = 0xfc7ce143
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -332,6 +332,7 @@ MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _cocon
 import sys
 
 from coconut.__coconut__ import consume as coc_consume
+from coconut.exceptions import CoconutStyleError
 from coconut.convenience import CoconutException
 from coconut.convenience import cmd
 from coconut.convenience import version
@@ -432,37 +433,43 @@ def main():
     setup(strict=True)
     try:
         parse("def f(x):\n \t pass")
-    except CoconutException:
+    except CoconutStyleError:
         assert True
     else:
         assert False
     try:
         parse("lambda x: x")
-    except CoconutException:
+    except CoconutStyleError:
         assert True
     else:
         assert False
     try:
         parse("u''")
-    except CoconutException:
+    except CoconutStyleError:
         assert True
     else:
         assert False
     try:
         parse("def f(x):\\\n pass")
-    except CoconutException:
+    except CoconutStyleError:
         assert True
     else:
         assert False
     try:
         parse("abc ")
-    except CoconutException:
+    except CoconutStyleError:
         assert True
     else:
         assert False
     try:
         parse("abc", "file")
-    except CoconutException:
+    except CoconutStyleError:
+        assert True
+    else:
+        assert False
+    try:
+        parse("a=1;")
+    except CoconutStyleError:
         assert True
     else:
         assert False

@@ -91,6 +91,7 @@ def factorial(n):
             _coconut_match_err.pattern = '0 = n  # destructuring assignment'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+# destructuring assignment
     except MatchError:
         try:
             _coconut_match_check = False
@@ -102,6 +103,7 @@ def factorial(n):
                 _coconut_match_err.pattern = '_ is int = n  # also destructuring assignment'
                 _coconut_match_err.value = _coconut_match_to
                 raise _coconut_match_err
+# also destructuring assignment
         except MatchError:
             pass
         else:
@@ -206,6 +208,7 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.pattern = 'def factorial(0):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return 1
 
 @addpattern(factorial)
@@ -221,6 +224,7 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.pattern = 'def factorial(n is int if n > 0):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     """Compute n! where n is an integer >= 0."""
     raise _coconut_tail_call((_coconut.functools.partial(reduce, _coconut.operator.mul)), range(1, n + 1))
 
@@ -264,6 +268,7 @@ def factorial(*_coconut_match_to):
         _coconut_match_err.pattern = 'def factorial(n is int if n > 0):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     """Compute n! where n is an integer >= 0."""
     return n * factorial(n - 1)
 
@@ -292,6 +297,7 @@ def quick_sort(*_coconut_match_to):
         _coconut_match_err.pattern = 'def quick_sort([]):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     return []
 
 @addpattern(quick_sort)
@@ -306,6 +312,7 @@ def quick_sort(*_coconut_match_to):
         _coconut_match_err.pattern = 'def quick_sort([head] + tail):'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
+
     """Sort the input sequence using the quick sort algorithm."""
     return (quick_sort([x for x in tail if x < head]) + [head] + quick_sort([x for x in tail if x >= head]))
 
@@ -400,6 +407,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
@@ -415,6 +423,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
@@ -513,6 +522,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
@@ -528,6 +538,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
@@ -608,6 +619,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
@@ -623,6 +635,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             _coconut_match_err.pattern = 'vector(other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
+
         assert len(other_pts) == len(self.pts)
         raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
