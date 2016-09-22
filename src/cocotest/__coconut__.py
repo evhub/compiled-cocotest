@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 

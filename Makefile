@@ -1,4 +1,4 @@
-.PHONY: quick full linenumbers run
+.PHONY: quick force linenumbers test
 
 quick:
 	cp -r ../cocotest/src/* ./src
@@ -17,7 +17,7 @@ quick:
 	rm ./src/cocotest/*.coc
 	cp -r ./src/* ../cocotest/src
 
-full:
+force:
 	cp -r ../cocotest/src/* ./src
 	coconut ./src/cocotest/py2_test.coco -t2 -sf
 	rm ./src/cocotest/py2_test.coco
@@ -51,7 +51,7 @@ linenumbers:
 	rm ./src/cocotest/*.coc
 	cp -r ./src/* ../cocotest/src
 
-run:
+test:
 	python ./extras.py
 	python ./src/runner.py
 	python2 ./src/runner.py
