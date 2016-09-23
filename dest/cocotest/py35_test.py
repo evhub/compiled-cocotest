@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x406e6e8
+# __coconut_hash__ = 0x49766680
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -80,4 +80,6 @@ def py35_test():
         assert False
     assert (1, *(2, 3), 4) == (1, 2, 3, 4)
     assert {"a": 1, **{"b": 2}, "c": 3} == {"a": 1, "b": 2, "c": 3}
+    assert range(1, 2) == range(1, 2)
+    assert range(1, 2) != range(3, 4)
     return True

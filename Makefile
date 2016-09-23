@@ -1,4 +1,4 @@
-.PHONY: quick force linenumbers test
+.PHONY: quick force linenumbers run test
 
 quick:
 	python ../coconut/tests
@@ -12,7 +12,9 @@ linenumbers:
 	python ../coconut/tests -l
 	cp -r ../coconut/tests/dest .
 
-test:
-	python3 ./extras.py
-	python3 ./cocotest/runner.py
-	python2 ./cocotest/runner.py
+run:
+	python3 ./dest/extras.py
+	python3 ./dest/runner.py
+	python2 ./dest/runner.py
+
+test: quick run

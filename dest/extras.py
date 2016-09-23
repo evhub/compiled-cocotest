@@ -59,6 +59,8 @@ if _coconut_sys.version_info < (3,):
             return (self.__class__, self._xrange.__reduce_ex__(protocol)[1])
         def __reduce__(self):
             return self.__reduce_ex__(_coconut.pickle.HIGHEST_PROTOCOL)
+        def __hash__(self):
+            return _coconut.hash(self._xrange.__reduce__()[1])
         def __copy__(self):
             return self.__class__(*self._xrange.__reduce__()[1])
         def __eq__(self, other):
@@ -125,7 +127,7 @@ class _coconut(object):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, staticmethod(repr)
+    IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, bytearray, repr = IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, bytearray, staticmethod(repr)
 
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
@@ -273,6 +275,8 @@ class count(object):
         return (elem - self._start) // self._step
     def __repr__(self):
         return "count(" + str(self._start) + ", " + str(self._step) + ")"
+    def __hash__(self):
+        return _coconut.hash((self._start, self._step))
     def __reduce__(self):
         return (self.__class__, (self._start, self._step))
     def __copy__(self):
