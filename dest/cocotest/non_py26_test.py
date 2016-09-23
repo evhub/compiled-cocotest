@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x21644302
+# __coconut_hash__ = 0xddbfc801
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -19,12 +19,16 @@ for name in dir(__coconut__):
 
 # Compiled Coconut: ------------------------------------------------------
 
-import sys
-import os.path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from .util import mod
 
-import cocotest
-from cocotest.main import main
-
-if __name__ == "__main__":
-    main(cocotest.__doc__)
+def non_py26_test():
+    """Tests for any non-py26 version."""
+    test = {}
+    exec("a = 1", test)
+    assert test["a"] == 1
+    exec("a = 2", globals(), test)
+    assert test["a"] == 2
+    test = {}
+    exec("b = mod(5, 3)", globals(), test)
+    assert test["b"] == 2
+    return True

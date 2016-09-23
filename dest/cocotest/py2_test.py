@@ -1,14 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xd11d438e
+# __coconut_hash__ = 0x23e46316
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
-
-"""
-Author: Evan Hubinger
-License: Apache 2.0
-Description: The Coconut test suite.
-"""
 
 # Coconut Header: --------------------------------------------------------
 
@@ -24,3 +18,12 @@ for name in dir(__coconut__):
         globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------
+
+def py2_test():
+    """Performs Python2-specific tests."""
+    assert py_filter(_coconut.functools.partial(_coconut.operator.gt, 3), range(10)) == [0, 1, 2]
+    assert py_map(_coconut.functools.partial(_coconut.operator.add, 2), range(5)) == [2, 3, 4, 5, 6]
+    assert py_range(5) == [0, 1, 2, 3, 4]
+    assert not isinstance(long(1), py_int)
+    assert py_str(3) == b"3" == unicode(b"3")
+    return True

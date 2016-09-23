@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# __coconut_hash__ = 0x13d2b237
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
-
-"""Built-in Coconut utilities."""
 
 # Coconut Header: --------------------------------------------------------
 
@@ -58,8 +57,13 @@ if _coconut_sys.version_info < (3,):
             return _coconut.repr(self._xrange)[1:]
         def __reduce_ex__(self, protocol):
             return (self.__class__, self._xrange.__reduce_ex__(protocol)[1])
+        def __reduce__(self):
+            return self.__reduce_ex__(_coconut.pickle.HIGHEST_PROTOCOL)
         def __copy__(self):
             return self.__class__(*self._xrange.__reduce__()[1])
+        def __eq__(self, other):
+            reduction = self.__reduce__()
+            return _coconut.isinstance(other, reduction[0]) and reduction[1] == other.__reduce__()[1]
     from collections import Sequence as _coconut_Sequence
     _coconut_Sequence.register(range)
     class int(_coconut_int):
@@ -190,8 +194,10 @@ class _coconut_map(_coconut.map):
         return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "map(" + _coconut.repr(self._func) + ", " + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
-    def __reduce_ex__(self, _):
+    def __reduce__(self):
         return (self.__class__, (self._func,) + self._iters)
+    def __reduce_ex__(self, _):
+        return self.__reduce__()
     def __copy__(self):
         return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
 class parallel_map(_coconut_map):
@@ -233,8 +239,10 @@ class zip(_coconut.zip):
         return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "zip(" + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
-    def __reduce_ex__(self, _):
+    def __reduce__(self):
         return (self.__class__, self._iters)
+    def __reduce_ex__(self, _):
+        return self.__reduce__()
     def __copy__(self):
         return self.__class__(*_coconut_map(_coconut.copy.copy, self._iters))
 class count(object):
@@ -269,6 +277,9 @@ class count(object):
         return (self.__class__, (self._start, self._step))
     def __copy__(self):
         return self.__class__(self._start, self._step)
+    def __eq__(self, other):
+        reduction = self.__reduce__()
+        return _coconut.isinstance(other, reduction[0]) and reduction[1] == other.__reduce__()[1]
 class _coconut_tail_call(Exception):
     __slots__ = ("func", "args", "kwargs")
     def __init__(self, func, *args, **kwargs):
@@ -327,3 +338,15 @@ def consume(iterable, keep_last=0):
     """Fully exhaust iterable and return the last keep_last elements."""
     return _coconut.collections.deque(iterable, maxlen=keep_last)  # fastest way to exhaust an iterator
 MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee
+
+# Compiled Coconut: ------------------------------------------------------
+
+import sys
+import os.path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+import cocotest
+from cocotest.main import main
+
+if __name__ == "__main__":
+    main(cocotest.__doc__)

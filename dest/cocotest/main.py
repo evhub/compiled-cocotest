@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x48aaf76
+# __coconut_hash__ = 0xfba0e1bb
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
@@ -432,6 +432,10 @@ def main_test():
     a = 1
     b = 1
     assert a == 1 == b
+    assert range(1, 2) == range(1, 2)
+    assert range(1, 2) != range(3, 4)
+    assert count(5) == count(5)
+    assert count(5) != count(3)
     return True
 
 def main(*args):

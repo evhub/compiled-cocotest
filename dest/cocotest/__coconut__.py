@@ -1,120 +1,23 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xab5f1950
 
 # Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
 
+"""Built-in Coconut utilities."""
+
 # Coconut Header: --------------------------------------------------------
 
-from __future__ import print_function, absolute_import, unicode_literals, division
+from __future__ import generator_stop
 import sys as _coconut_sys
 py_chr, py_filter, py_hex, py_input, py_int, py_map, py_oct, py_open, py_print, py_range, py_str, py_zip = chr, filter, hex, input, int, map, oct, open, print, range, str, zip
-py_raw_input, py_xrange = raw_input, xrange
-_coconut_raw_input, _coconut_xrange, _coconut_int, _coconut_long, _coconut_print, _coconut_str, _coconut_unicode, _coconut_repr = raw_input, xrange, int, long, print, str, unicode, repr
-from future_builtins import *
-chr, str = unichr, unicode
-from io import open
-class range(object):
-    __slots__ = ("_xrange",)
-    if hasattr(_coconut_xrange, "__doc__"):
-        __doc__ = _coconut_xrange.__doc__
-    def __init__(self, *args):
-        self._xrange = _coconut_xrange(*args)
-    def __iter__(self):
-        return _coconut.iter(self._xrange)
-    def __reversed__(self):
-        return _coconut.reversed(self._xrange)
-    def __len__(self):
-        return _coconut.len(self._xrange)
-    def __contains__(self, elem):
-        return elem in self._xrange
-    def __getitem__(self, index):
-        if _coconut.isinstance(index, _coconut.slice):
-            start, stop, step = index.start, index.stop, index.step
-            if start is None:
-                start = 0
-            elif start < 0:
-                start += _coconut.len(self._xrange)
-            if stop is None:
-                stop = _coconut.len(self._xrange)
-            elif stop is not None and stop < 0:
-                stop += _coconut.len(self._xrange)
-            if step is None:
-                step = 1
-            return _coconut_map(self._xrange.__getitem__, self.__class__(start, stop, step))
-        else:
-            return self._xrange[index]
-    def count(self, elem):
-        """Count the number of times elem appears in the range."""
-        return int(elem in self._xrange)
-    def index(self, elem):
-        """Find the index of elem in the range."""
-        if elem not in self._xrange: raise _coconut.ValueError(_coconut.repr(elem) + " is not in range")
-        start, _, step = self._xrange.__reduce_ex__(2)[1]
-        return (elem - start) // step
-    def __repr__(self):
-        return _coconut.repr(self._xrange)[1:]
-    def __reduce_ex__(self, protocol):
-        return (self.__class__, self._xrange.__reduce_ex__(protocol)[1])
-    def __copy__(self):
-        return self.__class__(*self._xrange.__reduce__()[1])
-from collections import Sequence as _coconut_Sequence
-_coconut_Sequence.register(range)
-class int(_coconut_int):
-    __slots__ = ()
-    if hasattr(_coconut_int, "__doc__"):
-        __doc__ = _coconut_int.__doc__
-    class __metaclass__(type):
-        def __instancecheck__(cls, inst):
-            return _coconut.isinstance(inst, (_coconut_int, _coconut_long))
-class bytes(_coconut_str):
-    __slots__ = ()
-    if hasattr(_coconut_str, "__doc__"):
-        __doc__ = _coconut_str.__doc__
-    class __metaclass__(type):
-        def __instancecheck__(cls, inst):
-            return _coconut.isinstance(inst, _coconut_str)
-    def __new__(cls, *args, **kwargs):
-        return _coconut_str.__new__(cls, _coconut.bytearray(*args, **kwargs))
-from functools import wraps as _coconut_wraps
-@_coconut_wraps(_coconut_print)
-def print(*args, **kwargs):
-    if _coconut.hasattr(_coconut_sys.stdout, "encoding") and _coconut_sys.stdout.encoding is not None:
-        return _coconut_print(*(_coconut_unicode(x).encode(_coconut_sys.stdout.encoding) for x in args), **kwargs)
-    else:
-        return _coconut_print(*(_coconut_unicode(x).encode() for x in args), **kwargs)
-@_coconut_wraps(_coconut_raw_input)
-def input(*args, **kwargs):
-    if _coconut.hasattr(_coconut_sys.stdout, "encoding") and _coconut_sys.stdout.encoding is not None:
-        return _coconut_raw_input(*args, **kwargs).decode(_coconut_sys.stdout.encoding)
-    else:
-        return _coconut_raw_input(*args, **kwargs).decode()
-@_coconut_wraps(_coconut_repr)
-def repr(obj):
-    if isinstance(obj, _coconut_unicode):
-        return _coconut_repr(obj)[1:]
-    else:
-        return _coconut_repr(obj)
-ascii = repr
-def raw_input(*args):
-    """Coconut uses Python 3 "input" instead of Python 2 "raw_input"."""
-    raise _coconut.NameError('Coconut uses Python 3 "input" instead of Python 2 "raw_input"')
-def xrange(*args):
-    """Coconut uses Python 3 "range" instead of Python 2 "xrange"."""
-    raise _coconut.NameError('Coconut uses Python 3 "range" instead of Python 2 "xrange"')
-if _coconut_sys.version_info < (2, 7):
-    import functools as _coconut_functools, copy_reg as _coconut_copy_reg
-    def _coconut_new_partial(func, args, keywords):
-        return _coconut_functools.partial(func, *(args if args is not None else ()), **(keywords if keywords is not None else {}))
-    _coconut_copy_reg.constructor(_coconut_new_partial)
-    def _coconut_reduce_partial(self):
-        return (_coconut_new_partial, (self.func, self.args, self.keywords))
-    _coconut_copy_reg.pickle(_coconut_functools.partial, _coconut_reduce_partial)
 
-class _coconut(object):
+class _coconut:
     import collections, functools, imp, itertools, operator, types, copy, pickle
-    abc = collections
-    IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, bytearray, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, staticmethod(repr)
+    if _coconut_sys.version_info < (3, 3):
+        abc = collections
+    else:
+        import collections.abc as abc
+    IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr = IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, repr
 
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
@@ -136,7 +39,7 @@ def _coconut_igetitem(iterable, index):
         return _coconut.tuple(iterable)[index]
     else:
         return _coconut.itertools.islice(iterable, index.start, index.stop, index.step)
-class _coconut_compose(object):
+class _coconut_compose:
     __slots__ = ("funcs")
     def __init__(self, *funcs):
         self.funcs = funcs
@@ -183,8 +86,10 @@ class _coconut_map(_coconut.map):
         return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "map(" + _coconut.repr(self._func) + ", " + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
-    def __reduce_ex__(self, _):
+    def __reduce__(self):
         return (self.__class__, (self._func,) + self._iters)
+    def __reduce_ex__(self, _):
+        return self.__reduce__()
     def __copy__(self):
         return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
 class parallel_map(_coconut_map):
@@ -202,8 +107,7 @@ class concurrent_map(_coconut_map):
     __slots__ = ()
     def __iter__(self):
         from concurrent.futures import ThreadPoolExecutor
-        from multiprocessing import cpu_count  # cpu_count() * 5 is the default Python 3 thread count
-        with ThreadPoolExecutor(cpu_count() * 5) as executor:
+        with ThreadPoolExecutor() as executor:
             return _coconut.iter(_coconut.tuple(executor.map(self._func, *self._iters)))
     def __repr__(self):
         return "concurrent_" + _coconut_map.__repr__(self)
@@ -226,11 +130,13 @@ class zip(_coconut.zip):
         return _coconut.min(_coconut.len(i) for i in self._iters)
     def __repr__(self):
         return "zip(" + ", ".join((_coconut.repr(i) for i in self._iters)) + ")"
-    def __reduce_ex__(self, _):
+    def __reduce__(self):
         return (self.__class__, self._iters)
+    def __reduce_ex__(self, _):
+        return self.__reduce__()
     def __copy__(self):
         return self.__class__(*_coconut_map(_coconut.copy.copy, self._iters))
-class count(object):
+class count:
     """count(start, step) returns an infinite iterator starting at start and increasing by step."""
     __slots__ = ("_start", "_step")
     def __init__(self, start=0, step=1):
@@ -262,6 +168,9 @@ class count(object):
         return (self.__class__, (self._start, self._step))
     def __copy__(self):
         return self.__class__(self._start, self._step)
+    def __eq__(self, other):
+        reduction = self.__reduce__()
+        return _coconut.isinstance(other, reduction[0]) and reduction[1] == other.__reduce__()[1]
 class _coconut_tail_call(Exception):
     __slots__ = ("func", "args", "kwargs")
     def __init__(self, func, *args, **kwargs):
@@ -320,14 +229,3 @@ def consume(iterable, keep_last=0):
     """Fully exhaust iterable and return the last keep_last elements."""
     return _coconut.collections.deque(iterable, maxlen=keep_last)  # fastest way to exhaust an iterator
 MatchError, map, reduce, takewhile, dropwhile, tee = _coconut_MatchError, _coconut_map, _coconut.functools.reduce, _coconut.itertools.takewhile, _coconut.itertools.dropwhile, _coconut_tee
-
-# Compiled Coconut: ------------------------------------------------------
-
-def py2_test():
-    """Performs Python2-specific tests."""
-    assert py_filter(_coconut.functools.partial(_coconut.operator.gt, 3), range(10)) == [0, 1, 2]
-    assert py_map(_coconut.functools.partial(_coconut.operator.add, 2), range(5)) == [2, 3, 4, 5, 6]
-    assert py_range(5) == [0, 1, 2, 3, 4]
-    assert not isinstance(long(1), py_int)
-    assert py_str(3) == b"3" == unicode(b"3")
-    return True
