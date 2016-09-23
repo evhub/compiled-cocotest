@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x2474872a
+# __coconut_hash__ = 0x75997882
 
-# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.2-post_dev2 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 

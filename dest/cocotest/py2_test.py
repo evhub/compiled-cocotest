@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xa5b6e360
+# __coconut_hash__ = 0x66c57797
 
-# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.2-post_dev2 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -26,6 +26,4 @@ def py2_test():
     assert py_range(5) == [0, 1, 2, 3, 4]
     assert not isinstance(long(1), py_int)
     assert py_str(3) == b"3" == unicode(b"3")
-    assert range(1, 2) == range(1, 2)
-    assert range(1, 2) != range(3, 4)
     return True

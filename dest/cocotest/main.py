@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xa25101b0
+# __coconut_hash__ = 0x29121605
 
-# Compiled with Coconut version 1.1.1-post_dev [Brontosaurus]
+# Compiled with Coconut version 1.1.2-post_dev2 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -435,7 +435,6 @@ def main_test():
     assert count(5) == count(5)
     assert count(5) != count(3)
     assert {count(5): True}[count(5)]
-    assert {range(8): True}[range(8)]
     return True
 
 def main(*args):
@@ -443,8 +442,11 @@ def main(*args):
     assert all(args)
     assert main_test()
     if sys.version_info >= (2, 7):
-        from .non_py26_test import non_py26_test
+        from .specific import non_py26_test
         assert non_py26_test()
+    if not (3,) <= sys.version_info < (3, 3):
+        from .specific import non_py32_test
+        assert non_py32_test
     from .suite import suite_test
     assert suite_test()
     if sys.version_info < (3,):

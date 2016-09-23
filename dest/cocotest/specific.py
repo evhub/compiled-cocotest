@@ -1,14 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x5b0cd511
+# __coconut_hash__ = 0xf03da7c7
 
 # Compiled with Coconut version 1.1.2-post_dev2 [Colonel]
-
-"""
-Author: Evan Hubinger
-License: Apache 2.0
-Description: The Coconut test suite.
-"""
 
 # Coconut Header: --------------------------------------------------------
 
@@ -24,3 +18,23 @@ for name in dir(__coconut__):
         globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------
+
+from .util import mod
+
+def non_py26_test():
+    """Tests for any non-py26 version."""
+    test = {}
+    exec("a = 1", test)
+    assert test["a"] == 1
+    exec("a = 2", globals(), test)
+    assert test["a"] == 2
+    test = {}
+    exec("b = mod(5, 3)", globals(), test)
+    assert test["b"] == 2
+    return True
+
+def non_py32_test():
+    """Tests for any non-py32 version."""
+    assert {range(8): True}[range(8)]
+    assert range(1, 2) == range(1, 2)
+    assert range(1, 2) != range(3, 4)
