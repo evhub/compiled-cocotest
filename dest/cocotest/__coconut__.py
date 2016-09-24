@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Compiled with Coconut version 1.1.2-post_dev2 [Colonel]
+# Compiled with Coconut version 1.2.0 [Colonel]
 
 """Built-in Coconut utilities."""
 
