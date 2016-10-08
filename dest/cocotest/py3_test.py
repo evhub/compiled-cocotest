@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x6ec6200a
+# __coconut_hash__ = 0xede810a7
 
-# Compiled with Coconut version 1.2.0-post_dev1 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -20,9 +20,6 @@ for name in dir(__coconut__):
 
 def py3_test():
     """Performs Python-3-specific tests."""
-    def p1(x: int) -> int:
-        return x + 1
-    assert p1(2) == 3
     x = 5
     assert x == 5
     def set_x(y):

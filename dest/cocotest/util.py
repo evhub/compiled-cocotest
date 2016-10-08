@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x53b1aee
+# __coconut_hash__ = 0x68241d09
 
-# Compiled with Coconut version 1.2.0-post_dev1 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -42,7 +42,7 @@ prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
 @_coconut_tco
 def zipwith(f, *args):
     raise _coconut_tail_call(map, lambda items: f(*items), zip(*args))
-zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
+zipsum = _coconut_compose(_coconut.functools.partial(map, (sum)), zip)
 plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
@@ -101,7 +101,7 @@ def qsort2(l):
     if not l:
         return []
     else:
-        head, tail = l[0], l[1:] # Python Pattern-Matching
+        head, tail = l[0], l[1:]  # Python Pattern-Matching
         return (qsort2([x for x in tail if x <= head]) + [head] + qsort2([x for x in tail if x > head]))
 @_coconut_tco
 def qsort3(l):
@@ -1002,27 +1002,27 @@ def grid(x=0):
 @_coconut_tco
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    raise _coconut_tail_call((_coconut.functools.partial(map, _coconut.functools.partial(map, func))), gridsample)
+    raise _coconut_tail_call(map, _coconut.functools.partial(map, func), gridsample)
 
 @_coconut_tco
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    raise _coconut_tail_call((_coconut.functools.partial(parallel_map, _coconut.functools.partial(parallel_map, func))), gridsample)
+    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, func), gridsample)
 
 @_coconut_tco
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
-    raise _coconut_tail_call((list), (_coconut.functools.partial(map, lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax)))))(_coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
+    raise _coconut_tail_call((list), map(lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax))), _coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
 
 # Physics function:
 
 def SHOPeriodTerminate(X, t, params):
     if X[1] > 0:
-        return -1 # passed the turning point, so go back
+        return -1  # passed the turning point, so go back
     epsilon = params['epsilon'] if 'epsilon' in params else 1e-8
     if abs(X[1]) < epsilon and X[0] < 0:
-        return 1 # we're done
-    return 0 # keep going
+        return 1  # we're done
+    return 0  # keep going
 
 # Multiple dispatch:
 
