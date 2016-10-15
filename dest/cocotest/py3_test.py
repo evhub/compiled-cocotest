@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xc5804d02
+# __coconut_hash__ = 0xbf31ddac
 
-# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev9 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map
 from __coconut__ import *
-import __coconut__
 _coconut_sys.path.remove(_coconut_file_path)
-for name in dir(__coconut__):
-    if name.startswith("_") and not name.startswith("__"):
-        globals()[name] = getattr(__coconut__, name)
 
 # Compiled Coconut: ------------------------------------------------------
 

@@ -1,11 +1,3 @@
-.PHONY: force
-force: clean quick
-
-.PHONY: clean
-clean:
-	rm -rf ../coconut/tests/dest
-	rm -rf ./dest
-
 .PHONY: quick
 quick:
 	python ../coconut/tests
@@ -21,6 +13,14 @@ run:
 	python3 ./dest/extras.py
 	python3 ./dest/runner.py
 	python2 ./dest/runner.py
+
+.PHONY: clean
+clean:
+	rm -rf ../coconut/tests/dest
+	rm -rf ./dest
+
+.PHONY: force
+force: clean quick
 
 .PHONY: test
 test: quick run
