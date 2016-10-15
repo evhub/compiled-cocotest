@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xfbfc38f
+# __coconut_hash__ = 0x5bb3d8a4
 
-# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -131,24 +131,33 @@ assert (factorial)(3) == 6
 
 @_coconut_tco
 def factorial(n, acc=1):
-    """Compute n! where n is an integer >= 0."""
-    _coconut_match_check = False
-    _coconut_match_to = n
-    if (_coconut_match_to == 0):
-        _coconut_match_check = True
-    if _coconut_match_check:
-        return acc
-    if not _coconut_match_check:
+    def _coconut_mock_func(n, acc=1): return n, acc
+    while True:
+        """Compute n! where n is an integer >= 0."""
+        _coconut_match_check = False
         _coconut_match_to = n
-        if (_coconut.isinstance(_coconut_match_to, int)):
-            if (n > 0):
-                _coconut_match_check = True
+        if (_coconut_match_to == 0):
+            _coconut_match_check = True
         if _coconut_match_check:
-            raise _coconut_tail_call(factorial, n - 1, acc * n)
-    if not _coconut_match_check:
-        raise TypeError("the argument to factorial must be an integer >= 0")
+            return acc
+        if not _coconut_match_check:
+            _coconut_match_to = n
+            if (_coconut.isinstance(_coconut_match_to, int)):
+                if (n > 0):
+                    _coconut_match_check = True
+            if _coconut_match_check:
+                if factorial is _coconut_recursive_func_3:
+                    n, acc = _coconut_mock_func(n - 1, acc * n)
+                    continue
+                else:
+                    raise _coconut_tail_call(factorial, n - 1, acc * n)
+
+        if not _coconut_match_check:
+            raise TypeError("the argument to factorial must be an integer >= 0")
 
 # Test cases:
+        return None
+_coconut_recursive_func_3 = factorial
 try:
     (factorial)(-1)
 except TypeError:
@@ -478,8 +487,9 @@ assert (isinstance)(diagonal_line(0), (list, tuple)) is False
 assert (list)(diagonal_line(0)) == [(0, 0)]
 assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 
+@_coconut_tco
 def linearized_plane(n=0):
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 
 # Note: these tests use $[] notation, which we haven't introduced yet
 #  but will introduce later in this case study; for now, just run the
@@ -575,8 +585,9 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
 @_coconut_tco
 def diagonal_line(n):
     raise _coconut_tail_call(map, lambda i: (i, n - i), range(n + 1))
+@_coconut_tco
 def linearized_plane(n=0):
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 @_coconut_tco
 def vector_field():
     raise _coconut_tail_call(map, lambda xy: vector(*xy), linearized_plane())

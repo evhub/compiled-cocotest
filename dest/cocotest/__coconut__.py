@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
 
 """Built-in Coconut utilities."""
 
@@ -132,6 +132,26 @@ class _coconut(object):
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
     __slots__ = ("pattern", "value")
+class _coconut_tail_call(Exception):
+    __slots__ = ("func", "args", "kwargs")
+    def __init__(self, func, *args, **kwargs):
+        self.func, self.args, self.kwargs = func, args, kwargs
+def _coconut_tco(func):
+    @_coconut.functools.wraps(func)
+    def tail_call_optimized_func(*args, **kwargs):
+        call_func = func
+        while True:
+            if "_coconut_inside_tco" in kwargs:
+                del kwargs["_coconut_inside_tco"]
+                return call_func(*args, **kwargs)
+            if hasattr(call_func, "_coconut_is_tco"):
+                kwargs["_coconut_inside_tco"] = call_func._coconut_is_tco
+            try:
+                return call_func(*args, **kwargs)
+            except _coconut_tail_call as tail_call:
+                call_func, args, kwargs = tail_call.func, tail_call.args, tail_call.kwargs
+    tail_call_optimized_func._coconut_is_tco = True
+    return tail_call_optimized_func
 def _coconut_igetitem(iterable, index):
     if isinstance(iterable, _coconut.range) or _coconut.hasattr(iterable, "__getitem__"):
         return iterable[index]
@@ -284,26 +304,6 @@ class count(object):
     def __eq__(self, other):
         reduction = self.__reduce__()
         return _coconut.isinstance(other, reduction[0]) and reduction[1] == other.__reduce__()[1]
-class _coconut_tail_call(Exception):
-    __slots__ = ("func", "args", "kwargs")
-    def __init__(self, func, *args, **kwargs):
-        self.func, self.args, self.kwargs = func, args, kwargs
-def _coconut_tco(func):
-    @_coconut.functools.wraps(func)
-    def tail_call_optimized_func(*args, **kwargs):
-        call_func = func
-        while True:
-            if "_coconut_inside_tco" in kwargs:
-                del kwargs["_coconut_inside_tco"]
-                return call_func(*args, **kwargs)
-            if hasattr(call_func, "_coconut_is_tco"):
-                kwargs["_coconut_inside_tco"] = call_func._coconut_is_tco
-            try:
-                return call_func(*args, **kwargs)
-            except _coconut_tail_call as tail_call:
-                call_func, args, kwargs = tail_call.func, tail_call.args, tail_call.kwargs
-    tail_call_optimized_func._coconut_is_tco = True
-    return tail_call_optimized_func
 def recursive_iterator(func):
     """Decorates a function by optimizing it for iterator recursion.
     Requires function arguments to be pickleable."""

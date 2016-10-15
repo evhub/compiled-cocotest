@@ -1,11 +1,14 @@
+.PHONY: force
+force: clean quick
+
+.PHONY: clean
+clean:
+	rm -rf ../coconut/tests/dest
+	rm -rf ./dest
+
 .PHONY: quick
 quick:
 	python ../coconut/tests
-	cp -r ../coconut/tests/dest .
-
-.PHONY: force
-force:
-	python ../coconut/tests -f
 	cp -r ../coconut/tests/dest .
 
 .PHONY: linenumbers

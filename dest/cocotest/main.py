@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xf8aa0eb
+# __coconut_hash__ = 0x24aecd5e
 
-# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -435,14 +435,26 @@ def main_test():
     assert count(5) == count(5)
     assert count(5) != count(3)
     assert {count(5): True}[count(5)]
-    def p1(x) :
-        return x + 1
-    assert p1(2) == 3
     def _coconut_lambda_1(x):
         yield x
     def _coconut_lambda_17(x):
         return x
     assert (_coconut_lambda_17)(1) == 1
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_18(*_coconut_match_to):
+        _coconut_match_check = False
+        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
+            xs = _coconut.list(_coconut_match_to[0][1:])
+            x = _coconut_match_to[0][0]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+        return x, xs
+    assert ((_coconut_lambda_18))(range(5)) == (0, [1, 2, 3, 4])
     return True
 
 def main(*args):

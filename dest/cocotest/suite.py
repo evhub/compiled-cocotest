@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x356d9f85
+# __coconut_hash__ = 0x42b6955f
 
-# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -86,6 +86,7 @@ def suite_test():
     assert factorial2(3) == 6
     assert factorial4(3) == 6
     assert factorial5(3) == 6
+    assert fact(3) == 6
     assert factorial1(-1) is None
     assert factorial2(-1) is None
     assert factorial4(-1) is None
@@ -237,4 +238,5 @@ def suite_test():
     assert 20 == _coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
     assert 20 == (_coconut_compose(_coconut.functools.partial(minus, (2)), _coconut.functools.partial(mul, (2)), _coconut.functools.partial(plus, (1))))(10)
     assert does_raise_exc(raise_exc)
+    assert ret_none(10) is None
     return True

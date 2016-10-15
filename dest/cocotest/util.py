@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x68241d09
+# __coconut_hash__ = 0x2d49dd5b
 
-# Compiled with Coconut version 1.2.0-post_dev5 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev8 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -30,7 +30,10 @@ def rand_list(n):
 # Infix Functions:
 plus = _coconut.operator.add
 mod = _coconut.operator.mod
-def mod_(a, b):
+def mod_(a,  # type: int
+    b,  # type: int
+    ):
+# type: (...) -> int
     return a % b
 base = int
 @_coconut_tco
@@ -47,9 +50,13 @@ plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
-def plus1_(x):
+def plus1_(x,  # type: int
+    ):
+# type: (...) -> int
     return x + 1
-def sqrt(x):
+def sqrt(x,  # type: int
+    ):
+# type: (...) -> float
     return x**0.5
 def sqrt_(x):
     return x**0.5
@@ -151,15 +158,17 @@ def repeat(elem):
     """Repeat Iterator."""
     while True:
         yield elem
+@_coconut_tco
 def repeat_(elem):
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (elem,), lambda: repeat_(elem))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (elem,), lambda: repeat_(elem))))
 def N(n=0):
     """Natural Numbers."""
     while True:
         yield n
         n += 1
+@_coconut_tco
 def N_(n=0):
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
 def N__(n=0):
     it = n,
     _coconut_lazy_chain_0 = it
@@ -169,6 +178,7 @@ def preN(it):
     _coconut_lazy_chain_1 = it
     it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
     return it
+@_coconut_tco
 def map_iter(func, args):
     _coconut_match_check = False
     _coconut_match_to = args
@@ -179,32 +189,60 @@ def map_iter(func, args):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
+        raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
 
 @_coconut_tco
 def next_mul_of(n, x):
-    if x % n == 0:
-        return x
-    else:
-        raise _coconut_tail_call(next_mul_of, n, x + 1)
+    while True:
+        if x % n == 0:
+            return x
+        else:
+            if next_mul_of is _coconut_recursive_func_22:
+                n, x = n, x + 1
+                continue
+            else:
+                raise _coconut_tail_call(next_mul_of, n, x + 1)
 
+
+        return None
+_coconut_recursive_func_22 = next_mul_of
 @_coconut_tco
 def collatz(n):
-    if n == 1:
-        return True
-    elif n % 2 == 0:
-        raise _coconut_tail_call(collatz, n / 2)
-    else:
-        raise _coconut_tail_call(collatz, 3 * n + 1)
+    while True:
+        if n == 1:
+            return True
+        elif n % 2 == 0:
+            if collatz is _coconut_recursive_func_23:
+                n = n / 2
+                continue
+            else:
+                raise _coconut_tail_call(collatz, n / 2)
 
+        else:
+            if collatz is _coconut_recursive_func_23:
+                n = 3 * n + 1
+                continue
+            else:
+                raise _coconut_tail_call(collatz, 3 * n + 1)
+
+
+        return None
+_coconut_recursive_func_23 = collatz
 @_coconut_tco
 def recurse_n_times(n):
-    if not n:
-        return True
-    raise _coconut_tail_call(recurse_n_times, n - 1)
+    while True:
+        if not n:
+            return True
+        if recurse_n_times is _coconut_recursive_func_24:
+            n = n - 1
+            continue
+        else:
+            raise _coconut_tail_call(recurse_n_times, n - 1)
+        return None
 
+_coconut_recursive_func_24 = recurse_n_times
 @_coconut_tco
 def is_even(n):
     if not n:
@@ -307,7 +345,7 @@ def is_null(item):
     else:
         return False
 
-# Match Functions:
+# Factorial:
 def factorial1(value):
     _coconut_match_check = False
     _coconut_match_to = value
@@ -404,6 +442,57 @@ def factorial5(value):
     if not _coconut_match_check:
         return None
     raise TypeError()
+@_coconut_tco
+def fact(*_coconut_match_to):
+    def _coconut_mock_func(*_coconut_match_to): return _coconut_match_to
+    while True:
+        _coconut_match_check = False
+        if (_coconut.len(_coconut_match_to) == 1):
+            n = _coconut_match_to[0]
+            _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n) = fact(n, 1)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'match def fact(n) = fact(n, 1)'
+            _coconut_match_err.value = _coconut_match_to
+            raise _coconut_match_err
+
+        if fact is _coconut_recursive_func_43:
+            _coconut_match_to = _coconut_mock_func(n, 1)
+            continue
+        else:
+            raise _coconut_tail_call(fact, n, 1)
+        return None
+_coconut_recursive_func_43 = fact
+@addpattern(fact)
+def fact(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == 0):
+        acc = _coconut_match_to[1]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(0, acc) = acc'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match def fact(0, acc) = acc'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    return acc
+@addpattern(fact)
+@_coconut_tco
+def fact(*_coconut_match_to):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to) == 2):
+        n = _coconut_match_to[0]
+        acc = _coconut_match_to[1]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n, acc) = fact(n-1, acc*n)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match def fact(n, acc) = fact(n-1, acc*n)'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    raise _coconut_tail_call(fact, n - 1, acc * n)
+
+# Match Functions:
 def classify(value):
     _coconut_match_check = False
     _coconut_match_to = value
@@ -591,6 +680,7 @@ def duplicate_first1(value):
         return [x] + l
     else:
         raise TypeError()
+@_coconut_tco
 def duplicate_first2(value):
     _coconut_match_check = False
     _coconut_match_to = value
@@ -602,9 +692,10 @@ def duplicate_first2(value):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
+@_coconut_tco
 def duplicate_first3(value):
     _coconut_match_check = False
     _coconut_match_to = value
@@ -616,7 +707,7 @@ def duplicate_first3(value):
             x = _coconut_match_iter_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
 def one_to_five(l):
@@ -821,11 +912,11 @@ def dictpoint__(*_coconut_match_to):
         raise _coconut_match_err
 
     return x, y
-def tuple1(a):
+def tuple1(a, ):
     return a,
-def tuple1_(a):
+def tuple1_(a, ):
     return a,
-def tuple2(a, b):
+def tuple2(a, b, ):
     return a, b
 def tuple2_(a, b):
     return a, b
@@ -991,13 +1082,15 @@ class pt(_coconut.collections.namedtuple("pt", "x, y")):
         else:
             return False
 
+@_coconut_tco
 def vertical_line(x=0, y=0):
     """Infinite iterator of pt representing a vertical line."""
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
 
+@_coconut_tco
 def grid(x=0):
     """Infinite iterator of infinite iterators representing cartesian space."""
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
 
 @_coconut_tco
 def grid_map(func, gridsample):
@@ -1121,18 +1214,20 @@ def pattern_abs_(*_coconut_match_to):
 
     return -x
 @addpattern(pattern_abs_)
-def pattern_abs_(x):
+def pattern_abs_(x, ):
     return x
 
 # Recursive iterator
 
 @recursive_iterator
+@_coconut_tco
 def fib():
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 @recursive_iterator
+@_coconut_tco
 def loop(it):
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: it, lambda: loop(it))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: it, lambda: loop(it))))
 
 # Sieve Example
 
@@ -1151,6 +1246,7 @@ def sieve(*_coconut_match_to):
     return []
 
 @prepattern(sieve)
+@_coconut_tco
 def sieve(*_coconut_match_to):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Iterable)):
@@ -1165,7 +1261,7 @@ def sieve(*_coconut_match_to):
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
 
-    return _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
 
 # "Assignment function" definitions
 
@@ -1225,3 +1321,19 @@ def does_raise_exc(func):
         return func()
     except Exception:
         return True
+
+# Returns None
+
+@_coconut_tco
+def ret_none(n):
+    while True:
+        if n != 0:
+            if ret_none is _coconut_recursive_func_121:
+                n = n - 1
+                continue
+            else:
+                raise _coconut_tail_call(ret_none, n - 1)
+
+
+        return None
+_coconut_recursive_func_121 = ret_none
