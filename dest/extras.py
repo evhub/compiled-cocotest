@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x328ec868
+# __coconut_hash__ = 0xb08852a0
 
-# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev13 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -75,15 +75,6 @@ if _coconut_sys.version_info < (3,):
         class __metaclass__(type):
             def __instancecheck__(cls, inst):
                 return _coconut.isinstance(inst, (_coconut_int, _coconut_long))
-    class bytes(_coconut_str):
-        __slots__ = ()
-        if hasattr(_coconut_str, "__doc__"):
-            __doc__ = _coconut_str.__doc__
-        class __metaclass__(type):
-            def __instancecheck__(cls, inst):
-                return _coconut.isinstance(inst, _coconut_str)
-        def __new__(cls, *args, **kwargs):
-            return _coconut_str.__new__(cls, _coconut.bytearray(*args, **kwargs))
     from functools import wraps as _coconut_wraps
     @_coconut_wraps(_coconut_print)
     def print(*args, **kwargs):

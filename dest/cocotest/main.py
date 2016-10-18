@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x195e7dee
+# __coconut_hash__ = 0x28870635
 
-# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev13 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -105,7 +105,6 @@ def main_test():
     assert text == "abc"
     assert first == 1
     assert rest == [2, 3]
-    assert bytes(3) == b"\x00\x00\x00"
     assert isinstance("a", str)
     assert isinstance(b"a", bytes)
     global glob_a, glob_b
@@ -132,9 +131,9 @@ def main_test():
         assert err
     else:
         assert False
-    b = bytes()
+    r = range(10)
     try:
-        b.x = 12
+        r.x = 12
     except AttributeError as err:
         assert err
     else:
@@ -457,6 +456,8 @@ def main_test():
             raise _coconut_match_err
         return x, xs
     assert ((_coconut_lambda_24))(range(5)) == (0, [1, 2, 3, 4])
+    s = "hello"  # type: str
+    assert s == "hello"
     return True
 
 def main(*args):
