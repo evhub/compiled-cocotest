@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x1a67cf1
+# __coconut_hash__ = 0xcea89af6
 
-# Compiled with Coconut version 1.2.0-post_dev9 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
+
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -458,7 +459,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, (other)), self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -574,7 +575,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, (other)), self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -672,7 +673,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, (other)), self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other

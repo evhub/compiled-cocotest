@@ -8,6 +8,11 @@ linenumbers:
 	python ../coconut/tests -l
 	cp -r ../coconut/tests/dest .
 
+.PHONY: mypy
+mypy:
+	python ../coconut/tests --mypy
+	cp -r ../coconut/tests/dest .
+
 .PHONY: run
 run:
 	python3 ./dest/extras.py

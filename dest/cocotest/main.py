@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x85a24a17
+# __coconut_hash__ = 0x195e7dee
 
-# Compiled with Coconut version 1.2.0-post_dev9 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
+
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -47,7 +48,7 @@ def main_test():
     assert +5e+5 == +5 * +10**+5
     assert repr(3) == "3" == ascii(3)
     assert _coconut.operator.mul(2, _coconut_minus(2, 5)) == -6
-    assert (list)(map(_coconut.functools.partial(pow, 2), (range)(0, 5))) == [1, 2, 4, 8, 16]
+    assert (list)(map(_coconut.functools.partial(pow, (2)), (range)(0, 5))) == [1, 2, 4, 8, 16]
     iter1 = range(0, 10)
     iter1, iter2 = tee(iter1)
     assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == (list)(_coconut_igetitem(iter2, _coconut.slice(2, 8)))
@@ -77,7 +78,7 @@ def main_test():
     assert (_coconut.functools.partial(_coconut.operator.getitem, "123"))(1) == "2" == (_coconut.functools.partial(_coconut_igetitem, "123"))(1)
     assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: -1, lambda: 0)), lambda: range(1, 5))))) == [-1, 0, 1, 2, 3, 4]
     assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1,)), lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 2,)))))) == [1, 2]
-    assert not isinstance(map(_coconut.functools.partial(_coconut.operator.add, 2), [1, 2, 3]), list)
+    assert not isinstance(map(_coconut.functools.partial(_coconut.operator.add, (2)), [1, 2, 3]), list)
     assert not isinstance(range(10), list)
     assert isinstance(10**100, int)
     assert chr(1000)
@@ -259,12 +260,12 @@ def main_test():
     assert repr(zip((0, 1), (1, 2))) == "zip((0, 1), (1, 2))"
     assert repr(map(_coconut_minus, range(5))).startswith("map(")
     assert repr(parallel_map(_coconut_minus, range(5))).startswith("parallel_map(")
-    assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
+    assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, (_coconut_minus)), (range(5),)), 0))
     assert (tuple)(map(tuple, parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
     assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, (2)), _coconut.functools.partial(_coconut.operator.add, (1))), range(5))) == (2, 4, 6, 8, 10)
     assert repr(concurrent_map(_coconut_minus, range(5))).startswith("concurrent_map(")
-    assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
+    assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, (_coconut_minus)), (range(5),)), 0))
     assert (tuple)(map(tuple, concurrent_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
     assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, (2)), _coconut.functools.partial(_coconut.operator.add, (1))), range(5))) == (2, 4, 6, 8, 10)
@@ -341,52 +342,56 @@ def main_test():
         do_stuff(x)
         assert x
     (_coconut_lambda_5)()
-    def _coconut_lambda_6(x=7):
+    def _coconut_lambda_8(x=7):
         do_stuff(x)
         assert x
         yield x
-    assert (list)((_coconut_lambda_6)()) == [7]
-    def _coconut_lambda_7(_=None):
+    assert (list)((_coconut_lambda_8)()) == [7]
+    def _coconut_lambda_9(_=None):
         do_stuff(_)
         assert _
         return _
-    assert (_coconut_lambda_7)(8) == 8
-    def _coconut_lambda_8(x=9):
+    assert (_coconut_lambda_9)(8) == 8
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_10(x=9):
         return x
-    assert (_coconut_lambda_8)() == 9
-    def _coconut_lambda_9(x=10):
+    assert (_coconut_lambda_10)() == 9
+    def _coconut_lambda_1(x):
+        yield x
+    def _coconut_lambda_11(x=10):
         do_stuff(x)
         return x
-    assert (_coconut_lambda_9)() == 10
+    assert (_coconut_lambda_11)() == 10
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_12(_=None):
+    def _coconut_lambda_14(_=None):
         def _coconut_lambda_1(x):
             yield x
-        def _coconut_lambda_11(_=None):
+        def _coconut_lambda_13(_=None):
             return 11
-        return _coconut_lambda_11
-    assert (_coconut_lambda_12)()() == 11
+        return _coconut_lambda_13
+    assert (_coconut_lambda_14)()() == 11
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_13(_=None):
+    def _coconut_lambda_15(_=None):
         return 12
-    def _coconut_lambda_14(_=None):
+    def _coconut_lambda_16(_=None):
         return 12
-    assert (_coconut_lambda_13)() == 12 == (_coconut_lambda_14)()
+    assert (_coconut_lambda_15)() == 12 == (_coconut_lambda_16)()
     def _coconut_lambda_1(x):
         yield x
-    def _coconut_lambda_15(x):
+    def _coconut_lambda_19(x):
         return lambda _=None: x
-    assert (list)(map(lambda _=None: _(), ((_coconut_lambda_15)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
+    assert (list)(map(lambda _=None: _(), ((_coconut_lambda_19)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
     herpaderp = 5
     def derp():
         herp = 10
-        def _coconut_lambda_1(x):
-            yield x
-        def _coconut_lambda_16(_=None):
+        def _coconut_lambda_2(x=3):
+            return do_stuff(x)
+        def _coconut_lambda_20(_=None):
             return herpaderp + herp
-        return (_coconut_lambda_16)
+        return (_coconut_lambda_20)
     assert derp()() == 15
     class abc(_coconut.collections.namedtuple("abc", "xyz")):
         __slots__ = ()
@@ -432,14 +437,14 @@ def main_test():
     assert count(5) == count(5)
     assert count(5) != count(3)
     assert {count(5): True}[count(5)]
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_17(x):
+    def _coconut_lambda_2(x=3):
+        return do_stuff(x)
+    def _coconut_lambda_21(x):
         return x
-    assert (_coconut_lambda_17)(1) == 1
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_18(*_coconut_match_to):
+    assert (_coconut_lambda_21)(1) == 1
+    def _coconut_lambda_2(x=3):
+        return do_stuff(x)
+    def _coconut_lambda_24(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
             xs = _coconut.list(_coconut_match_to[0][1:])
@@ -451,7 +456,7 @@ def main_test():
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         return x, xs
-    assert ((_coconut_lambda_18))(range(5)) == (0, [1, 2, 3, 4])
+    assert ((_coconut_lambda_24))(range(5)) == (0, [1, 2, 3, 4])
     return True
 
 def main(*args):

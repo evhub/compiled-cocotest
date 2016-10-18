@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x32b4d157
+# __coconut_hash__ = 0xe2da014f
 
-# Compiled with Coconut version 1.2.0-post_dev9 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
 from __future__ import generator_stop
+
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -65,7 +66,7 @@ def py35_test():
         return parallel_map(func, *iters)
     async def async_map_test():
         for async_map in (async_map_0, async_map_1, async_map_2, async_map_3, async_map_4):
-            assert (tuple)((await ((async_map)((_coconut.functools.partial(pow, 2), range(5)))))) == (1, 2, 4, 8, 16)
+            assert (tuple)((await ((async_map)((_coconut.functools.partial(pow, (2)), range(5)))))) == (1, 2, 4, 8, 16)
     loop = asyncio.new_event_loop()
     loop.run_until_complete(async_map_test())
     loop.close()

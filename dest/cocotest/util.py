@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xdc4143f8
+# __coconut_hash__ = 0x7339e656
 
-# Compiled with Coconut version 1.2.0-post_dev9 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
+
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -38,12 +39,12 @@ def join_with(a, b=""):
     raise _coconut_tail_call(b.join, a)
 
 # Basic Functions:
-prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
+prod = _coconut.functools.partial(reduce, (_coconut.operator.mul))
 @_coconut_tco
 def zipwith(f, *args):
     raise _coconut_tail_call(map, lambda items: f(*items), zip(*args))
 zipsum = _coconut_compose(_coconut.functools.partial(map, (sum)), zip)
-plus1 = _coconut.functools.partial(plus, 1)
+plus1 = _coconut.functools.partial(plus, (1))
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
@@ -81,8 +82,8 @@ def chain2(a, b):
 
 
 # Partial Applications:
-sum_ = _coconut.functools.partial(reduce, _coconut.operator.add)
-add = _coconut.functools.partial(zipwith, _coconut.operator.add)
+sum_ = _coconut.functools.partial(reduce, (_coconut.operator.add))
+add = _coconut.functools.partial(zipwith, (_coconut.operator.add))
 
 # Quick-Sorts:
 def qsort1(l):
@@ -1092,12 +1093,12 @@ def grid(x=0):
 @_coconut_tco
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    raise _coconut_tail_call(map, _coconut.functools.partial(map, func), gridsample)
+    raise _coconut_tail_call(map, _coconut.functools.partial(map, (func)), gridsample)
 
 @_coconut_tco
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, func), gridsample)
+    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, (func)), gridsample)
 
 @_coconut_tco
 def grid_trim(gridsample, xmax, ymax):
