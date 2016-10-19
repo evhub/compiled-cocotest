@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x823178f5
+# __coconut_hash__ = 0x956d04b
 
-# Compiled with Coconut version 1.2.0-post_dev13 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -48,11 +48,11 @@ plus1 = _coconut.functools.partial(plus, (1))
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
-def plus1_(x,  # type: int
+def plus1_(x  # type: int
     ):
 # type: (...) -> int
     return x + 1
-def sqrt(x,  # type: int
+def sqrt(x  # type: int
     ):
 # type: (...) -> float
     return x**0.5
@@ -910,11 +910,11 @@ def dictpoint__(*_coconut_match_to):
         raise _coconut_match_err
 
     return x, y
-def tuple1(a, ):
+def tuple1(a):
     return a,
-def tuple1_(a, ):
+def tuple1_(a):
     return a,
-def tuple2(a, b, ):
+def tuple2(a, b):
     return a, b
 def tuple2_(a, b):
     return a, b
@@ -1212,7 +1212,7 @@ def pattern_abs_(*_coconut_match_to):
 
     return -x
 @addpattern(pattern_abs_)
-def pattern_abs_(x, ):
+def pattern_abs_(x):
     return x
 
 # Recursive iterator
@@ -1335,3 +1335,14 @@ def ret_none(n):
 
         return None
 _coconut_recursive_func_121 = ret_none
+def anything_func(*args,  # type: Any
+     **kwargs  # type: Any
+    ):
+# type: (...) -> None
+    pass
+
+def args_kwargs_func(args=[],  # type: List[Any]
+     kwargs={}  # type: Dict[Any, Any]
+    ):
+# type: (...) -> None
+    pass

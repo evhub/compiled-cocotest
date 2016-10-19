@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xb5a62c08
+# __coconut_hash__ = 0xd4423290
 
-# Compiled with Coconut version 1.2.0-post_dev13 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -237,4 +237,6 @@ def suite_test():
     assert 20 == (_coconut_compose(_coconut.functools.partial(minus, (2)), _coconut.functools.partial(mul, (2)), _coconut.functools.partial(plus, (1))))(10)
     assert does_raise_exc(raise_exc)
     assert ret_none(10) is None
+    assert anything_func() is None
+    assert args_kwargs_func() is None
     return True
