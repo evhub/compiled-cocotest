@@ -21,8 +21,7 @@ run:
 
 .PHONY: clean
 clean:
-	rm -rf ../coconut/tests/dest
-	rm -rf ./dest
+	rm -rf ../coconut/tests/dest ./dest
 
 .PHONY: force
 force: clean quick
