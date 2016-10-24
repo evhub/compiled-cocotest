@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x887b9a5a
+# __coconut_hash__ = 0xc25b55d5
 
-# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -367,15 +367,15 @@ def main():
     else:
         assert False
     setup()
-    _exec = parse("abc", "exec")
-    assert _exec
-    assert _exec == parse("abc")
+    _sys = parse("abc", "sys")
+    assert _sys
+    assert _sys == parse("abc")
     _single = parse("abc", "single")
     assert _single
     _file = parse("abc", "file")
     assert _file
-    _module = parse("abc", "module")
-    assert _module
+    _package = parse("abc", "package")
+    assert _package
     _block = parse("abc", "block")
     assert _block
     _eval = parse("abc", "eval")
@@ -384,7 +384,7 @@ def main():
     assert _debug
     assert _single == parse("abc", "single")
     assert _file == parse("abc", "file")
-    assert _module == parse("abc", "module")
+    assert _package == parse("abc", "package")
     assert _block == parse("abc", "block")
     assert _eval == parse("abc", "eval")
     assert _debug == parse("abc", "debug")

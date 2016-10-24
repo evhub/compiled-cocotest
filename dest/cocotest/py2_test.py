@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x13eadc15
+# __coconut_hash__ = 0xcc624c93
 
-# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -19,8 +19,8 @@ _coconut_sys.path.remove(_coconut_file_path)
 
 def py2_test():
     """Performs Python2-specific tests."""
-    assert py_filter(_coconut.functools.partial(_coconut.operator.gt, (3)), range(10)) == [0, 1, 2]
-    assert py_map(_coconut.functools.partial(_coconut.operator.add, (2)), range(5)) == [2, 3, 4, 5, 6]
+    assert py_filter(_coconut.functools.partial(_coconut.operator.gt, 3), range(10)) == [0, 1, 2]
+    assert py_map(_coconut.functools.partial(_coconut.operator.add, 2), range(5)) == [2, 3, 4, 5, 6]
     assert py_range(5) == [0, 1, 2, 3, 4]
     assert not isinstance(long(1), py_int)
     assert py_str(3) == b"3" == unicode(b"3")

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x364563c1
+# __coconut_hash__ = 0x880d5fe7
 
-# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -48,7 +48,7 @@ def main_test():
     assert +5e+5 == +5 * +10**+5
     assert repr(3) == "3" == ascii(3)
     assert _coconut.operator.mul(2, _coconut_minus(2, 5)) == -6
-    assert (list)(map(_coconut.functools.partial(pow, (2)), (range)(0, 5))) == [1, 2, 4, 8, 16]
+    assert (list)(map(_coconut.functools.partial(pow, 2), (range)(0, 5))) == [1, 2, 4, 8, 16]
     iter1 = range(0, 10)
     iter1, iter2 = tee(iter1)
     assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == (list)(_coconut_igetitem(iter2, _coconut.slice(2, 8)))
@@ -78,7 +78,7 @@ def main_test():
     assert (_coconut.functools.partial(_coconut.operator.getitem, "123"))(1) == "2" == (_coconut.functools.partial(_coconut_igetitem, "123"))(1)
     assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: -1, lambda: 0)), lambda: range(1, 5))))) == [-1, 0, 1, 2, 3, 4]
     assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1,)), lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 2,)))))) == [1, 2]
-    assert not isinstance(map(_coconut.functools.partial(_coconut.operator.add, (2)), [1, 2, 3]), list)
+    assert not isinstance(map(_coconut.functools.partial(_coconut.operator.add, 2), [1, 2, 3]), list)
     assert not isinstance(range(10), list)
     assert isinstance(10**100, int)
     assert chr(1000)
@@ -120,7 +120,7 @@ def main_test():
         glob_a, glob_b = (x, x)
     set_globs_again(10)
     assert glob_a == 10 == glob_b
-    assert _coconut_minus(1) == -1 == _coconut.functools.partial(_coconut_minus, (1))(2)
+    assert _coconut_minus(1) == -1 == _coconut.functools.partial(_coconut_minus, 1)(2)
     assert (_coconut.operator.le)(3, 3)
     assert (list)((consume)(range(10))) == []
     assert (list)(consume(range(10), keep_last=2)) == [8, 9]
@@ -259,15 +259,15 @@ def main_test():
     assert repr(zip((0, 1), (1, 2))) == "zip((0, 1), (1, 2))"
     assert repr(map(_coconut_minus, range(5))).startswith("map(")
     assert repr(parallel_map(_coconut_minus, range(5))).startswith("parallel_map(")
-    assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, (_coconut_minus)), (range(5),)), 0))
+    assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, (2)), _coconut.functools.partial(_coconut.operator.add, (1))), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
     assert repr(concurrent_map(_coconut_minus, range(5))).startswith("concurrent_map(")
-    assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, (_coconut_minus)), (range(5),)), 0))
+    assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, concurrent_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, (2)), _coconut.functools.partial(_coconut.operator.add, (1))), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
     assert 0 in range(1)
     assert range(1).count(0) == 1
     assert 2 in range(5)

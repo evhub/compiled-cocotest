@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x956d04b
+# __coconut_hash__ = 0x67664263
 
-# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -39,12 +39,12 @@ def join_with(a, b=""):
     raise _coconut_tail_call(b.join, a)
 
 # Basic Functions:
-prod = _coconut.functools.partial(reduce, (_coconut.operator.mul))
+prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
 @_coconut_tco
 def zipwith(f, *args):
     raise _coconut_tail_call(map, lambda items: f(*items), zip(*args))
-zipsum = _coconut_compose(_coconut.functools.partial(map, (sum)), zip)
-plus1 = _coconut.functools.partial(plus, (1))
+zipsum = _coconut_compose(_coconut.functools.partial(map, sum), zip)
+plus1 = _coconut.functools.partial(plus, 1)
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
@@ -80,10 +80,12 @@ def chain2(a, b):
     for _coconut_yield_item in _coconut_yield_from:
         yield _coconut_yield_item
 
+def threeple(a, b, c):
+    return (a, b, c)
 
 # Partial Applications:
-sum_ = _coconut.functools.partial(reduce, (_coconut.operator.add))
-add = _coconut.functools.partial(zipwith, (_coconut.operator.add))
+sum_ = _coconut.functools.partial(reduce, _coconut.operator.add)
+add = _coconut.functools.partial(zipwith, _coconut.operator.add)
 
 # Quick-Sorts:
 def qsort1(l):
@@ -197,7 +199,7 @@ def next_mul_of(n, x):
         if x % n == 0:
             return x
         else:
-            if next_mul_of is _coconut_recursive_func_22:
+            if next_mul_of is _coconut_recursive_func_23:
                 n, x = n, x + 1
                 continue
             else:
@@ -205,21 +207,21 @@ def next_mul_of(n, x):
 
 
         return None
-_coconut_recursive_func_22 = next_mul_of
+_coconut_recursive_func_23 = next_mul_of
 @_coconut_tco
 def collatz(n):
     while True:
         if n == 1:
             return True
         elif n % 2 == 0:
-            if collatz is _coconut_recursive_func_23:
+            if collatz is _coconut_recursive_func_24:
                 n = n / 2
                 continue
             else:
                 raise _coconut_tail_call(collatz, n / 2)
 
         else:
-            if collatz is _coconut_recursive_func_23:
+            if collatz is _coconut_recursive_func_24:
                 n = 3 * n + 1
                 continue
             else:
@@ -227,20 +229,20 @@ def collatz(n):
 
 
         return None
-_coconut_recursive_func_23 = collatz
+_coconut_recursive_func_24 = collatz
 @_coconut_tco
 def recurse_n_times(n):
     while True:
         if not n:
             return True
-        if recurse_n_times is _coconut_recursive_func_24:
+        if recurse_n_times is _coconut_recursive_func_25:
             n = n - 1
             continue
         else:
             raise _coconut_tail_call(recurse_n_times, n - 1)
         return None
 
-_coconut_recursive_func_24 = recurse_n_times
+_coconut_recursive_func_25 = recurse_n_times
 @_coconut_tco
 def is_even(n):
     if not n:
@@ -454,13 +456,13 @@ def fact(*_coconut_match_to):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        if fact is _coconut_recursive_func_43:
+        if fact is _coconut_recursive_func_44:
             _coconut_match_to = _coconut_mock_func(n, 1)
             continue
         else:
             raise _coconut_tail_call(fact, n, 1)
         return None
-_coconut_recursive_func_43 = fact
+_coconut_recursive_func_44 = fact
 @addpattern(fact)
 def fact(*_coconut_match_to):
     _coconut_match_check = False
@@ -1093,12 +1095,12 @@ def grid(x=0):
 @_coconut_tco
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    raise _coconut_tail_call(map, _coconut.functools.partial(map, (func)), gridsample)
+    raise _coconut_tail_call(map, _coconut.functools.partial(map, func), gridsample)
 
 @_coconut_tco
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, (func)), gridsample)
+    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, func), gridsample)
 
 @_coconut_tco
 def grid_trim(gridsample, xmax, ymax):
@@ -1326,23 +1328,37 @@ def does_raise_exc(func):
 def ret_none(n):
     while True:
         if n != 0:
-            if ret_none is _coconut_recursive_func_121:
+            if ret_none is _coconut_recursive_func_122:
                 n = n - 1
                 continue
             else:
                 raise _coconut_tail_call(ret_none, n - 1)
 
 
+# Typing:
+
         return None
-_coconut_recursive_func_121 = ret_none
-def anything_func(*args,  # type: Any
-     **kwargs  # type: Any
+_coconut_recursive_func_122 = ret_none
+import sys
+if sys.version_info > (3, 5):
+    from typing import Any
+    from typing import List
+    from typing import Dict
+
+    def args_kwargs_func(args=[],  # type: List[Any]
+     kwargs={}  # type: Dict[Any, Any]
     ):
 # type: (...) -> None
-    pass
+        pass
+else:
+    def args_kwargs_func(args=[],  # type: [int]
+     kwargs={}  # type: {▶81⏹: int}
+    ):
+# type: (...) -> None
+        pass
 
-def args_kwargs_func(args=[],  # type: List[Any]
-     kwargs={}  # type: Dict[Any, Any]
+def anything_func(*args,  # type: int
+     **kwargs  # type: int
     ):
 # type: (...) -> None
     pass

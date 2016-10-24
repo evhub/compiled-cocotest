@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xd4423290
+# __coconut_hash__ = 0x58d56aa1
 
-# Compiled with Coconut version 1.2.0-post_dev14 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -34,6 +34,7 @@ def suite_test():
     assert _coconut.operator.mul(2, swap2(_coconut_minus)(2, 5)) == 6 == _coconut.operator.mul(2, swap2_(_coconut_minus)(2, 5))
     assert all(same((1, 2, 3), [1, 2, 3]))
     assert (list)(chain2((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
+    assert _coconut.functools.partial(threeple, 1, 2)(3) == (1, 2, 3)
     assert (prod)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
@@ -55,17 +56,17 @@ def suite_test():
         assert (tuple)((qsort)(to_sort)) == (tuple)((sorted)(to_sort))
     assert _coconut_igetitem(repeat(3), 2) == 3 == _coconut_igetitem(repeat_(3), 2)
     assert sum_(_coconut_igetitem(repeat(1), _coconut.slice(None, 5))) == 5 == sum_(_coconut_igetitem(repeat_(1), _coconut.slice(None, 5)))
-    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, (0)), (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
+    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
     assert (sum_)(((lambda s: map(_coconut.functools.partial(_coconut.operator.getitem, s), (1, 3, 5))))("ABCDEFG")) == "BDF"
     assert (list)(_coconut_igetitem(N(), _coconut.slice(10, 15))) == [10, 11, 12, 13, 14] == (list)(_coconut_igetitem(N_(), _coconut.slice(10, 15)))
-    assert ((list)(takewhile(_coconut.functools.partial(_coconut.operator.gt, (5)), N())) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(0, 10), _coconut.slice(None, 5, None))))
+    assert ((list)(takewhile(_coconut.functools.partial(_coconut.operator.gt, 5), N())) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(0, 10), _coconut.slice(None, 5, None))))
     assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
     assert (list)(_coconut_igetitem(add(repeat(1), N()), _coconut.slice(None, 5))) == [1, 2, 3, 4, 5] == (list)(_coconut_igetitem(add(repeat(1), N_()), _coconut.slice(None, 5)))
     assert sum(_coconut_igetitem(_coconut_igetitem(N(), _coconut.slice(5, None)), _coconut.slice(None, 5))) == 35 == sum(_coconut_igetitem(_coconut_igetitem(N_(), _coconut.slice(5, None)), _coconut.slice(None, 5)))
     assert (list)(_coconut.functools.partial(_coconut_igetitem, N())(slice(5, 10))) == [5, 6, 7, 8, 9] == _coconut.functools.partial(_coconut.operator.getitem, list(range(0, 15)))(slice(5, 10))
     assert (list)(_coconut_igetitem(N(), slice(5, 10))) == [5, 6, 7, 8, 9] == list(range(0, 15))[slice(5, 10)]
     assert (list)(_coconut_igetitem(preN(range(-5, 0)), _coconut.slice(1, 10))) == [-4, -3, -2, -1, 0, 1, 2, 3, 4]
-    assert (list)(_coconut_igetitem(map_iter(_coconut.functools.partial(_coconut.operator.mul, (2)), N()), _coconut.slice(None, 5))) == [0, 2, 4, 6, 8]
+    assert (list)(_coconut_igetitem(map_iter(_coconut.functools.partial(_coconut.operator.mul, 2), N()), _coconut.slice(None, 5))) == [0, 2, 4, 6, 8]
     assert (tuple)(_coconut_igetitem(N(), _coconut.slice(None, 100))) == (tuple)(_coconut_igetitem(N_(), _coconut.slice(None, 100))) == (tuple)(_coconut_igetitem(N__(), _coconut.slice(None, 100)))
     assert next_mul_of(5, 12) == 15
     assert collatz(27)
@@ -109,10 +110,10 @@ def suite_test():
     assert classify_sequence((1, 2, 3)) == "few"
     assert dictpoint({"x": 1, "y": 2}) == (1, 2)
     assert dictpoint_({"x": 1, "y": 2}) == (1, 2) == dictpoint__({"x": 1, "y": 2})
-    assert map_(_coconut.functools.partial(_coconut.operator.add, (1)), []) == []
-    assert map_(_coconut.functools.partial(_coconut.operator.add, (1)), ()) == ()
-    assert map_(_coconut.functools.partial(_coconut.operator.add, (1)), [0, 1, 2, 3]) == [1, 2, 3, 4]
-    assert map_(_coconut.functools.partial(_coconut.operator.add, (1)), (0, 1, 2, 3)) == (1, 2, 3, 4)
+    assert map_(_coconut.functools.partial(_coconut.operator.add, 1), []) == []
+    assert map_(_coconut.functools.partial(_coconut.operator.add, 1), ()) == ()
+    assert map_(_coconut.functools.partial(_coconut.operator.add, 1), [0, 1, 2, 3]) == [1, 2, 3, 4]
+    assert map_(_coconut.functools.partial(_coconut.operator.add, 1), (0, 1, 2, 3)) == (1, 2, 3, 4)
     assert duplicate_first1([1, 2, 3]) == [1, 1, 2, 3]
     assert (list)(duplicate_first2([1, 2, 3])) == [1, 1, 2, 3] == (list)(duplicate_first3([1, 2, 3]))
     assert one_to_five([1, 2, 3, 4, 5]) == [2, 3, 4]
@@ -195,7 +196,7 @@ def suite_test():
     y = y(*((5, 3)))
     assert x == 2 == y
     x = square
-    x = (lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)))(x, (_coconut.functools.partial(_coconut.operator.add, (1))))
+    x = (lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)))(x, (_coconut.functools.partial(_coconut.operator.add, 1)))
     x = x((4))
     assert x == 25
     v = vector(1, 2)
@@ -233,8 +234,8 @@ def suite_test():
     assert 11 == double_plus_one(5)
     assert 15 == assign_func_1(_coconut.operator.mul, 3, 5)
     assert 15 == assign_func_2(_coconut.operator.mul, 3, 5)
-    assert 20 == _coconut_compose(_coconut.functools.partial(minus, (2)), _coconut.functools.partial(mul, (2)), _coconut.functools.partial(plus, (1)))(10)
-    assert 20 == (_coconut_compose(_coconut.functools.partial(minus, (2)), _coconut.functools.partial(mul, (2)), _coconut.functools.partial(plus, (1))))(10)
+    assert 20 == _coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
+    assert 20 == (_coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1)))(10)
     assert does_raise_exc(raise_exc)
     assert ret_none(10) is None
     assert anything_func() is None
