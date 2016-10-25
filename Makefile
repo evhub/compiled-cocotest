@@ -3,6 +3,11 @@ quick:
 	python ../coconut/tests
 	cp -r ../coconut/tests/dest .
 
+.PHONY: verbose
+verbose:
+	python ../coconut/tests --verbose
+	cp -r ../coconut/tests/dest .
+
 .PHONY: linenumbers
 linenumbers:
 	python ../coconut/tests -l

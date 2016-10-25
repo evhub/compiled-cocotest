@@ -171,12 +171,12 @@ def N_(n=0):
     raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
 def N__(n=0):
     it = n,
-    _coconut_lazy_chain_0 = it
-    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_0, lambda: (N__(n + 1)))))
+    _coconut_lazy_chain_0th = it
+    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_0th, lambda: (N__(n + 1)))))
     return it
 def preN(it):
-    _coconut_lazy_chain_1 = it
-    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
+    _coconut_lazy_chain_1th = it
+    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1th, lambda: (N()))))
     return it
 @_coconut_tco
 def map_iter(func, args):
@@ -199,7 +199,7 @@ def next_mul_of(n, x):
         if x % n == 0:
             return x
         else:
-            if next_mul_of is _coconut_recursive_func_23:
+            if next_mul_of is _coconut_recursive_func_23th:
                 n, x = n, x + 1
                 continue
             else:
@@ -207,21 +207,21 @@ def next_mul_of(n, x):
 
 
         return None
-_coconut_recursive_func_23 = next_mul_of
+_coconut_recursive_func_23th = next_mul_of
 @_coconut_tco
 def collatz(n):
     while True:
         if n == 1:
             return True
         elif n % 2 == 0:
-            if collatz is _coconut_recursive_func_24:
+            if collatz is _coconut_recursive_func_24th:
                 n = n / 2
                 continue
             else:
                 raise _coconut_tail_call(collatz, n / 2)
 
         else:
-            if collatz is _coconut_recursive_func_24:
+            if collatz is _coconut_recursive_func_24th:
                 n = 3 * n + 1
                 continue
             else:
@@ -229,20 +229,20 @@ def collatz(n):
 
 
         return None
-_coconut_recursive_func_24 = collatz
+_coconut_recursive_func_24th = collatz
 @_coconut_tco
 def recurse_n_times(n):
     while True:
         if not n:
             return True
-        if recurse_n_times is _coconut_recursive_func_25:
+        if recurse_n_times is _coconut_recursive_func_25th:
             n = n - 1
             continue
         else:
             raise _coconut_tail_call(recurse_n_times, n - 1)
         return None
 
-_coconut_recursive_func_25 = recurse_n_times
+_coconut_recursive_func_25th = recurse_n_times
 @_coconut_tco
 def is_even(n):
     if not n:
@@ -456,13 +456,13 @@ def fact(*_coconut_match_to):
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
-        if fact is _coconut_recursive_func_44:
+        if fact is _coconut_recursive_func_44th:
             _coconut_match_to = _coconut_mock_func(n, 1)
             continue
         else:
             raise _coconut_tail_call(fact, n, 1)
         return None
-_coconut_recursive_func_44 = fact
+_coconut_recursive_func_44th = fact
 @addpattern(fact)
 def fact(*_coconut_match_to):
     _coconut_match_check = False
@@ -735,8 +735,8 @@ def compose(a, b):
     a = (lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)))(a, (b))
     return a
 def chain(a, b):
-    _coconut_lazy_chain_2 = a
-    a = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_2, lambda: (b))))
+    _coconut_lazy_chain_2th = a
+    a = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_2th, lambda: (b))))
     return a
 
 # Algebraic Data Types:
@@ -1328,7 +1328,7 @@ def does_raise_exc(func):
 def ret_none(n):
     while True:
         if n != 0:
-            if ret_none is _coconut_recursive_func_122:
+            if ret_none is _coconut_recursive_func_122th:
                 n = n - 1
                 continue
             else:
@@ -1338,7 +1338,7 @@ def ret_none(n):
 # Typing:
 
         return None
-_coconut_recursive_func_122 = ret_none
+_coconut_recursive_func_122th = ret_none
 import sys
 if sys.version_info > (3, 5):
     from typing import Any

@@ -319,78 +319,64 @@ def main_test():
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9]
     assert (_coconut.operator.itemgetter(1))(range(1, 5)) == 2 == (_coconut.functools.partial(_coconut_igetitem, index=1))(range(1, 5))
     assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 5)))(range(10))) == [0, 1, 2, 3, 4] == (list)((_coconut.functools.partial(_coconut_igetitem, index=_coconut.slice(None, 5)))(range(10)))
-    def _coconut_lambda_0(x):
+    def _coconut_lambda_0th(x):
         y = x
-    assert (list)(map(_coconut_lambda_0, range(10))) == [None] * 10
-    def _coconut_lambda_1(x):
+    assert (list)(map(_coconut_lambda_0th, range(10))) == [None] * 10
+    def _coconut_lambda_1th(x):
         yield x
-    assert (list)(map(list, map(_coconut_lambda_1, range(5)))) == [[0], [1], [2], [3], [4]]
+    assert (list)(map(list, map(_coconut_lambda_1th, range(5)))) == [[0], [1], [2], [3], [4]]
     def do_stuff(x):
         return True
-    def _coconut_lambda_2(x=3):
+    def _coconut_lambda_2th(x=3):
         return do_stuff(x)
-    assert (_coconut_lambda_2)() is True
-    def _coconut_lambda_3(x=4):
+    assert (_coconut_lambda_2th)() is True
+    def _coconut_lambda_3th(x=4):
         do_stuff(x)
         return x
-    assert (_coconut_lambda_3)() == 4
-    def _coconut_lambda_4(x=5):
+    assert (_coconut_lambda_3th)() == 4
+    def _coconut_lambda_4th(x=5):
         do_stuff(x)
-    assert (_coconut_lambda_4)() is None
-    def _coconut_lambda_5(x=6):
+    assert (_coconut_lambda_4th)() is None
+    def _coconut_lambda_5th(x=6):
         do_stuff(x)
         assert x
-    (_coconut_lambda_5)()
-    def _coconut_lambda_8(x=7):
+    (_coconut_lambda_5th)()
+    def _coconut_lambda_8th(x=7):
         do_stuff(x)
         assert x
         yield x
-    assert (list)((_coconut_lambda_8)()) == [7]
-    def _coconut_lambda_9(_=None):
+    assert (list)((_coconut_lambda_8th)()) == [7]
+    def _coconut_lambda_9th(_=None):
         do_stuff(_)
         assert _
         return _
-    assert (_coconut_lambda_9)(8) == 8
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_10(x=9):
+    assert (_coconut_lambda_9th)(8) == 8
+    def _coconut_lambda_10th(x=9):
         return x
-    assert (_coconut_lambda_10)() == 9
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_11(x=10):
+    assert (_coconut_lambda_10th)() == 9
+    def _coconut_lambda_11th(x=10):
         do_stuff(x)
         return x
-    assert (_coconut_lambda_11)() == 10
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_14(_=None):
-        def _coconut_lambda_1(x):
-            yield x
-        def _coconut_lambda_13(_=None):
+    assert (_coconut_lambda_11th)() == 10
+    def _coconut_lambda_14th(_=None):
+        def _coconut_lambda_13th(_=None):
             return 11
-        return _coconut_lambda_13
-    assert (_coconut_lambda_14)()() == 11
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_15(_=None):
+        return _coconut_lambda_13th
+    assert (_coconut_lambda_14th)()() == 11
+    def _coconut_lambda_15th(_=None):
         return 12
-    def _coconut_lambda_16(_=None):
+    def _coconut_lambda_16th(_=None):
         return 12
-    assert (_coconut_lambda_15)() == 12 == (_coconut_lambda_16)()
-    def _coconut_lambda_1(x):
-        yield x
-    def _coconut_lambda_19(x):
+    assert (_coconut_lambda_15th)() == 12 == (_coconut_lambda_16th)()
+    def _coconut_lambda_17th(x):
         return lambda _=None: x
-    assert (list)(map(lambda _=None: _(), ((_coconut_lambda_19)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
+    assert (list)(map(lambda _=None: _(), ((_coconut_lambda_17th)(x) for x in range(5)))) == [0, 1, 2, 3, 4]
     herpaderp = 5
     def derp():
         herp = 10
-        def _coconut_lambda_2(x=3):
-            return do_stuff(x)
-        def _coconut_lambda_20(_=None):
+        def _coconut_lambda_18th(_=None):
             return herpaderp + herp
-        return (_coconut_lambda_20)
+        return (_coconut_lambda_18th)
     assert derp()() == 15
     class abc(_coconut.collections.namedtuple("abc", "xyz")):
         __slots__ = ()
@@ -436,14 +422,10 @@ def main_test():
     assert count(5) == count(5)
     assert count(5) != count(3)
     assert {count(5): True}[count(5)]
-    def _coconut_lambda_2(x=3):
-        return do_stuff(x)
-    def _coconut_lambda_21(x):
+    def _coconut_lambda_19th(x):
         return x
-    assert (_coconut_lambda_21)(1) == 1
-    def _coconut_lambda_2(x=3):
-        return do_stuff(x)
-    def _coconut_lambda_24(*_coconut_match_to):
+    assert (_coconut_lambda_19th)(1) == 1
+    def _coconut_lambda_20th(*_coconut_match_to):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
             xs = _coconut.list(_coconut_match_to[0][1:])
@@ -455,7 +437,7 @@ def main_test():
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
         return x, xs
-    assert ((_coconut_lambda_24))(range(5)) == (0, [1, 2, 3, 4])
+    assert ((_coconut_lambda_20th))(range(5)) == (0, [1, 2, 3, 4])
     s = "hello"  # type: str
     assert s == "hello"
     return True
