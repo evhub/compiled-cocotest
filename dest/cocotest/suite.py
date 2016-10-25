@@ -227,9 +227,9 @@ def suite_test():
     assert recurse_n_times(10000)
     assert is_even(5000) and is_odd(5001)
     assert is_even_(5000) and is_odd_(5001)
-    def _coconut_lambda_0th(_=None):
+    def _coconut_lambda_0(_=None):
         return mod
-    assert (_coconut_lambda_0th)()(5, 3) == 2
+    assert (_coconut_lambda_0)()(5, 3) == 2
     assert (list)(sieve((2, 3, 4, 5))) == [2, 3, 5]
     assert 11 == double_plus_one(5)
     assert 15 == assign_func_1(_coconut.operator.mul, 3, 5)

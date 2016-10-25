@@ -144,7 +144,7 @@ def factorial(n, acc=1):
                 if (n > 0):
                     _coconut_match_check = True
             if _coconut_match_check:
-                if factorial is _coconut_recursive_func_3th:
+                if factorial is _coconut_recursive_func_3:
                     n, acc = _coconut_mock_func(n - 1, acc * n)
                     continue
                 else:
@@ -155,7 +155,7 @@ def factorial(n, acc=1):
 
 # Test cases:
         return None
-_coconut_recursive_func_3th = factorial
+_coconut_recursive_func_3 = factorial
 try:
     (factorial)(-1)
 except TypeError:
