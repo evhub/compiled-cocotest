@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x67664263
+# __coconut_hash__ = 0x4a00b77f
 
-# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -1095,17 +1095,17 @@ def grid(x=0):
 @_coconut_tco
 def grid_map(func, gridsample):
     """Map a function over every point in a grid."""
-    raise _coconut_tail_call(map, _coconut.functools.partial(map, func), gridsample)
+    raise _coconut_tail_call((_coconut.functools.partial(map, _coconut.functools.partial(map, func))), gridsample)
 
 @_coconut_tco
 def parallel_grid_map(func, gridsample):
     """Map a function over every point in a grid in parallel."""
-    raise _coconut_tail_call(parallel_map, _coconut.functools.partial(parallel_map, func), gridsample)
+    raise _coconut_tail_call((_coconut.functools.partial(parallel_map, _coconut.functools.partial(parallel_map, func))), gridsample)
 
 @_coconut_tco
 def grid_trim(gridsample, xmax, ymax):
     """Convert a grid to a list of lists up to xmax and ymax."""
-    raise _coconut_tail_call((list), map(lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax))), _coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
+    raise _coconut_tail_call((list), (_coconut.functools.partial(map, lambda l: (list)(_coconut_igetitem(l, _coconut.slice(None, ymax)))))(_coconut_igetitem(gridsample, _coconut.slice(None, xmax))))
 
 # Physics function:
 
@@ -1322,7 +1322,7 @@ def does_raise_exc(func):
     except Exception:
         return True
 
-# Returns None
+# Returns
 
 @_coconut_tco
 def ret_none(n):
@@ -1335,10 +1335,13 @@ def ret_none(n):
                 raise _coconut_tail_call(ret_none, n - 1)
 
 
-# Typing:
-
         return None
 _coconut_recursive_func_122 = ret_none
+def ret_args_kwargs(*args, **kwargs):
+    return (args, kwargs)
+
+# Typing:
+
 import sys
 if sys.version_info > (3, 5):
     from typing import Any

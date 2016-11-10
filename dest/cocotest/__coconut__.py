@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # type: ignore
 
-# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
 
 """Built-in Coconut utilities."""
 
@@ -120,7 +120,7 @@ class _coconut(object):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, bytearray, repr = IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, next, object, range, reversed, set, slice, super, tuple, bytearray, staticmethod(repr)
+    IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, max, next, object, range, reversed, set, slice, str, super, tuple, bytearray, repr = IndexError, NameError, ValueError, map, zip, dict, frozenset, getattr, hasattr, hash, isinstance, iter, len, list, min, max, next, object, range, reversed, set, slice, str, super, tuple, bytearray, staticmethod(repr)
 class _coconut_MatchError(Exception):
     """Pattern-matching error."""
     __slots__ = ("pattern", "value")
@@ -286,7 +286,7 @@ class count(object):
             raise _coconut.ValueError(_coconut.repr(elem) + " is not in count")
         return (elem - self._start) // self._step
     def __repr__(self):
-        return "count(" + str(self._start) + ", " + str(self._step) + ")"
+        return "count(" + _coconut.str(self._start) + ", " + _coconut.str(self._step) + ")"
     def __hash__(self):
         return _coconut.hash((self._start, self._step))
     def __reduce__(self):
@@ -327,6 +327,44 @@ def prepattern(base_func):
     def pattern_prepender(func):
         return addpattern(func)(base_func)
     return pattern_prepender
+class _coconut_partial(object):
+    __slots__ = ("func", "_argdict", "_arglen", "_stargs", "keywords")
+    if hasattr(_coconut.functools.partial, "__doc__"):
+        __doc__ = _coconut.functools.partial.__doc__
+    def __init__(self, func, argdict, arglen, *args, **kwargs):
+        self.func, self._argdict, self._arglen, self._stargs, self.keywords = func, argdict, arglen, args, kwargs
+    def __reduce__(self):
+        return (self.__class__, (self.func, self._argdict, self._arglen) + self._stargs, self.keywords)
+    def __setstate__(self, keywords):
+        self.keywords = keywords
+    @property
+    def args(self):
+        return _coconut.tuple(self._argdict.get(i) for i in _coconut.range(self._arglen)) + self._stargs
+    def __call__(self, *args, **kwargs):
+        callargs = []
+        argind = 0
+        for i in _coconut.range(self._arglen):
+            if i in self._argdict:
+                callargs.append(self._argdict[i])
+            elif argind >= _coconut.len(args):
+                raise TypeError("expected at least " + _coconut.str(self._arglen - _coconut.len(self._argdict)) + " argument(s) to " + _coconut.repr(self))
+            else:
+                callargs.append(args[argind])
+                argind += 1
+        callargs += self._stargs
+        callargs += args[argind:]
+        kwargs.update(self.keywords)
+        return self.func(*callargs, **kwargs)
+    def __repr__(self):
+        args = []
+        for i in _coconut.range(self._arglen):
+            if i in self._argdict:
+                args.append(_coconut.repr(self._argdict[i]))
+            else:
+                args.append("?")
+        for arg in self._stargs:
+            args.append(_coconut.repr(arg))
+        return _coconut.repr(self.func) + "$(" + ", ".join(args) + ")"
 def datamaker(data_type):
     """Returns base data constructor of passed data type."""
     return _coconut.functools.partial(_coconut.super(data_type, data_type).__new__, data_type)

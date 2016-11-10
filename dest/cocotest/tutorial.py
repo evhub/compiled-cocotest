@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xc7bdfa37
+# __coconut_hash__ = 0x371dc52f
 
-# Compiled with Coconut version 1.2.0-post_dev18 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -400,7 +400,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)(map(lambda x: x**2, self.pts)))
+        raise _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)((_coconut.functools.partial(map, _coconut_partial(pow, {1: 2}, 2)))(self.pts)))
     @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
@@ -436,7 +436,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -459,7 +459,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
@@ -479,7 +479,7 @@ assert vector(1, 2) * vector(1, 3) == 7
 
 @_coconut_tco
 def diagonal_line(n):
-    raise _coconut_tail_call(map, lambda i: (i, n - i), range(n + 1))
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda i: (i, n - i))), range(n + 1))
 
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
 assert (list)(diagonal_line(0)) == [(0, 0)]
@@ -497,7 +497,7 @@ assert (list)(_coconut_igetitem(linearized_plane(), _coconut.slice(None, 3))) ==
 
 @_coconut_tco
 def vector_field():
-    raise _coconut_tail_call(map, lambda xy: vector(*xy), linearized_plane())
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda xy: vector(*xy))), linearized_plane())
 
 # You'll need to bring in the vector class from earlier to make these work
 assert (repr)(_coconut_igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
@@ -516,7 +516,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)(map(lambda x: x**2, self.pts)))
+        raise _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)((_coconut.functools.partial(map, _coconut_partial(pow, {1: 2}, 2)))(self.pts)))
     @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
@@ -552,7 +552,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -575,20 +575,20 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 
 @_coconut_tco
 def diagonal_line(n):
-    raise _coconut_tail_call(map, lambda i: (i, n - i), range(n + 1))
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda i: (i, n - i))), range(n + 1))
 @_coconut_tco
 def linearized_plane(n=0):
     raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 @_coconut_tco
 def vector_field():
-    raise _coconut_tail_call(map, lambda xy: vector(*xy), linearized_plane())
+    raise _coconut_tail_call((_coconut.functools.partial(map, lambda xy: vector(*xy))), linearized_plane())
 
 # Test cases:
 assert (isinstance)(diagonal_line(0), (list, tuple)) is False
@@ -614,7 +614,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
-        raise _coconut_tail_call(((lambda s: s**0.5)), (sum)(map(lambda x: x**2, self.pts)))
+        raise _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)((_coconut.functools.partial(map, _coconut_partial(pow, {1: 2}, 2)))(self.pts)))
     @_coconut_tco
     def __add__(self, other):
         """Add two vectors together."""
@@ -650,7 +650,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
     @_coconut_tco
     def __neg__(self):
         """Retrieve the negative of the vector."""
-        raise _coconut_tail_call((vector), *map(_coconut_minus, self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut_minus))(self.pts))
     def __eq__(self, other):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
@@ -673,14 +673,14 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
             assert len(other_pts) == len(self.pts)
             raise _coconut_tail_call((sum), map(_coconut.operator.mul, self.pts, other_pts))  # dot product
         else:
-            raise _coconut_tail_call((vector), *map(_coconut.functools.partial(_coconut.operator.mul, other), self.pts))  # scalar multiplication
+            raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, _coconut.functools.partial(_coconut.operator.mul, other)))(self.pts))  # scalar multiplication
     def __rmul__(self, other):
         """Necessary to make scalar multiplication commutative."""
         return self * other
 # New one-line functions necessary for finding the angle between vectors:
     @_coconut_tco
     def __truediv__(self, other):
-        raise _coconut_tail_call((vector), *map(lambda x: x / other, self.pts))
+        raise _coconut_tail_call((vector), *(_coconut.functools.partial(map, lambda x: x / other))(self.pts))
     def unit(self):
         return self / abs(self)
     @_coconut_tco
