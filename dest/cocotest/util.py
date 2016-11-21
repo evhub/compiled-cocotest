@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x4a00b77f
+# __coconut_hash__ = 0x9eddd1e9
 
-# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -58,9 +58,10 @@ def sqrt(x  # type: int
     return x**0.5
 def sqrt_(x):
     return x**0.5
-square = lambda x: x**2
+square = _coconut_partial(_coconut.operator.pow, {1: 2}, 2)
 plus1sq = _coconut_compose(square, plus1)
-sqplus1 = _coconut_compose(plus1, square)
+sqplus1 = plus1
+sqplus1 = _coconut_compose(sqplus1, (square))
 plus1sq_ = lambda x: (square)((plus1)(x))
 sqplus1_ = lambda x: (plus1)((square)(x))
 clean = lambda s: s.strip()
@@ -143,9 +144,9 @@ def qsort5(l):
     _coconut_match_to = l
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         tail = _coconut.iter(_coconut_match_to)
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_iter_0) == 1):
-            head = _coconut_match_iter_0[0]
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_temp_0) == 1):
+            head = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         tail, tail_ = tee(tail)
@@ -184,9 +185,9 @@ def map_iter(func, args):
     _coconut_match_to = args
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         xs = _coconut.iter(_coconut_match_to)
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_iter_0) == 1):
-            x = _coconut_match_iter_0[0]
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_temp_0) == 1):
+            x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
@@ -254,14 +255,15 @@ def is_odd(n):
         return False
     raise _coconut_tail_call(is_even, n - 1)
 
-def is_even_(*_coconut_match_to):
+def is_even_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_even_(0) = True'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_even_(0) = True'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def is_even_(0) = True'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return True
@@ -270,14 +272,15 @@ def is_even_(*_coconut_match_to):
 def is_even_(n):
     raise _coconut_tail_call(is_odd_, n - 1)
 
-def is_odd_(*_coconut_match_to):
+def is_odd_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == 0):
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_odd_(0) = False'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_odd_(0) = False'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def is_odd_(0) = False'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return False
@@ -357,8 +360,9 @@ def factorial1(value):
     _coconut_match_to = value
     if (_coconut.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
-        if (n > 0):
-            _coconut_match_check = True
+        _coconut_match_check = True
+    if _coconut_match_check and not ((n > 0)):
+        _coconut_match_check = False
     if _coconut_match_check:
         return n * factorial1(n - 1)
 def factorial2(value):
@@ -373,8 +377,9 @@ def factorial2(value):
         _coconut_match_to = value
         if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
-            if (n > 0):
-                _coconut_match_check = True
+            _coconut_match_check = True
+        if _coconut_match_check and not ((n > 0)):
+            _coconut_match_check = False
         if _coconut_match_check:
             return n * factorial2(n - 1)
         else:
@@ -391,8 +396,9 @@ def factorial3(value):
     _coconut_match_to = value
     if (_coconut.isinstance(_coconut_match_to, int)):
         n = _coconut_match_to
-        if (n > 0):
-            _coconut_match_check = True
+        _coconut_match_check = True
+    if _coconut_match_check and not ((n > 0)):
+        _coconut_match_check = False
     if _coconut_match_check:
         return n * factorial3(n - 1)
     _coconut_match_check = False
@@ -420,8 +426,9 @@ def factorial4(value):
         _coconut_match_to = value
         if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
-            if (n > 0):
-                _coconut_match_check = True
+            _coconut_match_check = True
+        if _coconut_match_check and not ((n > 0)):
+            _coconut_match_check = False
         if _coconut_match_check:
             return n * factorial4(n - 1)
 def factorial5(value):
@@ -435,59 +442,67 @@ def factorial5(value):
         _coconut_match_to = value
         if (_coconut.isinstance(_coconut_match_to, int)):
             n = _coconut_match_to
-            if (n > 0):
-                _coconut_match_check = True
+            _coconut_match_check = True
+        if _coconut_match_check and not ((n > 0)):
+            _coconut_match_check = False
         if _coconut_match_check:
             return n * factorial5(n - 1)
     if not _coconut_match_check:
         return None
     raise TypeError()
 @_coconut_tco
-def fact(*_coconut_match_to):
-    def _coconut_mock_func(*_coconut_match_to): return _coconut_match_to
+def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    def _coconut_mock_func(*_coconut_match_to_args, **_coconut_match_to_kwargs): return _coconut_match_to_args, _coconut_match_to_kwargs
     while True:
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1):
-            n = _coconut_match_to[0]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
+            _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
+            if (not _coconut_match_to_kwargs):
+                n = _coconut_match_temp_0
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n) = fact(n, 1)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n) = fact(n, 1)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'match def fact(n) = fact(n, 1)'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         if fact is _coconut_recursive_func_44:
-            _coconut_match_to = _coconut_mock_func(n, 1)
+            _coconut_match_to_args, _coconut_match_to_kwargs = _coconut_mock_func(n, 1)
             continue
         else:
             raise _coconut_tail_call(fact, n, 1)
         return None
 _coconut_recursive_func_44 = fact
 @addpattern(fact)
-def fact(*_coconut_match_to):
+def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut_match_to[0] == 0):
-        acc = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) == 1) and (_coconut_match_to_args[0] == 0):
+        _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc")
+        if (not _coconut_match_to_kwargs):
+            acc = _coconut_match_temp_0
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(0, acc) = acc'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(0, acc) = acc'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'match def fact(0, acc) = acc'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return acc
 @addpattern(fact)
 @_coconut_tco
-def fact(*_coconut_match_to):
+def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2):
-        n = _coconut_match_to[0]
-        acc = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc")
+        if (not _coconut_match_to_kwargs):
+            n = _coconut_match_temp_0
+            acc = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n, acc) = fact(n-1, acc*n)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def fact(n, acc) = fact(n-1, acc*n)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'match def fact(n, acc) = fact(n-1, acc*n)'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     raise _coconut_tail_call(fact, n - 1, acc * n)
@@ -655,8 +670,9 @@ def map_(func, args):
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
         xs = _coconut.tuple(_coconut_match_to[1:])
         x = _coconut_match_to[0]
-        if ((isinstance)(args, tuple)):
-            _coconut_match_check = True
+        _coconut_match_check = True
+    if _coconut_match_check and not (((isinstance)(args, tuple))):
+        _coconut_match_check = False
     if _coconut_match_check:
         return (func(x),) + map_(func, xs)
     _coconut_match_check = False
@@ -664,8 +680,9 @@ def map_(func, args):
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) >= 1):
         xs = _coconut.list(_coconut_match_to[1:])
         x = _coconut_match_to[0]
-        if ((isinstance)(args, list)):
-            _coconut_match_check = True
+        _coconut_match_check = True
+    if _coconut_match_check and not (((isinstance)(args, list))):
+        _coconut_match_check = False
     if _coconut_match_check:
         return [func(x)] + map_(func, xs)
 def duplicate_first1(value):
@@ -687,9 +704,9 @@ def duplicate_first2(value):
     if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         l = _coconut_match_to
         xs = _coconut.iter(_coconut_match_to)
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_iter_0) == 1):
-            x = _coconut_match_iter_0[0]
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_temp_0) == 1):
+            x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
@@ -702,9 +719,9 @@ def duplicate_first3(value):
     if (_coconut.isinstance(_coconut_match_to, list)) and (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
         l = _coconut_match_to
         xs = _coconut.iter(_coconut_match_to)
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_iter_0) == 1):
-            x = _coconut_match_iter_0[0]
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_temp_0) == 1):
+            x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
@@ -732,7 +749,7 @@ def pipe(a, b):
     a = (b)(a)
     return a
 def compose(a, b):
-    a = (lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)))(a, (b))
+    a = _coconut_compose(a, (b))
     return a
 def chain(a, b):
     _coconut_lazy_chain_2 = a
@@ -899,16 +916,17 @@ def dictpoint_(value):
         raise _coconut_match_err
 
     return x, y
-def dictpoint__(*_coconut_match_to):
+def dictpoint__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to[0]) == 2) and ("x" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["x"], int)) and ("y" in _coconut_match_to[0]) and (_coconut.isinstance(_coconut_match_to[0]["y"], int)):
-        x = _coconut_match_to[0]["x"]
-        y = _coconut_match_to[0]["y"]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to_args[0]) == 2) and ("x" in _coconut_match_to_args[0]) and (_coconut.isinstance(_coconut_match_to_args[0]["x"], int)) and ("y" in _coconut_match_to_args[0]) and (_coconut.isinstance(_coconut_match_to_args[0]["y"], int)):
+        x = _coconut_match_to_args[0]["x"]
+        y = _coconut_match_to_args[0]["y"]
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def dictpoint__({"x":x is int, "y":y is int}):'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return x, y
@@ -928,95 +946,110 @@ def dectest(x):
     return x
 
 # Match Function Definition:
-def last_two_(*_coconut_match_to):
+def last_two_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 2):
-        _ = _coconut.list(_coconut_match_to[0][:-2])
-        a = _coconut_match_to[0][-2]
-        b = _coconut_match_to[0][-1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 2):
+        _ = _coconut.list(_coconut_match_to_args[0][:-2])
+        a = _coconut_match_to_args[0][-2]
+        b = _coconut_match_to_args[0][-1]
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def last_two_(_ + [a, b]):'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return a, b
-def htsplit(*_coconut_match_to):
+def htsplit(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-        tail = _coconut.list(_coconut_match_to[0][1:])
-        head = _coconut_match_to[0][0]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+        tail = _coconut.list(_coconut_match_to_args[0][1:])
+        head = _coconut_match_to_args[0][0]
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'match def htsplit([head] + tail) = [head, tail]'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return [head, tail]
-def htsplit_(*_coconut_match_to):
+def htsplit_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-        tail = _coconut.list(_coconut_match_to[0][1:])
-        head = _coconut_match_to[0][0]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+        tail = _coconut.list(_coconut_match_to_args[0][1:])
+        head = _coconut_match_to_args[0][0]
+        if (not _coconut_match_to_kwargs):
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def htsplit_([head] + tail) = [head, tail]'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return [head, tail]
-def iadd(*_coconut_match_to):
+def iadd(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
-        x = _coconut_match_to[0]
-        y = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "y" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("y")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def (x is int) `iadd` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'match def (x is int) `iadd` (y is int) = x + y'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return x + y
-def iadd_(*_coconut_match_to):
+def iadd_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)) and (_coconut.isinstance(_coconut_match_to[1], int)):
-        x = _coconut_match_to[0]
-        y = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "y" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("y")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def (x is int) `iadd_` (y is int) = x + y'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def (x is int) `iadd_` (y is int) = x + y'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return x + y
-def strmul(*_coconut_match_to):
+def strmul(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
-        a = _coconut_match_to[0]
-        x = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "a" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("a")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("x")
+        if (_coconut.isinstance(_coconut_match_temp_0, str)) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            a = _coconut_match_temp_0
+            x = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def strmul(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'match def strmul(a is str, x is int):'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return a * x
-def strmul_(*_coconut_match_to):
+def strmul_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)) and (_coconut.isinstance(_coconut_match_to[1], int)):
-        a = _coconut_match_to[0]
-        x = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "a" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("a")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("x")
+        if (_coconut.isinstance(_coconut_match_temp_0, str)) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            a = _coconut_match_temp_0
+            x = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def strmul_(a is str, x is int):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def strmul_(a is str, x is int):'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return a * x
@@ -1032,8 +1065,8 @@ def is_empty(i):
     _coconut_match_check = False
     _coconut_match_to = i
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to)
-        if (_coconut.len(_coconut_match_iter_0) == 0):
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_match_to)
+        if (_coconut.len(_coconut_match_temp_0) == 0):
             _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -1043,8 +1076,8 @@ def is_one(i):
     _coconut_match_check = False
     _coconut_match_to = i
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to)
-        if (_coconut.len(_coconut_match_iter_0) == 1) and (_coconut_match_iter_0[0] == 1):
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_match_to)
+        if (_coconut.len(_coconut_match_temp_0) == 1) and (_coconut_match_temp_0[0] == 1):
             _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -1119,56 +1152,66 @@ def SHOPeriodTerminate(X, t, params):
 
 # Multiple dispatch:
 
-def add_int_or_str_1(*_coconut_match_to):
+def add_int_or_str_1(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], int)):
-        x = _coconut_match_to[0]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def add_int_or_str_1(x is int) = x + 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def add_int_or_str_1(x is int) = x + 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def add_int_or_str_1(x is int) = x + 1'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return x + 1
 @addpattern(add_int_or_str_1)
-def add_int_or_str_1(*_coconut_match_to):
+def add_int_or_str_1(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], str)):
-        x = _coconut_match_to[0]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        if (_coconut.isinstance(_coconut_match_temp_0, str)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def add_int_or_str_1(x is str) = x + "1"\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def add_int_or_str_1(x is str) = x + "1"\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def add_int_or_str_1(x is str) = x + "1"'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return x + "1"
 
-def coercive_add(*_coconut_match_to):
+def coercive_add(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], int)):
-        a = _coconut_match_to[0]
-        b = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "a" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "b" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("a")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("b")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            a = _coconut_match_temp_0
+            b = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is int, b) = a + int(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is int, b) = a + int(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def coercive_add(a is int, b) = a + int(b)'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return a + int(b)
 @addpattern(coercive_add)
-def coercive_add(*_coconut_match_to):
+def coercive_add(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 2) and (_coconut.isinstance(_coconut_match_to[0], str)):
-        a = _coconut_match_to[0]
-        b = _coconut_match_to[1]
-        _coconut_match_check = True
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "a" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "b" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("a")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("b")
+        if (_coconut.isinstance(_coconut_match_temp_0, str)) and (not _coconut_match_to_kwargs):
+            a = _coconut_match_temp_0
+            b = _coconut_match_temp_1
+            _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is str, b) = a + str(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def coercive_add(a is str, b) = a + str(b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def coercive_add(a is str, b) = a + str(b)'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return a + str(b)
@@ -1183,16 +1226,19 @@ def not_ident(x):
 
 # Pattern-matching functions with guards
 
-def pattern_abs(*_coconut_match_to):
+def pattern_abs(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1):
-        x = _coconut_match_to[0]
-        if (x < 0):
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        if (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
             _coconut_match_check = True
+    if _coconut_match_check and not ((x < 0)):
+        _coconut_match_check = False
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def pattern_abs(x if x < 0) = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def pattern_abs(x if x < 0) = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def pattern_abs(x if x < 0) = -x'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return -x
@@ -1200,16 +1246,19 @@ def pattern_abs(*_coconut_match_to):
 def pattern_abs(x):
     return x
 
-def pattern_abs_(*_coconut_match_to):
+def pattern_abs_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1):
-        x = _coconut_match_to[0]
-        if (x < 0):
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        if (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
             _coconut_match_check = True
+    if _coconut_match_check and not ((x < 0)):
+        _coconut_match_check = False
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def `pattern_abs_` (x) if x < 0 = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def `pattern_abs_` (x) if x < 0 = -x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def `pattern_abs_` (x) if x < 0 = -x'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return -x
@@ -1231,34 +1280,34 @@ def loop(it):
 
 # Sieve Example
 
-def sieve(*_coconut_match_to):
+def sieve(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Iterable)):
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_match_to[0])
-        if (_coconut.len(_coconut_match_iter_0) == 0):
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Iterable)):
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_match_to_args[0])
+        if (_coconut.len(_coconut_match_temp_0) == 0) and (not _coconut_match_to_kwargs):
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve((||)) = []'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve((||)) = []'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def sieve((||)) = []'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     return []
 
 @prepattern(sieve)
 @_coconut_tco
-def sieve(*_coconut_match_to):
+def sieve(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Iterable)):
-        tail = _coconut.iter(_coconut_match_to[0])
-        _coconut_match_iter_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_iter_0) == 1):
-            head = _coconut_match_iter_0[0]
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Iterable)):
+        tail = _coconut.iter(_coconut_match_to_args[0])
+        _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
+        if (_coconut.len(_coconut_match_temp_0) == 1) and (not _coconut_match_to_kwargs):
+            head = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
         _coconut_match_err.pattern = 'def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)'
-        _coconut_match_err.value = _coconut_match_to
+        _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
     raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
@@ -1272,16 +1321,17 @@ def double_plus_one(x):
 @_coconut_tco
 def assign_func_1(f, x, y):
     @_coconut_tco
-    def inner_assign_func(*_coconut_match_to):
+    def inner_assign_func(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
-            a = _coconut_match_to[0][0]
-            b = _coconut_match_to[0][1]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
+            a = _coconut_match_to_args[0][0]
+            b = _coconut_match_to_args[0][1]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) = f(a, b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) = f(a, b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'def inner_assign_func((a, b)) = f(a, b)'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         raise _coconut_tail_call(f, a, b)
@@ -1290,16 +1340,17 @@ def assign_func_1(f, x, y):
 @_coconut_tco
 def assign_func_2(f, x, y):
     @_coconut_tco
-    def inner_assign_func(*_coconut_match_to):
+    def inner_assign_func(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) == 2):
-            a = _coconut_match_to[0][0]
-            b = _coconut_match_to[0][1]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
+            a = _coconut_match_to_args[0][0]
+            b = _coconut_match_to_args[0][1]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'def inner_assign_func((a, b)) ='
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         raise _coconut_tail_call(f, a, b)
@@ -1340,7 +1391,7 @@ _coconut_recursive_func_122 = ret_none
 def ret_args_kwargs(*args, **kwargs):
     return (args, kwargs)
 
-# Typing:
+# Typing
 
 import sys
 if sys.version_info > (3, 5):
@@ -1365,3 +1416,136 @@ def anything_func(*args,  # type: int
     ):
 # type: (...) -> None
     pass
+
+# Enhanced Pattern-Matching
+
+def fact_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1) and (_coconut_match_to_args[0] == 0):
+        _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
+        if (not _coconut_match_to_kwargs):
+            acc = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def fact_(0, acc=1) = acc'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def fact_(0, acc=1) = acc'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return acc
+@addpattern(fact_)
+@_coconut_tco
+def fact_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            n = _coconut_match_temp_0
+            acc = _coconut_match_temp_1
+            _coconut_match_check = True
+    if _coconut_match_check and not ((n > 0)):
+        _coconut_match_check = False
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def fact_(n is int, acc=1 if n > 0) = fact_(n-1, acc*n)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def fact_(n is int, acc=1 if n > 0) = fact_(n-1, acc*n)'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    raise _coconut_tail_call(fact_, n - 1, acc * n)
+
+def x_is_int(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def x_is_int(x is int) = x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def x_is_int(x is int) = x'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return x
+
+def x_as_y(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "y" in _coconut_match_to_kwargs, "x" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("y") if "y" in _coconut_match_to_kwargs else _coconut_match_to_kwargs.pop("x")
+        if (not _coconut_match_to_kwargs):
+            y = _coconut_match_temp_0
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def x_as_y(x as y) = (x, y)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def x_as_y(x as y) = (x, y)'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return (x, y)
+
+def x_y_are_int_gt_0(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "y" in _coconut_match_to_kwargs)) == 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("y")
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
+            _coconut_match_check = True
+    if _coconut_match_check and not ((x > 0 and y > 0)):
+        _coconut_match_check = False
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def (x is int) `x_y_are_int_gt_0` (y is int) if x > 0 and y > 0 = (x, y)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def (x is int) `x_y_are_int_gt_0` (y is int) if x > 0 and y > 0 = (x, y)'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return (x, y)
+
+def x_is_int_def_0(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) <= 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x") if "x" in _coconut_match_to_kwargs else 0
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def x_is_int_def_0(x is int = 0) = x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def x_is_int_def_0(x is int = 0) = x'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return x
+
+def head_tail_def_none(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else [None]
+        if (_coconut.isinstance(_coconut_match_temp_0, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_temp_0) >= 1) and (not _coconut_match_to_kwargs):
+            tail = _coconut.list(_coconut_match_temp_0[1:])
+            head = _coconut_match_temp_0[0]
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def head_tail_def_none([head] + tail = [None]) = (head, tail)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def head_tail_def_none([head] + tail = [None]) = (head, tail)'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return (head, tail)
+
+def kwd_only_x_is_int_def_0(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) == 0):
+        _coconut_match_temp_0 = _coconut_match_to_kwargs.pop("x") if "x" in _coconut_match_to_kwargs else 0
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def kwd_only_x_is_int_def_0(*, x is int = 0) = x'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def kwd_only_x_is_int_def_0(*, x is int = 0) = x'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return x

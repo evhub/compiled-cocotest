@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xdc7fa0ea
+# __coconut_hash__ = 0xdc1a1cb7
 
-# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -25,42 +25,45 @@ def py35_test():
         return parallel_map(args[0], *args[1:])
     async def async_map_1(args):
         return parallel_map(args[0], *args[1:])
-    async def async_map_2(*_coconut_match_to):
+    async def async_map_2(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-            iters = _coconut.list(_coconut_match_to[0][1:])
-            func = _coconut_match_to[0][0]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+            iters = _coconut.list(_coconut_match_to_args[0][1:])
+            func = _coconut_match_to_args[0][0]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async def async_map_2([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async def async_map_2([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'async def async_map_2([func] + iters) = parallel_map(func, *iters)'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         return parallel_map(func, *iters)
-    async def async_map_3(*_coconut_match_to):
+    async def async_map_3(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-            iters = _coconut.list(_coconut_match_to[0][1:])
-            func = _coconut_match_to[0][0]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+            iters = _coconut.list(_coconut_match_to_args[0][1:])
+            func = _coconut_match_to_args[0][0]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async match def async_map_3([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async match def async_map_3([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'async match def async_map_3([func] + iters) = parallel_map(func, *iters)'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         return parallel_map(func, *iters)
-    async def async_map_4(*_coconut_match_to):
+    async def async_map_4(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-            iters = _coconut.list(_coconut_match_to[0][1:])
-            func = _coconut_match_to[0][0]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+            iters = _coconut.list(_coconut_match_to_args[0][1:])
+            func = _coconut_match_to_args[0][0]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match async def async_map_4([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match async def async_map_4([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'match async def async_map_4([func] + iters) = parallel_map(func, *iters)'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
         return parallel_map(func, *iters)

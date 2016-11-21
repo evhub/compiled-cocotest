@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xae944ce5
+# __coconut_hash__ = 0x2b1a862f
 
-# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -389,11 +389,11 @@ def main_test():
     _coconut_match_check = False
     _coconut_match_to = range(10)
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
-        _coconut_match_iter_0 = _coconut.list(_coconut_match_to)
-        if (_coconut.len(_coconut_match_iter_0) >= 2):
-            b = _coconut_match_iter_0[1:-1]
-            a = _coconut_match_iter_0[0]
-            c = _coconut_match_iter_0[-1]
+        _coconut_match_temp_0 = _coconut.list(_coconut_match_to)
+        if (_coconut.len(_coconut_match_temp_0) >= 2):
+            b = _coconut_match_temp_0[1:-1]
+            a = _coconut_match_temp_0[0]
+            c = _coconut_match_temp_0[-1]
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match [a, *b, c] = range(10)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -407,10 +407,10 @@ def main_test():
     _coconut_match_check = False
     _coconut_match_to = range(10)
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
-        _coconut_match_iter_0 = _coconut.list(_coconut_match_to)
-        if (_coconut.len(_coconut_match_iter_0) >= 2) and (_coconut_match_iter_0[0] == _coconut_match_iter_0[-1]):
-            b = _coconut_match_iter_0[1:-1]
-            a = _coconut_match_iter_0[0]
+        _coconut_match_temp_0 = _coconut.list(_coconut_match_to)
+        if (_coconut.len(_coconut_match_temp_0) >= 2) and (_coconut_match_temp_0[0] == _coconut_match_temp_0[-1]):
+            b = _coconut_match_temp_0[1:-1]
+            a = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         assert False
@@ -425,16 +425,17 @@ def main_test():
     def _coconut_lambda_19(x):
         return x
     assert (_coconut_lambda_19)(1) == 1
-    def _coconut_lambda_20(*_coconut_match_to):
+    def _coconut_lambda_20(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
-        if (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to[0]) >= 1):
-            xs = _coconut.list(_coconut_match_to[0][1:])
-            x = _coconut_match_to[0][0]
-            _coconut_match_check = True
+        if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
+            xs = _coconut.list(_coconut_match_to_args[0][1:])
+            x = _coconut_match_to_args[0][0]
+            if (not _coconut_match_to_kwargs):
+                _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
             _coconut_match_err.pattern = 'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'
-            _coconut_match_err.value = _coconut_match_to
+            _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
         return x, xs
     assert ((_coconut_lambda_20))(range(5)) == (0, [1, 2, 3, 4])

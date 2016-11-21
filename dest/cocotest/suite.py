@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x1947256e
+# __coconut_hash__ = 0x642afe48
 
-# Compiled with Coconut version 1.2.0-post_dev20 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -42,6 +42,7 @@ def suite_test():
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
     assert sqplus1(3) == 10 == (_coconut_compose(plus1, square))(3)
+    assert (tuple)(parallel_map(sqplus1, range(3))) == (1, 2, 5)
     assert (plus1sq)(3) == 16 == (plus1sq_)(3)
     assert (sqplus1)(3) == 10 == (sqplus1_)(3)
     assert (square)((plus1)(3)) == 16 == (square)((plus1_)(3))
@@ -85,7 +86,7 @@ def suite_test():
     assert factorial2(3) == 6
     assert factorial4(3) == 6
     assert factorial5(3) == 6
-    assert fact(3) == 6
+    assert fact(3) == 6 == fact_(3)
     assert factorial1(-1) is None
     assert factorial2(-1) is None
     assert factorial4(-1) is None
@@ -196,7 +197,7 @@ def suite_test():
     y = y(*((5, 3)))
     assert x == 2 == y
     x = square
-    x = (lambda f, g: lambda *args, **kwargs: f(g(*args, **kwargs)))(x, (_coconut.functools.partial(_coconut.operator.add, 1)))
+    x = _coconut_compose(x, (_coconut.functools.partial(_coconut.operator.add, 1)))
     x = x((4))
     assert x == 25
     v = vector(1, 2)
@@ -241,4 +242,40 @@ def suite_test():
     assert (_coconut_partial(ret_args_kwargs, {0: 1, 3: 4}, 5, *(6, 7), a="k"))(*(2, 3, 5)) == ((1, 2, 3, 4, 5, 6, 7), {"a": "k"})
     assert anything_func() is None
     assert args_kwargs_func() is None
+    assert x_is_int(4) == 4 == x_is_int(x=4)
+    try:
+        x_is_int(x="herp")
+    except MatchError:
+        pass
+    else:
+        assert False
+    try:
+        x_is_int()
+    except MatchError:
+        pass
+    else:
+        assert False
+    assert x_as_y(x=2) == (2, 2) == x_as_y(y=2)
+    assert x_y_are_int_gt_0(1, 2) == (1, 2) == x_y_are_int_gt_0(x=1, y=2)
+    try:
+        x_y_are_int_gt_0(1, y=0)
+    except MatchError:
+        pass
+    else:
+        assert False
+    assert x_is_int_def_0() == 0 == x_is_int_def_0(x=0)
+    try:
+        x_is_int_def_0("derp")
+    except MatchError:
+        pass
+    else:
+        assert False
+    assert head_tail_def_none() == (None, []) == head_tail_def_none([None])
+    assert kwd_only_x_is_int_def_0() == 0 == kwd_only_x_is_int_def_0(x=0)
+    try:
+        kwd_only_x_is_int_def_0(1)
+    except MatchError:
+        pass
+    else:
+        assert False
     return True
