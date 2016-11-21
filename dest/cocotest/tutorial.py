@@ -55,7 +55,7 @@ def factorial(n):
         _coconut_match_to = n
         if (_coconut.isinstance(_coconut_match_to, int)):
             _coconut_match_check = True
-        if _coconut_match_check and not ((n > 0)):
+        if _coconut_match_check and not (n > 0):
             _coconut_match_check = False
         if _coconut_match_check:
             return n * factorial(n - 1)
@@ -143,7 +143,7 @@ def factorial(n, acc=1):
             _coconut_match_to = n
             if (_coconut.isinstance(_coconut_match_to, int)):
                 _coconut_match_check = True
-            if _coconut_match_check and not ((n > 0)):
+            if _coconut_match_check and not (n > 0):
                 _coconut_match_check = False
             if _coconut_match_check:
                 if factorial is _coconut_recursive_func_3:
@@ -186,7 +186,7 @@ def factorial(n):
         _coconut_match_to = n
         if (_coconut.isinstance(_coconut_match_to, int)):
             _coconut_match_check = True
-        if _coconut_match_check and not ((n > 0)):
+        if _coconut_match_check and not (n > 0):
             _coconut_match_check = False
         if _coconut_match_check:
             raise _coconut_tail_call(reduce, _coconut.operator.mul, range(1, n + 1))
@@ -231,7 +231,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
             n = _coconut_match_temp_0
             _coconut_match_check = True
-    if _coconut_match_check and not ((n > 0)):
+    if _coconut_match_check and not (n > 0):
         _coconut_match_check = False
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -279,7 +279,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
             n = _coconut_match_temp_0
             _coconut_match_check = True
-    if _coconut_match_check and not ((n > 0)):
+    if _coconut_match_check and not (n > 0):
         _coconut_match_check = False
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
