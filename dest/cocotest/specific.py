@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x3705cec5
+# __coconut_hash__ = 0x79e02dab
 
-# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev26 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -29,6 +29,7 @@ def non_py26_test():
     test = {}
     exec("b = mod(5, 3)", globals(), test)
     assert test["b"] == 2
+    assert 5 .bit_length() == 3
     return True
 
 def non_py32_test():

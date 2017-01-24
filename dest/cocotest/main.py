@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x2b1a862f
+# __coconut_hash__ = 0x7d3bd2b3
 
-# Compiled with Coconut version 1.2.0-post_dev21 [Colonel]
+# Compiled with Coconut version 1.2.0-post_dev26 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -446,6 +446,47 @@ def main_test():
     assert (repr)(_coconut_partial(pow, {1: 2}, 2)) == "<built-in function pow>$(?, 2)"
     assert (tuple)(parallel_map(_coconut_partial(pow, {1: 2}, 2), range(10))) == (0, 1, 4, 9, 16, 25, 36, 49, 64, 81)
     assert _coconut_partial(pow, {1: 2}, 2).args == (None, 2)
+    assert (tuple)((reversed)((_coconut.functools.partial(filter, lambda x: x < 5))(range(20)))) == (4, 3, 2, 1, 0) == (tuple)((reversed)((_coconut.functools.partial(filter, lambda x: x < 5))((0, 1, 2, 3, 4, 5, 6, 7, 8, 9))))
+    assert (isinstance)(((reversed)((_coconut.functools.partial(map, lambda x: x))(range(10)))), map)
+
+    assert (tuple)((reversed)((reversed)(range(10)))) == (tuple)(range(10))
+    assert (len)((reversed)(range(10))) == 10
+    assert (_coconut.operator.itemgetter(1))((reversed)(range(10))) == 8
+    assert (_coconut.operator.itemgetter(-1))((reversed)(range(10))) == 0
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(None, -1)))((reversed)(range(10)))) == (tuple)((reversed)(range(1, 10)))
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(1, None)))((reversed)(range(10)))) == (tuple)((reversed)(range(9)))
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(2, -3)))((reversed)(range(10)))) == (tuple)((reversed)(range(3, 8)))
+    assert 5 in ((reversed)(range(10)))
+    assert ((reversed)(range(10))).count(3) == 1
+    assert ((reversed)(range(10))).count(10) == 0
+    assert ((reversed)(range(10))).index(3)
+
+    range10 = (list)(range(10))
+    assert (reversed)((reversed)(range10)) == range10
+    assert (len)((reversed)(range10)) == 10
+    assert (_coconut.operator.itemgetter(1))((reversed)(range10)) == 8
+    assert (_coconut.operator.itemgetter(-1))((reversed)(range10)) == 0
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(None, -1)))((reversed)(range10))) == (tuple)((reversed)(range(1, 10)))
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(1, None)))((reversed)(range10))) == (tuple)((reversed)(range(9)))
+    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(2, -3)))((reversed)(range10))) == (tuple)((reversed)(range(3, 8)))
+    assert 5 in ((reversed)(range10))
+    assert ((reversed)(range10)).count(3) == 1
+    assert ((reversed)(range10)).count(10) == 0
+    assert ((reversed)(range10)).index(3)
+
+    assert (list)((enumerate)(range(1, 3))) == [(0, 1), (1, 2)]
+    assert (list)((_coconut.functools.partial(enumerate, start=1))(range(2))) == [(1, 0), (2, 1)]
+    assert (len)((enumerate)(range(10))) == 10
+    assert (_coconut.operator.itemgetter(1))((enumerate)(range(10))) == (1, 1)
+    assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 1)))((enumerate)(range(10)))) == [(0, 0)]
+    assert (list)((_coconut.operator.itemgetter(_coconut.slice(1, 3)))((enumerate)(range(10)))) == [(1, 1), (2, 2)]
+    assert (list)((_coconut.operator.itemgetter(_coconut.slice(-1, None)))((enumerate)(range(10)))) == [(9, 9)]
+    assert (tuple)(range(3, 0, -1)) == (3, 2, 1)
+    assert (tuple)(range(10, 0, -1)[9:1:-1]) == tuple(range(10, 0, -1))[9:1:-1]
+    assert count(1)[1:] == count(2)
+    assert (tuple)(reversed((x for x in range(10)))[2:-3]) == (tuple)((reversed)(range(3, 8)))
+    assert (tuple)(count(1, 2)[:3]) == (1, 3, 5)
+    assert (tuple)(count(0.5, 0.5)[:3]) == (0.5, 1, 1.5)
     return True
 
 def main(*args):
