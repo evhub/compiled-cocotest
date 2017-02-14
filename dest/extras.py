@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xe80b86d5
+# __coconut_hash__ = 0xdc9bcd9e
 
-# Compiled with Coconut version 1.2.0-post_dev27 [Colonel]
+# Compiled with Coconut version 1.2.1 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -459,6 +459,7 @@ import sys
 
 from coconut.__coconut__ import consume as coc_consume
 from coconut.exceptions import CoconutStyleError
+from coconut.exceptions import CoconutSyntaxError
 from coconut.convenience import CoconutException
 from coconut.convenience import cmd
 from coconut.convenience import version
@@ -483,6 +484,12 @@ def main():
     try:
         version("other")
     except CoconutException:
+        assert True
+    else:
+        assert False
+    try:
+        raise CoconutException("derp").syntax_err()
+    except SyntaxError:
         assert True
     else:
         assert False
