@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x59e36eed
+# __coconut_hash__ = 0x11731e68
 
-# Compiled with Coconut version 1.2.1 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -182,10 +182,10 @@ def main_test():
         assert err.__cause__ is from_err
     else:
         assert False
-    class doc(_coconut.collections.namedtuple("doc", "")):
+    class doc(_coconut.collections.namedtuple("doc", ""), _coconut.object):
         "doc"
         __slots__ = ()
-    class doc_(_coconut.collections.namedtuple("doc_", "")):
+    class doc_(_coconut.collections.namedtuple("doc_", ""), _coconut.object):
         """doc"""
         __slots__ = ()
     assert doc.__doc__ == "doc" == doc_.__doc__
@@ -378,11 +378,14 @@ def main_test():
             return herpaderp + herp
         return (_coconut_lambda_18)
     assert derp()() == 15
-    class abc(_coconut.collections.namedtuple("abc", "xyz")):
+    class abc(_coconut.collections.namedtuple("abc", "xyz"), _coconut.object):
         __slots__ = ()
     assert abc(10).xyz == 10
+    assert issubclass(abc, object)
+    assert isinstance(abc(10), object)
     class aclass(_coconut.object): pass
-    assert isinstance(aclass, object)
+    assert issubclass(aclass, object)
+    assert isinstance(aclass(), object)
     assert (_coconut.operator.is_)(*tee((1, 2)))
     assert (_coconut.operator.is_)(*tee(_coconut.frozenset((1, 2))))
     assert (lambda x: 2 / x)(4) == 1 / 2
@@ -487,8 +490,38 @@ def main_test():
     assert (tuple)(reversed((x for x in range(10)))[2:-3]) == (tuple)((reversed)(range(3, 8)))
     assert (tuple)(count(1, 2)[:3]) == (1, 3, 5)
     assert (tuple)(count(0.5, 0.5)[:3]) == (0.5, 1, 1.5)
+    assert (_coconut.functools.partial(fmap, lambda x: x + 1))([1, 2, 3]) == [2, 3, 4]
+    assert (_coconut.functools.partial(fmap, lambda x: x + 1))((1, 2, 3)) == (2, 3, 4)
+    assert (_coconut.functools.partial(fmap, lambda x: x + "!"))("abc") == "a!b!c!"
+    assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))({1: "2", 2: "3"}) == {2: "2", 3: "3"}
+    assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(_coconut.set((1, 2, 3))) == _coconut.set((2, 3, 4))
+    assert (_coconut.functools.partial(fmap, _coconut.functools.partial(_coconut.operator.add, [0])))([[1, 2, 3]]) == [[0, 1, 2, 3]]
+    assert (tuple)((_coconut.functools.partial(fmap, lambda _=None: _ + 1))(range(3))) == (1, 2, 3)
+    assert issubclass(int, py_int)
+    class pyobjsub(py_object): pass
+    class objsub(object): pass
+    assert not issubclass(pyobjsub, objsub)
+    assert issubclass(objsub, object)
+    assert issubclass(objsub, py_object)
+    assert not issubclass(objsub, pyobjsub)
+    pos = pyobjsub()
+    os = objsub()
+    assert not isinstance(pos, objsub)
+    assert isinstance(os, objsub)
+    assert isinstance(os, object)
+    assert not isinstance(os, pyobjsub)
     return True
 
+@_coconut_tco
+def test_tco(x):
+    while True:
+        if test_tco is _coconut_recursive_func_5:
+            continue
+        else:
+            raise _coconut_tail_call(test_tco, x)
+        return None
+
+_coconut_recursive_func_5 = test_tco
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
@@ -500,7 +533,10 @@ def main(*args):
         from .specific import non_py32_test
         assert non_py32_test
     from .suite import suite_test
+    from .suite import tco_test
     assert suite_test()
+    if hasattr(test_tco, "_coconut_is_tco"):
+        assert tco_test()
     if sys.version_info < (3,):
         from .py2_test import py2_test
         assert py2_test()

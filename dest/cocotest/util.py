@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x1e9e5c74
+# __coconut_hash__ = 0x1b60c612
 
-# Compiled with Coconut version 1.2.1 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -19,6 +19,7 @@ _coconut_sys.path.remove(_coconut_file_path)
 
 # Imports:
 import random
+from contextlib import contextmanager
 
 # Random Number Helper:
 def rand_list(n):
@@ -83,6 +84,7 @@ def chain2(a, b):
 
 def threeple(a, b, c):
     return (a, b, c)
+times2 = _coconut.functools.partial(_coconut.operator.mul, 2)
 
 # Partial Applications:
 sum_ = _coconut.functools.partial(reduce, _coconut.operator.add)
@@ -290,12 +292,13 @@ def is_odd_(n):
     raise _coconut_tail_call(is_even_, n - 1)
 
 # Data Blocks:
-class preop(_coconut.collections.namedtuple("preop", "x, y")):
+class preop(_coconut.collections.namedtuple("preop", "x y"), _coconut.object):
     __slots__ = ()
     def add(self):
         return self.x + self.y
-class vector(_coconut.collections.namedtuple("vector", "x, y")):
+class vector(_coconut.collections.namedtuple("vector", "x y"), _coconut.object):
     __slots__ = ()
+    @_coconut_tco
     def __new__(cls, x, y=None):
         _coconut_match_check = False
         _coconut_match_to = x
@@ -305,7 +308,7 @@ class vector(_coconut.collections.namedtuple("vector", "x, y")):
             _coconut_match_check = True
         if _coconut_match_check:
             pass
-        return datamaker(cls)(x, y)
+        raise _coconut_tail_call(datamaker(cls), x, y)
     def __abs__(self):
         return (self.x**2 + self.y**2)**.5
     @_coconut_tco
@@ -329,13 +332,13 @@ class vector(_coconut.collections.namedtuple("vector", "x, y")):
             return True
         else:
             return False
-class triangle(_coconut.collections.namedtuple("triangle", "a, b, c")):
+class triangle(_coconut.collections.namedtuple("triangle", "a b c"), _coconut.object):
     __slots__ = ()
     def is_right(self):
         return self.a**2 + self.b**2 == self.c**2
-class null1(_coconut.collections.namedtuple("null1", "")):
+class null1(_coconut.collections.namedtuple("null1", ""), _coconut.object):
     __slots__ = ()
-class null2(_coconut.collections.namedtuple("null2", "")):
+class null2(_coconut.collections.namedtuple("null2", ""), _coconut.object):
     __slots__ = ()
 null = (null1, null2)
 def is_null(item):
@@ -347,6 +350,13 @@ def is_null(item):
         return True
     else:
         return False
+class Elems(_coconut.collections.namedtuple("Elems", "elems"), _coconut.object):
+    __slots__ = ()
+    @_coconut_tco
+    def __new__(cls, *elems):
+        raise _coconut_tail_call((datamaker(cls)), elems)
+class vector_with_id(_coconut.collections.namedtuple("vector_with_id", "x y i"), vector):
+    __slots__ = ()
 
 # Factorial:
 def factorial1(value):
@@ -466,13 +476,13 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        if fact is _coconut_recursive_func_44:
+        if fact is _coconut_recursive_func_45:
             _coconut_match_to_args, _coconut_match_to_kwargs = _coconut_mock_func(n, 1)
             continue
         else:
             raise _coconut_tail_call(fact, n, 1)
         return None
-_coconut_recursive_func_44 = fact
+_coconut_recursive_func_45 = fact
 @addpattern(fact)
 def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
@@ -755,11 +765,11 @@ def chain(a, b):
     return a
 
 # Algebraic Data Types:
-class empty(_coconut.collections.namedtuple("empty", "")):
+class empty(_coconut.collections.namedtuple("empty", ""), _coconut.object):
     __slots__ = ()
-class leaf(_coconut.collections.namedtuple("leaf", "n")):
+class leaf(_coconut.collections.namedtuple("leaf", "n"), _coconut.object):
     __slots__ = ()
-class node(_coconut.collections.namedtuple("node", "l, r")):
+class node(_coconut.collections.namedtuple("node", "l r"), _coconut.object):
     __slots__ = ()
 tree = (empty, leaf, node)
 
@@ -793,7 +803,7 @@ def base_maybe(x, f):
 def maybes(*fs):
     raise _coconut_tail_call(reduce, base_maybe, fs)
 
-class Nothing(_coconut.collections.namedtuple("Nothing", "")):
+class Nothing(_coconut.collections.namedtuple("Nothing", ""), _coconut.object):
     __slots__ = ()
     @_coconut_tco
     def __call__(self, *args):
@@ -807,7 +817,7 @@ class Nothing(_coconut.collections.namedtuple("Nothing", "")):
             return True
         else:
             return False
-class Just(_coconut.collections.namedtuple("Just", "item")):
+class Just(_coconut.collections.namedtuple("Just", "item"), _coconut.object):
     __slots__ = ()
     @_coconut_tco
     def __call__(self, *args):
@@ -1083,7 +1093,7 @@ def is_one(i):
         return False
 
 # Constructed Data Types:
-class trilen(_coconut.collections.namedtuple("trilen", "h")):
+class trilen(_coconut.collections.namedtuple("trilen", "h"), _coconut.object):
     __slots__ = ()
     @_coconut_tco
     def __new__(cls, a, b):
@@ -1098,7 +1108,7 @@ class B(A):
 
 # Infinite Grid:
 
-class pt(_coconut.collections.namedtuple("pt", "x, y")):
+class pt(_coconut.collections.namedtuple("pt", "x y"), _coconut.object):
     """Cartesian point in the x-y plane. Immutable."""
     __slots__ = ()
     def __abs__(self):
@@ -1377,7 +1387,7 @@ def does_raise_exc(func):
 def ret_none(n):
     while True:
         if n != 0:
-            if ret_none is _coconut_recursive_func_122:
+            if ret_none is _coconut_recursive_func_123:
                 n = n - 1
                 continue
             else:
@@ -1385,9 +1395,30 @@ def ret_none(n):
 
 
         return None
-_coconut_recursive_func_122 = ret_none
+_coconut_recursive_func_123 = ret_none
 def ret_args_kwargs(*args, **kwargs):
     return (args, kwargs)
+
+# Useful Classes
+
+class identity_operations(_coconut.object):
+    def __getitem__(self, args):
+        return args
+    def method(self, *args, **kwargs):
+        return (args, kwargs)
+ident = identity_operations()
+
+class container(_coconut.object):
+    def __init__(self, x):
+        self.x = x
+    def __eq__(self, other):
+        return isinstance(other, container) and self.x == other.x
+
+class container_(object):
+    def __init__(self, x):
+        self.x = x
+    def __eq__(self, other):
+        return isinstance(other, container_) and self.x == other.x
 
 # Typing
 
@@ -1403,8 +1434,8 @@ if sys.version_info > (3, 5):
 # type: (...) -> None
         pass
 else:
-    def args_kwargs_func(args=[],  # type: [int]
-     kwargs={}  # type: {▶81⏹: int}
+    def args_kwargs_func(args=[],  # type: "List"
+     kwargs={}  # type: "Dict"
     ):
 # type: (...) -> None
         pass
@@ -1547,3 +1578,144 @@ def kwd_only_x_is_int_def_0(*_coconut_match_to_args, **_coconut_match_to_kwargs)
         raise _coconut_match_err
 
     return x
+
+def no_args_kwargs(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to_args[0:], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0:]) == 0):
+        if (_coconut.isinstance(_coconut_match_to_kwargs, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to_kwargs) == 0):
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def no_args_kwargs(*(), **{}) = True'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def no_args_kwargs(*(), **{}) = True'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return True
+
+# Alternative Class Notation
+
+class altclass(_coconut.object): pass
+def func(self, x):
+    return x
+altclass.func = func
+@_coconut_tco
+def zero(self, x):
+    while True:
+        if x == 0:
+            return 0
+        if altclass.zero is _coconut_recursive_func_144:
+            self, x = self, x - 1
+            continue
+        else:
+            raise _coconut_tail_call(altclass.zero, self, x - 1)
+
+
+# Logic Stuff
+        return None
+
+_coconut_recursive_func_144 = zero
+altclass.zero = zero
+class Vars(_coconut.object):
+    var_one = 1
+
+    @classmethod
+    def items(cls):
+        for name, var in vars(cls).items():
+            if not name.startswith("_"):
+                yield name, var
+    @classmethod
+    def use(cls, globs=None):
+        """Put variables into the global namespace."""
+        if globs is None:
+            globs = globals()
+        for name, var in cls.items():
+            globs[name] = var
+    @classmethod
+    @contextmanager
+    def using(cls, globs=None):
+        """Temporarilty put variables into the global namespace."""
+        if globs is None:
+            globs = globals()
+        prevars = {}
+        for name, var in cls.items():
+            if name in globs:
+                prevars[name] = globs[name]
+            globs[name] = var
+        try:
+            yield
+        finally:
+            for name, var in cls.items():
+                if name in prevars:
+                    globs[name] = prevars[name]
+                else:
+                    del globs[name]
+
+# Starred Data
+
+class Tuple(_coconut.collections.namedtuple("Tuple", "elems"), _coconut.object):
+    __slots__ = ()
+    def __new__(_cls, *elems):
+        return _coconut.tuple.__new__(_cls, elems)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=None):
+        return new(cls, iterable)
+    def _asdict(self):
+        return _coconut.OrderedDict([("elems", self[:])])
+    def __repr__(self):
+        return "Tuple(*elems=%r)" % (self[:],)
+    def _replace(_self, **kwds):
+        result = self._make(kwds.pop("elems", _self))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def elems(self):
+        return self[:]
+
+
+class Pred(_coconut.collections.namedtuple("Pred", "name args"), _coconut.object):
+    __slots__ = ()
+    def __new__(_cls, name, *args):
+        return _coconut.tuple.__new__(_cls, (name,) + args)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=_coconut.len):
+        result = new(cls, iterable)
+        if len(result) < 1:
+            raise _coconut.TypeError("Expected at least 2 arguments, got %d" % len(result))
+        return result
+    def _asdict(self):
+        return _coconut.OrderedDict((f, _coconut.getattr(self, f)) for f in self._fields)
+    def __repr__(self):
+        return "Pred(name={name!r}, *args={args!r})".format(**self._asdict())
+    def _replace(_self, **kwds):
+        result = _self._make(_coconut.tuple(_coconut.map(kwds.pop, ("name",), _self)) + kwds.pop("args", self.args))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def args(self):
+        return self[1:]
+
+
+class Quant(_coconut.collections.namedtuple("Quant", "name var args"), _coconut.object):
+    __slots__ = ()
+    def __new__(_cls, name, var, *args):
+        return _coconut.tuple.__new__(_cls, (name, var) + args)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=_coconut.len):
+        result = new(cls, iterable)
+        if len(result) < 2:
+            raise _coconut.TypeError("Expected at least 2 arguments, got %d" % len(result))
+        return result
+    def _asdict(self):
+        return _coconut.OrderedDict((f, _coconut.getattr(self, f)) for f in self._fields)
+    def __repr__(self):
+        return "Quant(name={name!r}, var={var!r}, *args={args!r})".format(**self._asdict())
+    def _replace(_self, **kwds):
+        result = _self._make(_coconut.tuple(_coconut.map(kwds.pop, ("name", "var"), _self)) + kwds.pop("args", self.args))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def args(self):
+        return self[2:]

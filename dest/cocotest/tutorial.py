@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xef8dc1c9
+# __coconut_hash__ = 0xab1d60b4
 
-# Compiled with Coconut version 1.2.1 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -367,7 +367,7 @@ assert (list)((quick_sort)([0, 1, 2, 3, 4])) == [0, 1, 2, 3, 4]
 assert (list)((quick_sort)([4, 3, 2, 1, 0])) == [0, 1, 2, 3, 4]
 assert (list)((quick_sort)([3, 0, 4, 2, 1])) == [0, 1, 2, 3, 4]
 
-class vector2(_coconut.collections.namedtuple("vector2", "x, y")):
+class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object):
     """Immutable 2-vector."""
     __slots__ = ()
     def __abs__(self):
@@ -375,8 +375,9 @@ class vector2(_coconut.collections.namedtuple("vector2", "x, y")):
         return (self.x**2 + self.y**2)**0.5
 
 # Test cases:
-assert (repr)(vector2(1, 2)) == "vector2(x=1, y=2)"
+assert (str)(vector2(1, 2)) == "vector2(x=1, y=2)"
 assert (abs)(vector2(3, 4)) == 5
+(str)((_coconut.functools.partial(fmap, lambda x: x * 2))(vector2(1, 2))) == "vector2(x=2, y=4)"
 v = vector2(2, 3)
 try:
     v.x = 7
@@ -385,31 +386,75 @@ except AttributeError:
 else:
     assert False
 
-class vector(_coconut.collections.namedtuple("vector", "pts")):
+class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    def __new__(_cls, *pts):
+        return _coconut.tuple.__new__(_cls, pts)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=None):
+        return new(cls, iterable)
+    def _asdict(self):
+        return _coconut.OrderedDict([("pts", self[:])])
+    def __repr__(self):
+        return "vector(*pts=%r)" % (self[:],)
+    def _replace(_self, **kwds):
+        result = self._make(kwds.pop("pts", _self))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def pts(self):
+        return self[:]
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        if len(pts) == 1 and (isinstance)(pts[0], vector):
-            return pts[0]  # vector(v) where v is a vector should return v
+        _coconut_match_check = False
+        _coconut_match_to = pts
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
+            v = _coconut_match_to[0]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return v  # vector(v) where v is a vector should return v
         else:
-            raise _coconut_tail_call((datamaker(cls)), (tuple)(pts))  # accesses base constructor
+            raise _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
 
 # Test cases:
-assert (repr)(vector(1, 2, 3)) == "vector(pts=(1, 2, 3))"
-assert (repr)((vector)(vector(4, 5))) == "vector(pts=(4, 5))"
+assert (str)(vector(1, 2, 3)) == "vector(*pts=(1, 2, 3))"
+assert (str)((vector)(vector(4, 5))) == "vector(*pts=(4, 5))"
 
-class vector(_coconut.collections.namedtuple("vector", "pts")):
+class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    def __new__(_cls, *pts):
+        return _coconut.tuple.__new__(_cls, pts)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=None):
+        return new(cls, iterable)
+    def _asdict(self):
+        return _coconut.OrderedDict([("pts", self[:])])
+    def __repr__(self):
+        return "vector(*pts=%r)" % (self[:],)
+    def _replace(_self, **kwds):
+        result = self._make(kwds.pop("pts", _self))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def pts(self):
+        return self[:]
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        if len(pts) == 1 and (isinstance)(pts[0], vector):
-            return pts[0]  # vector(v) where v is a vector should return v
+        _coconut_match_check = False
+        _coconut_match_to = pts
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
+            v = _coconut_match_to[0]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return v  # vector(v) where v is a vector should return v
         else:
-            raise _coconut_tail_call((datamaker(cls)), (tuple)(pts))  # accesses base constructor
+            raise _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
@@ -419,12 +464,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Add two vectors together."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -435,12 +480,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Subtract one vector from another."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -454,19 +499,21 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == self.pts):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut_match_to[0:] == self.pts):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
         else:
             return False
+    def __ne__(self, other):
+        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
@@ -478,16 +525,16 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         return self * other
 
 # Test cases:
-assert (repr)(vector(1, 2, 3)) == "vector(pts=(1, 2, 3))"
-assert (repr)((vector)(vector(4, 5))) == "vector(pts=(4, 5))"
+assert (str)(vector(1, 2, 3)) == "vector(*pts=(1, 2, 3))"
+assert (str)((vector)(vector(4, 5))) == "vector(*pts=(4, 5))"
 assert (abs)(vector(3, 4)) == 5
-assert (repr)(vector(1, 2) + vector(2, 3)) == "vector(pts=(3, 5))"
-assert (repr)(vector(2, 2) - vector(0, 1)) == "vector(pts=(2, 1))"
-assert (repr)(-vector(1, 3)) == "vector(pts=(-1, -3))"
+assert (str)(vector(1, 2) + vector(2, 3)) == "vector(*pts=(3, 5))"
+assert (str)(vector(2, 2) - vector(0, 1)) == "vector(*pts=(2, 1))"
+assert (str)(-vector(1, 3)) == "vector(*pts=(-1, -3))"
 assert (vector(1, 2) == "string") is False
 assert (vector(1, 2) == vector(3, 4)) is False
 assert (vector(2, 4) == vector(2, 4)) is True
-assert (repr)(2 * vector(1, 2)) == "vector(pts=(2, 4))"
+assert (str)(2 * vector(1, 2)) == "vector(*pts=(2, 4))"
 assert vector(1, 2) * vector(1, 3) == 7
 
 @_coconut_tco
@@ -513,19 +560,41 @@ def vector_field():
     raise _coconut_tail_call((_coconut.functools.partial(map, lambda xy: vector(*xy))), linearized_plane())
 
 # You'll need to bring in the vector class from earlier to make these work
-assert (repr)(_coconut_igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
-assert (repr)((list)(_coconut_igetitem(vector_field(), _coconut.slice(2, 3)))) == "[vector(pts=(1, 0))]"
+assert (str)(_coconut_igetitem(vector_field(), 0)) == "vector(*pts=(0, 0))"
+assert (str)((list)(_coconut_igetitem(vector_field(), _coconut.slice(2, 3)))) == "[vector(*pts=(1, 0))]"
 
-class vector(_coconut.collections.namedtuple("vector", "pts")):
+class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    def __new__(_cls, *pts):
+        return _coconut.tuple.__new__(_cls, pts)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=None):
+        return new(cls, iterable)
+    def _asdict(self):
+        return _coconut.OrderedDict([("pts", self[:])])
+    def __repr__(self):
+        return "vector(*pts=%r)" % (self[:],)
+    def _replace(_self, **kwds):
+        result = self._make(kwds.pop("pts", _self))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def pts(self):
+        return self[:]
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        if len(pts) == 1 and (isinstance)(pts[0], vector):
-            return pts[0]  # vector(v) where v is a vector should return v
+        _coconut_match_check = False
+        _coconut_match_to = pts
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
+            v = _coconut_match_to[0]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return v  # vector(v) where v is a vector should return v
         else:
-            raise _coconut_tail_call((datamaker(cls)), (tuple)(pts))  # accesses base constructor
+            raise _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
@@ -535,12 +604,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Add two vectors together."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -551,12 +620,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Subtract one vector from another."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -570,19 +639,21 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == self.pts):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut_match_to[0:] == self.pts):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
         else:
             return False
+    def __ne__(self, other):
+        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
@@ -609,21 +680,43 @@ assert (list)(diagonal_line(0)) == [(0, 0)]
 assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 assert _coconut_igetitem(linearized_plane(), 0) == (0, 0)
 assert (list)(_coconut_igetitem(linearized_plane(), _coconut.slice(None, 3))) == [(0, 0), (0, 1), (1, 0)]
-assert (repr)(_coconut_igetitem(vector_field(), 0)) == "vector(pts=(0, 0))"
-assert (repr)((list)(_coconut_igetitem(vector_field(), _coconut.slice(2, 3)))) == "[vector(pts=(1, 0))]"
+assert (str)(_coconut_igetitem(vector_field(), 0)) == "vector(*pts=(0, 0))"
+assert (str)((list)(_coconut_igetitem(vector_field(), _coconut.slice(2, 3)))) == "[vector(*pts=(1, 0))]"
 
 import math  # necessary for math.acos in .angle
 
-class vector(_coconut.collections.namedtuple("vector", "pts")):
+class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    def __new__(_cls, *pts):
+        return _coconut.tuple.__new__(_cls, pts)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=None):
+        return new(cls, iterable)
+    def _asdict(self):
+        return _coconut.OrderedDict([("pts", self[:])])
+    def __repr__(self):
+        return "vector(*pts=%r)" % (self[:],)
+    def _replace(_self, **kwds):
+        result = self._make(kwds.pop("pts", _self))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def pts(self):
+        return self[:]
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        if len(pts) == 1 and (isinstance)(pts[0], vector):
-            return pts[0]  # vector(v) where v is a vector should return v
+        _coconut_match_check = False
+        _coconut_match_to = pts
+        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
+            v = _coconut_match_to[0]
+            _coconut_match_check = True
+        if _coconut_match_check:
+            return v  # vector(v) where v is a vector should return v
         else:
-            raise _coconut_tail_call((datamaker(cls)), (tuple)(pts))  # accesses base constructor
+            raise _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
@@ -633,12 +726,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Add two vectors together."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -649,12 +742,12 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Subtract one vector from another."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-            _coconut_match_err.pattern = 'vector(other_pts) = other'
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'vector(*other_pts) = other'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_err.pattern = 'vector(*other_pts) = other'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
@@ -668,19 +761,21 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         """Compare whether two vectors are equal."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut_match_to[0] == self.pts):
+        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut_match_to[0:] == self.pts):
             _coconut_match_check = True
         if _coconut_match_check:
             return True
         else:
             return False
+    def __ne__(self, other):
+        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
         _coconut_match_check = False
         _coconut_match_to = other
-        if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 1):
-            other_pts = _coconut_match_to[0]
+        if (_coconut.isinstance(_coconut_match_to, vector)):
+            other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
         if _coconut_match_check:
             assert len(other_pts) == len(self.pts)
@@ -715,10 +810,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts")):
         raise _coconut_tail_call(math.acos, self.unit() * other.unit())
 
 # Test cases:
-assert (repr)(vector(3, 4) / 1) == "vector(pts=(3.0, 4.0))"
-assert (repr)(vector(2, 4) / 2) == "vector(pts=(1.0, 2.0))"
-assert (repr)(vector(0, 1).unit()) == "vector(pts=(0.0, 1.0))"
-assert (repr)(vector(5, 0).unit()) == "vector(pts=(1.0, 0.0))"
+assert (str)(vector(3, 4) / 1) == "vector(*pts=(3.0, 4.0))"
+assert (str)(vector(2, 4) / 2) == "vector(*pts=(1.0, 2.0))"
+assert (str)(vector(0, 1).unit()) == "vector(*pts=(0.0, 1.0))"
+assert (str)(vector(5, 0).unit()) == "vector(*pts=(1.0, 0.0))"
 assert vector(2, 0).angle(vector(3, 0)) == 0.0
 assert vector(1, 0).angle(vector(0, 2)) == math.pi / 2
 try:

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x32b9d30f
+# __coconut_hash__ = 0x45cc2be1
 
-# Compiled with Coconut version 1.2.1 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -11,7 +11,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_tee, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -72,13 +72,14 @@ def suite_test():
     assert (_coconut.functools.partial(next_mul_of, 5))(12) == 15
     assert collatz(27)
     assert preop(1, 2).add() == 3
-    assert (abs)(vector(3, 4)) == 5
+    assert (abs)(vector(3, 4)) == 5 == (abs)(vector_with_id(3, 4, 1))
     assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.getattr, v), ("x", "y"))))(vector(1, 2))) == (1, 2)
     assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.operator.getitem, v), (0, 1))))((vector(1, 2).transform)(vector(3, 1)))) == (4, 3)
     assert (vector(1, 2).__eq__)(vector(1, 2))
     assert not (vector(3, 4).__eq__)(vector(1, 2))
     assert not (vector(1, 2).__eq__)((1, 2))
     assert vector(vector(4, 3)) == vector(4, 3)
+    assert not vector(4, 3) != vector(4, 3)
     assert triangle(3, 4, 5).is_right()
     assert _coconut.getattr(triangle(3, 4, 5), "is_right")
     assert (_coconut.operator.methodcaller("is_right"))(triangle(3, 4, 5))
@@ -225,9 +226,6 @@ def suite_test():
     assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
     assert (sum)((_coconut.functools.partial(filter, lambda i: i % 2 == 0))((_coconut.functools.partial(takewhile, lambda i: i < 4000000))(fib()))) == 4613732
     assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
-    assert recurse_n_times(10000)
-    assert is_even(5000) and is_odd(5001)
-    assert is_even_(5000) and is_odd_(5001)
     def _coconut_lambda_0(_=None):
         return mod
     assert (_coconut_lambda_0)()(5, 3) == 2
@@ -278,4 +276,111 @@ def suite_test():
         pass
     else:
         assert False
+    assert no_args_kwargs()
+    try:
+        no_args_kwargs(1)
+    except MatchError:
+        pass
+    else:
+        assert False
+    try:
+        no_args_kwargs(a=1)
+    except MatchError:
+        pass
+    else:
+        assert False
+    a = altclass()
+    assert a.func(1) == 1
+    assert a.zero(10) == 0
+    with Vars.using(globals()):
+        assert var_one == 1
+    try:
+        var_one
+    except NameError:
+        assert True
+    else:
+        assert False
+    assert (Just)(*(_coconut.functools.partial(map, lambda _=None: _ * 2))(Just(3))) == Just(6) == (_coconut.functools.partial(fmap, lambda _=None: _ * 2))(Just(3))
+    assert (Nothing)(*(_coconut.functools.partial(map, lambda _=None: _ * 2))(Nothing())) == Nothing() == (_coconut.functools.partial(fmap, lambda _=None: _ * 2))(Nothing())
+    assert Elems(1, 2, 3) != Elems(1, 2)
+    assert (repr)((_coconut.functools.partial(fmap, times2))(map(plus1, (1, 2, 3)))) == (repr)(map(_coconut_compose(times2, plus1), (1, 2, 3)))
+    assert (repr)((_coconut.functools.partial(fmap, plus1))(reversed((1, 2, 3)))) == (repr)((reversed)(map(plus1, (1, 2, 3))))
+    assert ident[1:2, 2:3] == (slice(1, 2), slice(2, 3)) == (_coconut.operator.itemgetter(_coconut.slice(1, 2), _coconut.slice(2, 3)))(ident)
+    assert ident.method(*(1,), **{"a": 2}) == ((1,), {"a": 2}) == (_coconut.operator.methodcaller("method", *(1,), **{"a": 2}))(ident)
+    assert container(1) == container(1)
+    assert not container(1) != container(1)
+    assert container(1) != container(2)
+    assert not container(1) == container(2)
+    assert container_(1) == container_(1)
+    assert not container_(1) != container_(1)
+    assert container_(1) != container_(2)
+    assert not container_(1) == container_(2)
+    t = Tuple(1, 2)
+    assert repr(t) == "Tuple(*elems=(1, 2))"
+    assert t.elems == (1, 2)
+    assert isinstance(t.elems, tuple)
+    assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(t) == Tuple(2, 3)
+    _coconut_match_check = False
+    _coconut_match_to = t
+    if (_coconut.isinstance(_coconut_match_to, Tuple)) and (_coconut.len(_coconut_match_to) == 2):
+        x = _coconut_match_to[0]
+        y = _coconut_match_to[1]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Tuple(x, y) = t'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'Tuple(x, y) = t'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert x == 1 and y == 2
+    p = Pred("name", 1, 2)
+    assert repr(p) in ("Pred(name='name', *args=(1, 2))", "Pred(name=u'name', *args=(1, 2))")
+    assert p.name == "name"
+    assert p.args == (1, 2)
+    assert isinstance(p.args, tuple)
+    _coconut_match_check = False
+    _coconut_match_to = p
+    if (_coconut.isinstance(_coconut_match_to, Pred)) and (_coconut.len(_coconut_match_to) >= 1):
+        name = _coconut_match_to[0]
+        args = _coconut_match_to[1:]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Pred(name, *args) = p'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'Pred(name, *args) = p'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert name == "name"
+    assert args == (1, 2)
+    q = Quant("name", "var", 1, 2)
+    assert repr(q) in ("Quant(name='name', var='var', *args=(1, 2))", "Quant(name=u'name', var=u'var', *args=(1, 2))")
+    assert q.name == "name"
+    assert q.var == "var"
+    assert q.args == (1, 2)
+    assert isinstance(q.args, tuple)
+    _coconut_match_check = False
+    _coconut_match_to = q
+    if (_coconut.isinstance(_coconut_match_to, Quant)) and (_coconut.len(_coconut_match_to) >= 2):
+        name = _coconut_match_to[0]
+        var = _coconut_match_to[1]
+        args = _coconut_match_to[2:]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Quant(name, var, *args) = q'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'Quant(name, var, *args) = q'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert name == "name"
+    assert var == "var"
+    assert args == (1, 2)
+    assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(Pred(0, 1, 2)) == Pred(1, 2, 3)
+    assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(Quant(0, 1, 2)) == Quant(1, 2, 3)
+    return True
+
+def tco_test():
+    """Exectues suite tests that rely on TCO."""
+    assert recurse_n_times(10000)
+    assert is_even(5000) and is_odd(5001)
+    assert is_even_(5000) and is_odd_(5001)
     return True
