@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x11731e68
+# __coconut_hash__ = 0xe2d99160
 
-# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -185,9 +185,11 @@ def main_test():
     class doc(_coconut.collections.namedtuple("doc", ""), _coconut.object):
         "doc"
         __slots__ = ()
+        __ne__ = _coconut.object.__ne__
     class doc_(_coconut.collections.namedtuple("doc_", ""), _coconut.object):
         """doc"""
         __slots__ = ()
+        __ne__ = _coconut.object.__ne__
     assert doc.__doc__ == "doc" == doc_.__doc__
     assert 10000000.0 == 10000000.0
     assert (tuple)(_coconut.iter(())) == ()
@@ -380,6 +382,7 @@ def main_test():
     assert derp()() == 15
     class abc(_coconut.collections.namedtuple("abc", "xyz"), _coconut.object):
         __slots__ = ()
+        __ne__ = _coconut.object.__ne__
     assert abc(10).xyz == 10
     assert issubclass(abc, object)
     assert isinstance(abc(10), object)

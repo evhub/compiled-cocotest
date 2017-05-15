@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x1b60c612
+# __coconut_hash__ = 0x64808a0e
 
-# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -40,7 +40,7 @@ def join_with(a, b=""):
     raise _coconut_tail_call(b.join, a)
 
 # Basic Functions:
-prod = _coconut.functools.partial(reduce, _coconut.operator.mul)
+product = _coconut.functools.partial(reduce, _coconut.operator.mul)
 @_coconut_tco
 def zipwith(f, *args):
     raise _coconut_tail_call(map, lambda items: f(*items), zip(*args))
@@ -294,10 +294,12 @@ def is_odd_(n):
 # Data Blocks:
 class preop(_coconut.collections.namedtuple("preop", "x y"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def add(self):
         return self.x + self.y
 class vector(_coconut.collections.namedtuple("vector", "x y"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     @_coconut_tco
     def __new__(cls, x, y=None):
         _coconut_match_check = False
@@ -334,12 +336,15 @@ class vector(_coconut.collections.namedtuple("vector", "x y"), _coconut.object):
             return False
 class triangle(_coconut.collections.namedtuple("triangle", "a b c"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def is_right(self):
         return self.a**2 + self.b**2 == self.c**2
 class null1(_coconut.collections.namedtuple("null1", ""), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 class null2(_coconut.collections.namedtuple("null2", ""), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 null = (null1, null2)
 def is_null(item):
     _coconut_match_check = False
@@ -352,11 +357,13 @@ def is_null(item):
         return False
 class Elems(_coconut.collections.namedtuple("Elems", "elems"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     @_coconut_tco
     def __new__(cls, *elems):
         raise _coconut_tail_call((datamaker(cls)), elems)
 class vector_with_id(_coconut.collections.namedtuple("vector_with_id", "x y i"), vector):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 
 # Factorial:
 def factorial1(value):
@@ -516,6 +523,40 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         raise _coconut_match_err
 
     raise _coconut_tail_call(fact, n - 1, acc * n)
+def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1) and (_coconut_match_to_args[0] == 0):
+        _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
+        if (not _coconut_match_to_kwargs):
+            acc = _coconut_match_temp_0
+            _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0, acc=1) = acc'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def factorial(0, acc=1) = acc'
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    return acc
+@addpattern(factorial)
+@_coconut_tco
+def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    _coconut_match_check = False
+    if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1):
+        _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
+        _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
+        if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+            n = _coconut_match_temp_0
+            acc = _coconut_match_temp_1
+            _coconut_match_check = True
+    if _coconut_match_check and not (n > 0):
+        _coconut_match_check = False
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int, acc=1 if n > 0) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_err.pattern = 'def factorial(n is int, acc=1 if n > 0) ='
+        _coconut_match_err.value = _coconut_match_to_args
+        raise _coconut_match_err
+
+    raise _coconut_tail_call(factorial, n - 1, acc * n)
 
 # Match Functions:
 def classify(value):
@@ -767,10 +808,13 @@ def chain(a, b):
 # Algebraic Data Types:
 class empty(_coconut.collections.namedtuple("empty", ""), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 class leaf(_coconut.collections.namedtuple("leaf", "n"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 class node(_coconut.collections.namedtuple("node", "l r"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
 tree = (empty, leaf, node)
 
 def depth(t):
@@ -805,6 +849,7 @@ def maybes(*fs):
 
 class Nothing(_coconut.collections.namedtuple("Nothing", ""), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     @_coconut_tco
     def __call__(self, *args):
         raise _coconut_tail_call(Nothing)
@@ -819,6 +864,7 @@ class Nothing(_coconut.collections.namedtuple("Nothing", ""), _coconut.object):
             return False
 class Just(_coconut.collections.namedtuple("Just", "item"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     @_coconut_tco
     def __call__(self, *args):
         raise _coconut_tail_call((Just), reduce(_coconut_pipe, args, self.item))
@@ -1095,6 +1141,7 @@ def is_one(i):
 # Constructed Data Types:
 class trilen(_coconut.collections.namedtuple("trilen", "h"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     @_coconut_tco
     def __new__(cls, a, b):
         raise _coconut_tail_call((datamaker(cls)), (a**2 + b**2)**0.5)
@@ -1111,6 +1158,7 @@ class B(A):
 class pt(_coconut.collections.namedtuple("pt", "x y"), _coconut.object):
     """Cartesian point in the x-y plane. Immutable."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __abs__(self):
         return (self.x**2 + self.y**2)**0.5
     def __eq__(self, other):
@@ -1279,7 +1327,7 @@ def pattern_abs_(x):
 @recursive_iterator
 @_coconut_tco
 def fib():
-    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 2), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
+    raise _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 1), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 @recursive_iterator
 @_coconut_tco
@@ -1387,7 +1435,7 @@ def does_raise_exc(func):
 def ret_none(n):
     while True:
         if n != 0:
-            if ret_none is _coconut_recursive_func_123:
+            if ret_none is _coconut_recursive_func_125:
                 n = n - 1
                 continue
             else:
@@ -1395,7 +1443,7 @@ def ret_none(n):
 
 
         return None
-_coconut_recursive_func_123 = ret_none
+_coconut_recursive_func_125 = ret_none
 def ret_args_kwargs(*args, **kwargs):
     return (args, kwargs)
 
@@ -1603,7 +1651,7 @@ def zero(self, x):
     while True:
         if x == 0:
             return 0
-        if altclass.zero is _coconut_recursive_func_144:
+        if altclass.zero is _coconut_recursive_func_146:
             self, x = self, x - 1
             continue
         else:
@@ -1613,7 +1661,7 @@ def zero(self, x):
 # Logic Stuff
         return None
 
-_coconut_recursive_func_144 = zero
+_coconut_recursive_func_146 = zero
 altclass.zero = zero
 class Vars(_coconut.object):
     var_one = 1
@@ -1654,6 +1702,7 @@ class Vars(_coconut.object):
 
 class Tuple(_coconut.collections.namedtuple("Tuple", "elems"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, *elems):
         return _coconut.tuple.__new__(_cls, elems)
     @_coconut.classmethod
@@ -1675,6 +1724,7 @@ class Tuple(_coconut.collections.namedtuple("Tuple", "elems"), _coconut.object):
 
 class Pred(_coconut.collections.namedtuple("Pred", "name args"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, name, *args):
         return _coconut.tuple.__new__(_cls, (name,) + args)
     @_coconut.classmethod
@@ -1699,6 +1749,7 @@ class Pred(_coconut.collections.namedtuple("Pred", "name args"), _coconut.object
 
 class Quant(_coconut.collections.namedtuple("Quant", "name var args"), _coconut.object):
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, name, var, *args):
         return _coconut.tuple.__new__(_cls, (name, var) + args)
     @_coconut.classmethod

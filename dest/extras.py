@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x7766a628
+# __coconut_hash__ = 0xd42c13f9
 
-# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -81,8 +81,9 @@ if _coconut_sys.version_info < (3,):
     from functools import wraps as _coconut_wraps
     @_coconut_wraps(_coconut_print)
     def print(*args, **kwargs):
-        if _coconut.hasattr(_coconut_sys.stdout, "encoding") and _coconut_sys.stdout.encoding is not None:
-            return _coconut_print(*(_coconut_unicode(x).encode(_coconut_sys.stdout.encoding) for x in args), **kwargs)
+        file = kwargs.get("file", _coconut_sys.stdout)
+        if _coconut.hasattr(file, "encoding") and file.encoding is not None:
+            return _coconut_print(*(_coconut_unicode(x).encode(file.encoding) for x in args), **kwargs)
         else:
             return _coconut_print(*(_coconut_unicode(x).encode() for x in args), **kwargs)
     @_coconut_wraps(_coconut_raw_input)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x45cc2be1
+# __coconut_hash__ = 0x13bc02d0
 
-# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -35,7 +35,7 @@ def suite_test():
     assert all(same((1, 2, 3), [1, 2, 3]))
     assert (list)(chain2((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
     assert _coconut.functools.partial(threeple, 1, 2)(3) == (1, 2, 3)
-    assert (prod)((range)(1, 5)) == 24
+    assert (product)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
     assert plus1(plus1(5)) == 7 == (_coconut_compose(plus1, plus1))(5)
@@ -80,6 +80,9 @@ def suite_test():
     assert not (vector(1, 2).__eq__)((1, 2))
     assert vector(vector(4, 3)) == vector(4, 3)
     assert not vector(4, 3) != vector(4, 3)
+    assert not vector(1, 2) == (1, 2)
+    assert not vector(2, 3) != vector(2, 3)
+    assert vector(1, 2) != (1, 2)
     assert triangle(3, 4, 5).is_right()
     assert _coconut.getattr(triangle(3, 4, 5), "is_right")
     assert (_coconut.operator.methodcaller("is_right"))(triangle(3, 4, 5))
@@ -88,6 +91,7 @@ def suite_test():
     assert factorial4(3) == 6
     assert factorial5(3) == 6
     assert fact(3) == 6 == fact_(3)
+    assert factorial(3) == 6
     assert factorial1(-1) is None
     assert factorial2(-1) is None
     assert factorial4(-1) is None
@@ -133,6 +137,12 @@ def suite_test():
     assert (mod)(*(5, 3)) == 2 == (mod)(*(5, 3))
     assert ((Just(5))(square))(plus1) == Just(26)
     assert ((Nothing())(square))(plus1) == Nothing()
+    assert not Nothing() == ()
+    assert not Nothing() != Nothing()
+    assert Nothing() != ()
+    assert not Just(1) == (1,)
+    assert not Just(1) != Just(1)
+    assert Just(1) != (1,)
     assert head_tail([1, 2, 3]) == (1, [2, 3])
     assert init_last([1, 2, 3]) == ([1, 2], 3)
     assert last_two([1, 2, 3]) == (2, 3) == last_two_([1, 2, 3])
@@ -224,6 +234,7 @@ def suite_test():
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
     assert (_coconut.functools.partial(_coconut.operator.eq, vector(1, 2)))(vector(1, 2))
     assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
+    assert (tuple)(_coconut_igetitem(fib(), _coconut.slice(1, 4))) == (1, 2, 3)
     assert (sum)((_coconut.functools.partial(filter, lambda i: i % 2 == 0))((_coconut.functools.partial(takewhile, lambda i: i < 4000000))(fib()))) == 4613732
     assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
     def _coconut_lambda_0(_=None):

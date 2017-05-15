@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xab1d60b4
+# __coconut_hash__ = 0xf8e1683a
 
-# Compiled with Coconut version 1.2.2-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
 
 # Coconut Header: --------------------------------------------------------
 
@@ -370,6 +370,7 @@ assert (list)((quick_sort)([3, 0, 4, 2, 1])) == [0, 1, 2, 3, 4]
 class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object):
     """Immutable 2-vector."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __abs__(self):
         """Return the magnitude of the 2-vector."""
         return (self.x**2 + self.y**2)**0.5
@@ -389,6 +390,7 @@ else:
 class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -426,6 +428,7 @@ assert (str)((vector)(vector(4, 5))) == "vector(*pts=(4, 5))"
 class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -505,8 +508,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             return True
         else:
             return False
-    def __ne__(self, other):
-        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
@@ -566,6 +567,7 @@ assert (str)((list)(_coconut_igetitem(vector_field(), _coconut.slice(2, 3)))) ==
 class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -645,8 +647,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             return True
         else:
             return False
-    def __ne__(self, other):
-        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
@@ -688,6 +688,7 @@ import math  # necessary for math.acos in .angle
 class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
+    __ne__ = _coconut.object.__ne__
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -767,8 +768,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             return True
         else:
             return False
-    def __ne__(self, other):
-        return not self == other
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
