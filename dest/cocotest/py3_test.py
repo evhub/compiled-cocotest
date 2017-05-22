@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x15d31640
+# __coconut_hash__ = 0x85af7ab8
 
-# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev2 [Colonel]
 
-# Coconut Header: --------------------------------------------------------
-
+# Coconut Header: --------------------------------------------------------------
 
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
@@ -14,7 +13,7 @@ from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coco
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------------
 
 def py3_test():
     """Performs Python-3-specific tests."""

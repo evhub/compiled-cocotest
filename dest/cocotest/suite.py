@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x13bc02d0
+# __coconut_hash__ = 0xf1d77c4f
 
-# Compiled with Coconut version 1.2.2-post_dev18 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev2 [Colonel]
 
-# Coconut Header: --------------------------------------------------------
+# Coconut Header: --------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
-
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
@@ -15,7 +14,7 @@ from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coco
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------
+# Compiled Coconut: ------------------------------------------------------------
 
 from .util import *
 
@@ -387,6 +386,8 @@ def suite_test():
     assert args == (1, 2)
     assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(Pred(0, 1, 2)) == Pred(1, 2, 3)
     assert (_coconut.functools.partial(fmap, lambda _=None: _ + 1))(Quant(0, 1, 2)) == Quant(1, 2, 3)
+    a = Nest()
+    assert a.b.c.d == "data" == (_coconut.operator.attrgetter("b.c.d"))(a)
     return True
 
 def tco_test():
