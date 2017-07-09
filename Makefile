@@ -13,6 +13,11 @@ linenumbers:
 	python ../coconut/tests -l
 	cp -r ../coconut/tests/dest .
 
+.PHONY: notco
+notco:
+	python ../coconut/tests --no-tco
+	cp -r ../coconut/tests/dest .
+
 .PHONY: mypy
 mypy:
 	python ../coconut/tests --mypy

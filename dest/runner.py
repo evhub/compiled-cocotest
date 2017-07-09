@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xf8e5dcb6
+# __coconut_hash__ = 0x90dc1545
 
-# Compiled with Coconut version 1.2.3-post_dev2 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev7 [Colonel]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -116,7 +116,7 @@ if _coconut_sys.version_info < (3,):
 else:
     py_chr, py_filter, py_hex, py_input, py_int, py_map, py_object, py_oct, py_open, py_print, py_range, py_str, py_zip, py_filter, py_reversed, py_enumerate = chr, filter, hex, input, int, map, object, oct, open, print, range, str, zip, filter, reversed, enumerate
 class _coconut(object):
-    import collections, functools, imp, itertools, operator, types, copy, pickle
+    import collections, copy, functools, imp, itertools, operator, pickle, types, weakref
     if _coconut_sys.version_info >= (2, 7):
         OrderedDict = collections.OrderedDict
     else:
@@ -125,33 +125,10 @@ class _coconut(object):
         abc = collections
     else:
         import collections.abc as abc
-    IndexError, KeyError, NameError, TypeError, ValueError, classmethod, dict, enumerate, filter, frozenset, getattr, hasattr, hash, int, isinstance, issubclass, iter, len, list, map, min, max, next, object, property, range, reversed, set, slice, str, sum, super, tuple, zip, repr, bytearray = IndexError, KeyError, NameError, TypeError, ValueError, classmethod, dict, enumerate, filter, frozenset, getattr, hasattr, hash, int, isinstance, issubclass, iter, len, list, map, min, max, next, object, property, range, reversed, set, slice, str, sum, super, tuple, zip, staticmethod(repr), bytearray
+    Exception, IndexError, KeyError, NameError, TypeError, ValueError, classmethod, dict, enumerate, filter, frozenset, getattr, hasattr, hash, id, int, isinstance, issubclass, iter, len, list, map, min, max, next, object, property, range, reversed, set, slice, str, sum, super, tuple, zip, repr, bytearray = Exception, IndexError, KeyError, NameError, TypeError, ValueError, classmethod, dict, enumerate, filter, frozenset, getattr, hasattr, hash, id, int, isinstance, issubclass, iter, len, list, map, min, max, next, object, property, range, reversed, set, slice, str, sum, super, tuple, zip, staticmethod(repr), bytearray
 class MatchError(Exception):
     """Pattern-matching error."""
     __slots__ = ("pattern", "value")
-class _coconut_tail_call(Exception):
-    __slots__ = ("func", "args", "kwargs")
-    def __init__(self, func, *args, **kwargs):
-        self.func, self.args, self.kwargs = func, args, kwargs
-def _coconut_tco(func):
-    @_coconut.functools.wraps(func)
-    def tail_call_optimized_func(*args, **kwargs):
-        call_func = func
-        while True:
-            try:
-                del kwargs["_coconut_inside_tco"]
-            except _coconut.KeyError:
-                pass
-            else:
-                return call_func(*args, **kwargs)  # pass --no-tco to clean up your traceback
-            if _coconut.hasattr(call_func, "_coconut_is_tco"):
-                kwargs["_coconut_inside_tco"] = call_func._coconut_is_tco
-            try:
-                return call_func(*args, **kwargs)  # pass --no-tco to clean up your traceback
-            except _coconut_tail_call as tail_call:
-                call_func, args, kwargs = tail_call.func, tail_call.args, tail_call.kwargs
-    tail_call_optimized_func._coconut_is_tco = True
-    return tail_call_optimized_func
 def _coconut_igetitem(iterable, index):
     if isinstance(iterable, (_coconut_reversed, _coconut_map, _coconut.filter, _coconut.zip, _coconut_enumerate, _coconut_count, _coconut.abc.Sequence)):
         return iterable[index]
@@ -267,7 +244,7 @@ class map(_coconut.map):
     def __reduce_ex__(self, _):
         return self.__reduce__()
     def __copy__(self):
-        return self.__class__(self._func, *_coconut_map(_coconut.copy.copy, self._iters))
+        return self.__class__(self._func, *_coconut.map(_coconut.copy.copy, self._iters))
     def __fmap__(self, func):
         return self.__class__(_coconut_compose(func, self._func), *self._iters)
 class parallel_map(map):
@@ -334,7 +311,7 @@ class zip(_coconut.zip):
     def __reduce_ex__(self, _):
         return self.__reduce__()
     def __copy__(self):
-        return self.__class__(*_coconut_map(_coconut.copy.copy, self._iters))
+        return self.__class__(*_coconut.map(_coconut.copy.copy, self._iters))
     def __fmap__(self, func):
         return _coconut_map(func, self)
 class enumerate(_coconut.enumerate):
@@ -406,29 +383,48 @@ class count(object):
     def __fmap__(self, func):
         return _coconut_map(func, self)
 def recursive_iterator(func):
-    """Decorates a function by optimizing it for iterator recursion.
-    Requires function arguments to be pickleable."""
+    """Decorates a function by optimizing it for iterator recursion."""
     tee_store = {}
+    backup_tee_store = []
     @_coconut.functools.wraps(func)
     def recursive_iterator_func(*args, **kwargs):
-        hashable_args_kwargs = _coconut.pickle.dumps((args, kwargs), _coconut.pickle.HIGHEST_PROTOCOL)
+        key, use_backup = (args, frozenset(kwargs)), False
         try:
-            to_tee = tee_store[hashable_args_kwargs]
-        except _coconut.KeyError:
-            to_tee = func(*args, **kwargs)
-        tee_store[hashable_args_kwargs], to_return = _coconut_tee(to_tee)
+            hash(key)
+        except _coconut.Exception:
+            try:
+                key = _coconut.pickle.dumps(key, _coconut.pickle.HIGHEST_PROTOCOL)
+            except _coconut.Exception:
+                use_backup = True
+        if use_backup:
+            to_tee, store_pos = None, None
+            for i, (k, v) in _coconut.enumerate(backup_tee_store):
+                if k == key:
+                    to_tee, store_pos = v, i
+            if to_tee is None:
+                to_tee = func(*args, **kwargs)
+            to_store, to_return = _coconut_tee(to_tee)
+            if store_pos is None:
+                backup_tee_store.append([key, to_store])
+            else:
+                backup_tee_store[store_pos][1] = to_store
+        else:
+            try:
+                to_tee = tee_store[key]
+            except _coconut.KeyError:
+                to_tee = func(*args, **kwargs)
+            tee_store[key], to_return = _coconut_tee(to_tee)
         return to_return
     return recursive_iterator_func
 def addpattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked last."""
     def pattern_adder(func):
         @_coconut.functools.wraps(func)
-        @_coconut_tco
         def add_pattern_func(*args, **kwargs):
             try:
                 return base_func(*args, **kwargs)
             except _coconut_MatchError:
-                raise _coconut_tail_call(func, *args, **kwargs)
+                return func(*args, **kwargs)
         return add_pattern_func
     return pattern_adder
 def prepattern(base_func):
