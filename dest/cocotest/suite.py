@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xf4788089
+# __coconut_hash__ = 0x35f8487e
 
-# Compiled with Coconut version 1.2.3-post_dev7 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -10,7 +10,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -24,7 +24,7 @@ def suite_test():
     assert (plus)("1", "1") == "11" == (_coconut.operator.add)("1", "1")
     assert (mod)(3, 6) == 3 == (_coconut.operator.mod)(3, 6)
     assert (mod)(5, 4) == 1 == (mod_)(5, 4)
-    assert (mod)(5, (plus)(2, 2)) == 1 == (_coconut.operator.mod)(5, (_coconut.operator.add)(2, 2))
+    assert (plus)((mod)(5, 2), 2) == 3 == (_coconut.operator.add)((_coconut.operator.mod)(5, 2), 2)
     assert (base)("11", 2) == 3
     assert (int)("10A", 12) == 154
     assert (join_with)(["1", "2"], ", ") == "1, 2"
@@ -37,16 +37,22 @@ def suite_test():
     assert (product)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
-    assert plus1(plus1(5)) == 7 == (_coconut_compose(plus1, plus1))(5)
+    assert plus1(plus1(5)) == 7 == _coconut_compose(plus1, plus1)(5)
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
-    assert sqplus1(3) == 10 == (_coconut_compose(plus1, square))(3)
-    assert (tuple)(parallel_map(sqplus1, range(3))) == (1, 2, 5)
-    assert (plus1sq)(3) == 16 == (plus1sq_)(3)
-    assert (sqplus1)(3) == 10 == (sqplus1_)(3)
+    def test_sqplus1_plus1sq(sqplus1, plus1sq, parallel=True):
+        assert sqplus1(3) == 10 == _coconut_compose(square, plus1)(3)
+        if parallel:
+            assert (tuple)(parallel_map(sqplus1, range(3))) == (1, 2, 5)
+        assert (plus1sq)(3) == 16
+        assert (sqplus1)(3) == 10
+    test_sqplus1_plus1sq(sqplus1_1, plus1sq_1)
+    test_sqplus1_plus1sq(sqplus1_2, plus1sq_2, parallel=False)
+    test_sqplus1_plus1sq(sqplus1_3, plus1sq_3)
+    test_sqplus1_plus1sq(sqplus1_4, plus1sq_4)
     assert (square)((plus1)(3)) == 16 == (square)((plus1_)(3))
     assert reduce(_coconut_pipe, [3, plus1, square]) == 16 == pipe(pipe(3, plus1), square)
-    assert reduce(_coconut_compose, [sqrt, square, plus1])(3) == 4 == compose(compose(sqrt, square), plus1)(3)
+    assert reduce(_coconut_back_compose, [sqrt, square, plus1])(3) == 4 == compose(compose(sqrt, square), plus1)(3)
     assert sum_([1, 7, 3, 5]) == 16
     assert ((list)(add([1, 2, 3], [10, 20, 30])) == [11, 22, 33] == (list)(zipsum([1, 2, 3], [10, 20, 30])))
     assert clean("   ab cd ef   ") == "ab cd ef" == (clean)("   ab cd ef   ")
@@ -85,16 +91,18 @@ def suite_test():
     assert triangle(3, 4, 5).is_right()
     assert _coconut.getattr(triangle(3, 4, 5), "is_right")
     assert (_coconut.operator.methodcaller("is_right"))(triangle(3, 4, 5))
-    assert factorial1(3) == 6
-    assert factorial2(3) == 6
-    assert factorial4(3) == 6
-    assert factorial5(3) == 6
-    assert fact(3) == 6 == fact_(3)
-    assert factorial(3) == 6
-    assert factorial1(-1) is None
-    assert factorial2(-1) is None
-    assert factorial4(-1) is None
-    assert factorial5(-1) is None
+    def test_factorial(factorial, test_none=True):
+        assert factorial(0) == 1 == factorial(1)
+        assert factorial(3) == 6
+        if test_none:
+            assert factorial(-1) is None
+    test_factorial(factorial1)
+    test_factorial(factorial2)
+    test_factorial(factorial4)
+    test_factorial(factorial5)
+    test_factorial(fact, test_none=False)
+    test_factorial(fact_, test_none=False)
+    test_factorial(factorial, test_none=False)
     assert factorial3([2, 3]) == [2, 6] == factorial3((2, 3))
     assert classify(()) == "empty tuple"
     assert classify([]) == "empty list"
@@ -207,7 +215,7 @@ def suite_test():
     y = y(*((5, 3)))
     assert x == 2 == y
     x = square
-    x = _coconut_compose(x, (_coconut.functools.partial(_coconut.operator.add, 1)))
+    x = _coconut_compose((_coconut.functools.partial(_coconut.operator.add, 1)), x)
     x = x((4))
     assert x == 25
     v = vector(1, 2)
@@ -243,8 +251,8 @@ def suite_test():
     assert 11 == double_plus_one(5)
     assert 15 == assign_func_1(_coconut.operator.mul, 3, 5)
     assert 15 == assign_func_2(_coconut.operator.mul, 3, 5)
-    assert 20 == _coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
-    assert 20 == (_coconut_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1)))(10)
+    assert 20 == _coconut_back_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
+    assert 20 == _coconut_compose(_coconut.functools.partial(plus, 1), _coconut.functools.partial(mul, 2), _coconut.functools.partial(minus, 2))(10)
     assert does_raise_exc(raise_exc)
     assert ret_none(10) is None
     assert (_coconut_partial(ret_args_kwargs, {0: 1, 3: 4}, 5, *(6, 7), a="k"))(*(2, 3, 5)) == ((1, 2, 3, 4, 5, 6, 7), {"a": "k"})
@@ -313,7 +321,7 @@ def suite_test():
     assert (Just)(*map(lambda _=None: _ * 2, Just(3))) == Just(6) == fmap(lambda _=None: _ * 2, Just(3))
     assert (Nothing)(*map(lambda _=None: _ * 2, Nothing())) == Nothing() == fmap(lambda _=None: _ * 2, Nothing())
     assert Elems(1, 2, 3) != Elems(1, 2)
-    assert (repr)(fmap(times2, map(plus1, (1, 2, 3)))) == (repr)(map(_coconut_compose(times2, plus1), (1, 2, 3)))
+    assert (repr)(fmap(times2, map(plus1, (1, 2, 3)))) == (repr)(map(_coconut_compose(plus1, times2), (1, 2, 3)))
     assert (repr)(fmap(plus1, reversed((1, 2, 3)))) == (repr)((reversed)(map(plus1, (1, 2, 3))))
     assert ident[1:2, 2:3] == (slice(1, 2), slice(2, 3)) == (_coconut.operator.itemgetter(_coconut.slice(1, 2), _coconut.slice(2, 3)))(ident)
     assert ident.method(*(1,), **{"a": 2}) == ((1,), {"a": 2}) == (_coconut.operator.methodcaller("method", *(1,), **{"a": 2}))(ident)
@@ -393,10 +401,23 @@ def suite_test():
     assert myreduce(_coconut.operator.add, (1, 2, 3)) == 6
     assert recurse_n_times(10000)
     assert fake_recurse_n_times(10000)
+    a = A()
+    assert _coconut_compose(a.true, _coconut.operator.not_)() is False
+    assert 10 % 4 % 3 == 2 == (mod)((mod)(10, 4), 3)
+    assert square_times2_plus1(3) == 19 == square_times2_plus1_(3)
+    assert plus1_cube(2) == 27
+    assert (repr)(_coconut_compose(square, times2, plus1)) == (repr)(_coconut_compose(square, (_coconut_compose(times2, plus1))))
+    assert (_coconut_compose(square, times2, plus1)).funcs == [square, times2, plus1]
+    assert (tuple)(starmap(toprint, map(range, range(1, 5)))) == ('0', '0 1', '0 1 2', '0 1 2 3')
+    assert (tuple)(fmap(_coconut.operator.methodcaller("strip", " 0"), starmap(toprint, map(range, range(1, 5))))) == ("", "1", "1 2", "1 2 3")
+    assert (len)(starmap(toprint, ())) == 0
+    assert (_coconut.operator.itemgetter(0))(starmap(toprint, [(1, 2)])) == "1 2"
+    assert (list)((_coconut.operator.itemgetter(_coconut.slice(1, None)))(starmap(toprint, [(1, 2), (2, 3), (3, 4)]))) == ["2 3", "3 4"]
+    assert none_to_ten() == 10 == any_to_ten(1, 2, 3)
     return True
 
 def tco_test():
-    """Exectues suite tests that rely on TCO."""
+    """Executes suite tests that rely on TCO."""
     assert is_even(5000) and is_odd(5001)
     assert is_even_(5000) and is_odd_(5001)
     return True

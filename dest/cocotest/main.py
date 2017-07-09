@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xd8a258b3
+# __coconut_hash__ = 0x7100ee12
 
-# Compiled with Coconut version 1.2.3-post_dev7 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
 
 # Coconut Header: --------------------------------------------------------------
 
@@ -10,7 +10,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_igetitem, _coconut_compose, _coconut_pipe, _coconut_starpipe, _coconut_backpipe, _coconut_backstarpipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -263,12 +263,12 @@ def main_test():
     assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
     assert repr(concurrent_map(_coconut_minus, range(5))).startswith("concurrent_map(")
     assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, concurrent_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.mul, 2), _coconut.functools.partial(_coconut.operator.add, 1)), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
     assert 0 in range(1)
     assert range(1).count(0) == 1
     assert 2 in range(5)
@@ -495,10 +495,10 @@ def main_test():
     assert fmap(lambda x: x + 1, [1, 2, 3]) == [2, 3, 4]
     assert fmap(lambda x: x + 1, (1, 2, 3)) == (2, 3, 4)
     assert fmap(lambda x: x + "!", "abc") == "a!b!c!"
-    assert fmap(lambda _=None: _ + 1, {1: "2", 2: "3"}) == {2: "2", 3: "3"}
+    assert fmap(lambda k, v: (k + 1, v + "!"), {1: "2", 2: "3"}) == {2: "2!", 3: "3!"}
     assert fmap(lambda _=None: _ + 1, _coconut.set((1, 2, 3))) == _coconut.set((2, 3, 4))
     assert fmap(_coconut.functools.partial(_coconut.operator.add, [0]), [[1, 2, 3]]) == [[0, 1, 2, 3]]
-    assert (tuple)(fmap(lambda _=None: _ + 1, range(3))) == (1, 2, 3)
+    assert (tuple)(fmap(lambda _=None: _ + 1, range(3))) == (1, 2, 3) == (tuple)(fmap(lambda _=None: _ + 1, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2))))
     assert issubclass(int, py_int)
     class pyobjsub(py_object): pass
     class objsub(object): pass
@@ -556,32 +556,69 @@ def main_test():
         _coconut_match_check = True
     if _coconut_match_check:
         assert False
+    assert 400 == (lambda x: (lambda x: x**2)(x * 2))(10)
+    assert 100 == (lambda x: (lambda y: x**2)(x * 2))(10)
+    assert 3 == (lambda x, y: x + y)(1, 2)
+    _coconut_match_check = False
+    _coconut_match_to = {"a": 2, "b": 3}
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and ("a" in _coconut_match_to):
+        a = _coconut_match_to["a"]
+        rest = dict((k, v) for (k, v) in _coconut_match_to.items() if k not in set(("a",)))
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'match {"a": a, **rest} = {"a": 2, "b": 3}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match {"a": a, **rest} = {"a": 2, "b": 3}'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert a == 2
+    assert rest == {"b": 3}
+    _ = None
+    _coconut_match_check = False
+    _coconut_match_to = {"a": 4, "b": 5}
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and ("a" in _coconut_match_to):
+        a = _coconut_match_to["a"]
+        _coconut_match_check = True
+    if not _coconut_match_check:
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'match {"a": a **_} = {"a": 4, "b": 5}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+        _coconut_match_err.pattern = 'match {"a": a **_} = {"a": 4, "b": 5}'
+        _coconut_match_err.value = _coconut_match_to
+        raise _coconut_match_err
+
+    assert a == 4
+    assert _ is None
     return True
 
+@_coconut_tco
 def tco_func():
     while True:
         if tco_func is _coconut_recursive_func_5:
             continue
         else:
-            return tco_func()
+            return _coconut_tail_call(tco_func)
         return None
 
 _coconut_recursive_func_5 = tco_func
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
+    print(".", end="")  # ..
     assert main_test()
+    print(".", end="")  # ...
     if sys.version_info >= (2, 7):
         from .specific import non_py26_test
         assert non_py26_test()
     if not (3,) <= sys.version_info < (3, 3):
         from .specific import non_py32_test
         assert non_py32_test
+    print(".", end="")  # ....
     from .suite import suite_test
     from .suite import tco_test
     assert suite_test()
+    print(".", end="")  # .....
     if hasattr(tco_func, "_coconut_tco_func"):
         assert tco_test()
+    print(".", end="")  # ......
     if sys.version_info < (3,):
         from .py2_test import py2_test
         assert py2_test()
@@ -591,5 +628,6 @@ def main(*args):
         if sys.version_info >= (3, 5):
             from .py35_test import py35_test
             assert py35_test()
+    print(".", end="")  # .......
     from . import tutorial
-    print("<success>")
+    print("\n<success>")
