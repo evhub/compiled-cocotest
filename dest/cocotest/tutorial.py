@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xab935273
+# __coconut_hash__ = 0x1b972189
 
 # Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
@@ -376,7 +376,7 @@ class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object
 # Test cases:
 assert (str)(vector2(1, 2)) == "vector2(x=1, y=2)"
 assert (abs)(vector2(3, 4)) == 5
-(str)(fmap(lambda x: x * 2, vector2(1, 2))) == "vector2(x=2, y=4)"
+assert (str)(fmap(lambda x: x * 2, vector2(1, 2))) == "vector2(x=2, y=4)"
 v = vector2(2, 3)
 try:
     v.x = 7
