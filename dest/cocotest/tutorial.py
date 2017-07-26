@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x8e4614f0
+# __coconut_hash__ = 0xab935273
 
-# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: -----------------------------------------------------------
 
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -353,7 +353,7 @@ def quick_sort(l):
             _coconut_match_check = True
     if _coconut_match_check:
         tail, tail_ = tee(tail)
-        _coconut_yield_from = (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: quick_sort((x for x in tail if x < head)), lambda: (head,), lambda: quick_sort((x for x in tail_ if x >= head))))))
+        _coconut_yield_from = (_coconut.itertools.chain.from_iterable((f() for f in (lambda: quick_sort((x for x in tail if x < head)), lambda: (head,), lambda: quick_sort((x for x in tail_ if x >= head))))))
         for _coconut_yield_item in _coconut_yield_from:
             yield _coconut_yield_item
 
@@ -546,7 +546,7 @@ assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 
 @_coconut_tco
 def linearized_plane(n=0):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 
 # Note: these tests use $[] notation, which we haven't introduced yet
 #  but will introduce later in this case study; for now, just run the
@@ -667,7 +667,7 @@ def diagonal_line(n):
     return _coconut_tail_call(map, lambda i: (i, n - i), range(n + 1))
 @_coconut_tco
 def linearized_plane(n=0):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 @_coconut_tco
 def vector_field():
     return _coconut_tail_call(starmap, vector, linearized_plane())

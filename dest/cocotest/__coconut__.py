@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # type: ignore
 
-# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
 """Built-in Coconut utilities."""
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys
@@ -145,7 +145,8 @@ def _coconut_tco(func):
     def tail_call_optimized_func(*args, **kwargs):
         call_func = func
         while True:
-            if _coconut.id(call_func) in _coconut_tco_func_dict and _coconut_tco_func_dict[_coconut.id(call_func)]() is call_func:
+            wkref = _coconut_tco_func_dict.get(_coconut.id(call_func))
+            if wkref is not None and wkref() is call_func:
                 call_func = call_func._coconut_tco_func
             result = call_func(*args, **kwargs)  # pass --no-tco to clean up your traceback
             if not isinstance(result, _coconut_tail_call):
@@ -196,6 +197,7 @@ def _coconut_back_pipe(f, x): return f(x)
 def _coconut_back_star_pipe(f, xs): return f(*xs)
 def _coconut_bool_and(a, b): return a and b
 def _coconut_bool_or(a, b): return a or b
+def _coconut_none_coalesce(a, b): return a if a is not None else b
 def _coconut_minus(a, *rest):
     if not rest:
         return -a
@@ -420,8 +422,7 @@ class count(object):
         return _coconut_map(func, self)
 def recursive_iterator(func):
     """Decorator that optimizes a function for iterator recursion."""
-    tee_store = {}
-    backup_tee_store = []
+    tee_store, backup_tee_store = {}, []
     @_coconut.functools.wraps(func)
     def recursive_iterator_func(*args, **kwargs):
         key, use_backup = (args, frozenset(kwargs)), False
@@ -433,23 +434,19 @@ def recursive_iterator(func):
             except _coconut.Exception:
                 use_backup = True
         if use_backup:
-            to_tee, store_pos = None, None
             for i, (k, v) in _coconut.enumerate(backup_tee_store):
                 if k == key:
                     to_tee, store_pos = v, i
-            if to_tee is None:
-                to_tee = func(*args, **kwargs)
+                    break
+            else:  # no break
+                to_tee, store_pos = func(*args, **kwargs), None
             to_store, to_return = _coconut_tee(to_tee)
             if store_pos is None:
                 backup_tee_store.append([key, to_store])
             else:
                 backup_tee_store[store_pos][1] = to_store
         else:
-            try:
-                to_tee = tee_store[key]
-            except _coconut.KeyError:
-                to_tee = func(*args, **kwargs)
-            tee_store[key], to_return = _coconut_tee(to_tee)
+            tee_store[key], to_return = _coconut_tee(tee_store.get(key) or func(*args, **kwargs))
         return to_return
     return recursive_iterator_func
 def addpattern(base_func):
@@ -465,12 +462,6 @@ def addpattern(base_func):
                 return _coconut_tail_call(func, *args, **kwargs)
         return add_pattern_func
     return pattern_adder
-def prepattern(base_func):
-    """Decorator to add a new case to a pattern-matching function,
-    where the new case is checked first."""
-    def pattern_prepender(func):
-        return addpattern(func)(base_func)
-    return pattern_prepender
 class _coconut_partial(object):
     __slots__ = ("func", "_argdict", "_arglen", "_stargs", "keywords")
     if hasattr(_coconut.functools.partial, "__doc__"):

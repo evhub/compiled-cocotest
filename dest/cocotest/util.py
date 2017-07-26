@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xa18c4dc4
+# __coconut_hash__ = 0xb4ddf303
 
-# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: -----------------------------------------------------------
 
 # Imports:
 import random
@@ -39,7 +39,7 @@ def join_with(a, b=""):
     return _coconut_tail_call(b.join, a)
 
 # Composable Functions:
-plus1 = _coconut.functools.partial(plus, 1)  # type: _coconut.typing.Callable[[int], int]
+plus1 = _coconut.functools.partial(plus, 1)
 square = _coconut_partial(_coconut.operator.pow, {1: 2}, 2)
 times2 = _coconut.functools.partial(_coconut.operator.mul, 2)
 
@@ -141,7 +141,7 @@ def qsort3(l):
         tail, tail_ = (tee)((iter)(l))
 # Since only iter is ever called on l, and next on tail, l only has to be an iterator
         head = next(tail)
-        return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
+        return (_coconut.itertools.chain.from_iterable((f() for f in (lambda: qsort3((x for x in tail if x <= head)), lambda: (head,), lambda: qsort3((x for x in tail_ if x > head))))))
     except StopIteration:
         return _coconut_tail_call(iter, ())
 def qsort4(l  # type: _coconut.typing.Sequence[int]
@@ -174,7 +174,7 @@ def qsort5(l):
             _coconut_match_check = True
     if _coconut_match_check:
         tail, tail_ = tee(tail)
-        return (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
+        return (_coconut.itertools.chain.from_iterable((f() for f in (lambda: qsort5((x for x in tail if x <= head)), lambda: (head,), lambda: qsort5((x for x in tail_ if x > head))))))
     else:
         return _coconut_tail_call(iter, ())
 
@@ -185,7 +185,7 @@ def repeat(elem):
         yield elem
 @_coconut_tco
 def repeat_(elem):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (elem,), lambda: repeat_(elem))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (elem,), lambda: repeat_(elem))))
 def N(n=0):
     """Natural Numbers."""
     while True:
@@ -193,15 +193,15 @@ def N(n=0):
         n += 1
 @_coconut_tco
 def N_(n=0):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (n,), lambda: N_(n + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (n,), lambda: N_(n + 1))))
 def N__(n=0):
     it = n,
     _coconut_lazy_chain_0 = it
-    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_0, lambda: (N__(n + 1)))))
+    it = _coconut.itertools.chain.from_iterable((f() for f in (lambda: _coconut_lazy_chain_0, lambda: (N__(n + 1)))))
     return it
 def preN(it):
     _coconut_lazy_chain_1 = it
-    it = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
+    it = _coconut.itertools.chain.from_iterable((f() for f in (lambda: _coconut_lazy_chain_1, lambda: (N()))))
     return it
 @_coconut_tco
 def map_iter(func, args):
@@ -214,7 +214,7 @@ def map_iter(func, args):
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: func(x),)), lambda: map_iter(func, xs))))
+        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (f() for f in (lambda: func(x),)), lambda: map_iter(func, xs))))
 
 # Recursive Functions:
 
@@ -314,7 +314,7 @@ def is_odd_(n):
 
 @_coconut_tco
 def tco_chain(it):
-    return _coconut_tail_call(consume, _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: it, lambda: ["last"]))), keep_last=1)
+    return _coconut_tail_call(consume, _coconut.itertools.chain.from_iterable((f() for f in (lambda: it, lambda: ["last"]))), keep_last=1)
 
 @_coconut_tco
 def partition(items, pivot, lprefix=[], rprefix=[]):
@@ -328,9 +328,9 @@ def partition(items, pivot, lprefix=[], rprefix=[]):
             _coconut_match_check = True
     if _coconut_match_check:
         if head < pivot:
-            return _coconut_tail_call(partition, tail, pivot, _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: lprefix))), rprefix)
+            return _coconut_tail_call(partition, tail, pivot, _coconut.itertools.chain.from_iterable((f() for f in (lambda: [head], lambda: lprefix))), rprefix)
         else:
-            return _coconut_tail_call(partition, tail, pivot, lprefix, _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: rprefix))))
+            return _coconut_tail_call(partition, tail, pivot, lprefix, _coconut.itertools.chain.from_iterable((f() for f in (lambda: [head], lambda: rprefix))))
     if not _coconut_match_check:
         _coconut_match_to = items
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
@@ -359,7 +359,7 @@ def myreduce(func, items):
                 second = _coconut_match_temp_0[0]
                 _coconut_match_check = True
         if _coconut_match_check:
-            return _coconut_tail_call(myreduce, func, _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: [func(first, second)], lambda: tail2))))
+            return _coconut_tail_call(myreduce, func, _coconut.itertools.chain.from_iterable((f() for f in (lambda: [func(first, second)], lambda: tail2))))
         else:
             return first
 
@@ -447,6 +447,13 @@ class Elems(_coconut.collections.namedtuple("Elems", "elems"), _coconut.object):
 class vector_with_id(_coconut.collections.namedtuple("vector_with_id", "x y i"), vector):
     __slots__ = ()
     __ne__ = _coconut.object.__ne__  # type: ignore
+class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object):
+    __slots__ = ()
+    __ne__ = _coconut.object.__ne__
+    def __new__(_cls, x=0, y=0):
+        return _coconut.tuple.__new__(_cls, (x, y))
+    def __abs__(self):
+        return (self.x**2 + self.y**2)**.5
 
 # Factorial:
 def factorial1(value):
@@ -566,13 +573,13 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        if fact is _coconut_recursive_func_50:
+        if fact is _coconut_recursive_func_51:
             _coconut_match_to_args, _coconut_match_to_kwargs = _coconut_mock_func(n, 1)
             continue
         else:
             return _coconut_tail_call(fact, n, 1)
         return None
-_coconut_recursive_func_50 = fact
+_coconut_recursive_func_51 = fact
 @addpattern(fact)
 def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
@@ -841,7 +848,7 @@ def duplicate_first2(value):
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
 @_coconut_tco
@@ -856,7 +863,7 @@ def duplicate_first3(value):
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [x], lambda: l)))
+        return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: [x], lambda: l)))
     else:
         raise TypeError()
 def one_to_five(l):
@@ -885,7 +892,7 @@ def compose(a, b):
     return a
 def chain(a, b):
     _coconut_lazy_chain_2 = a
-    a = _coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: _coconut_lazy_chain_2, lambda: (b))))
+    a = _coconut.itertools.chain.from_iterable((f() for f in (lambda: _coconut_lazy_chain_2, lambda: (b))))
     return a
 
 # Algebraic Data Types:
@@ -1195,7 +1202,7 @@ class lazy(_coconut.object):
     def finish(self):
         self.done = True
     def list(self):
-        return (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2, lambda: 3, lambda: self.finish()))
+        return (f() for f in (lambda: 1, lambda: 2, lambda: 3, lambda: self.finish()))
 def is_empty(i):
     _coconut_match_check = False
     _coconut_match_to = i
@@ -1239,6 +1246,8 @@ class Nest(_coconut.object):
     class B(_coconut.object):
         class C(_coconut.object):
             d = "data"
+            def m(self):
+                return "method"
         c = C()
     b = B()
 
@@ -1263,12 +1272,12 @@ class pt(_coconut.collections.namedtuple("pt", "x y"), _coconut.object):
 @_coconut_tco
 def vertical_line(x=0, y=0):
     """Infinite iterator of pt representing a vertical line."""
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (pt(x, y),), lambda: vertical_line(x, y + 1))))
 
 @_coconut_tco
 def grid(x=0):
     """Infinite iterator of infinite iterators representing cartesian space."""
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (vertical_line(x, 0),), lambda: grid(x + 1))))
 
 @_coconut_tco
 def grid_map(func, gridsample):
@@ -1296,6 +1305,13 @@ def SHOPeriodTerminate(X, t, params):
     return 0  # keep going
 
 # Multiple dispatch:
+def prepattern(base_func):
+    """Decorator to add a new case to a pattern-matching function,
+    where the new case is checked first."""
+    @_coconut_tco
+    def pattern_prepender(func):
+        return _coconut_tail_call(addpattern(func), base_func)
+    return pattern_prepender
 
 def add_int_or_str_1(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
@@ -1363,6 +1379,7 @@ def coercive_add(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 @addpattern(ident)
 def still_ident(x):
+    """docstring"""
     return "foo"
 
 @prepattern(ident)
@@ -1416,12 +1433,12 @@ def pattern_abs_(x):
 @recursive_iterator
 @_coconut_tco
 def fib():
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: (1, 1), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (1, 1), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 @recursive_iterator
 @_coconut_tco
 def loop(it):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: it, lambda: loop(it))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: it, lambda: loop(it))))
 
 # Sieve Example
 
@@ -1455,7 +1472,7 @@ def sieve(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: [head], lambda: sieve((n for n in tail if n % head)))))
 
 # "Assignment function" definitions
 
@@ -1510,7 +1527,7 @@ def minus(a, b):
 # Exception Functions
 
 def raise_exc():
-    raise Exception()
+    raise Exception("raise_exc")
 
 def does_raise_exc(func):
     try:
@@ -1524,14 +1541,14 @@ def does_raise_exc(func):
 def ret_none(n):
     while True:
         if n != 0:
-            if ret_none is _coconut_recursive_func_130:
+            if ret_none is _coconut_recursive_func_134:
                 n = n - 1
                 continue
             else:
                 return _coconut_tail_call(ret_none, n - 1)
 
         return None
-_coconut_recursive_func_130 = ret_none
+_coconut_recursive_func_134 = ret_none
 def ret_args_kwargs(*args, **kwargs):
     return (args, kwargs)
 
@@ -1542,7 +1559,7 @@ class identity_operations(_coconut.object):
         return args
     def method(self, *args, **kwargs):
         return (args, kwargs)
-ident = identity_operations()
+identity = identity_operations()
 
 class container(_coconut.object):
     def __init__(self, x):
@@ -1739,7 +1756,7 @@ def zero(self, x):
     while True:
         if x == 0:
             return 0
-        if altclass.zero is _coconut_recursive_func_151:
+        if altclass.zero is _coconut_recursive_func_155:
             self, x = self, x - 1
             continue
         else:
@@ -1748,7 +1765,7 @@ def zero(self, x):
 # Logic Stuff
         return None
 
-_coconut_recursive_func_151 = zero
+_coconut_recursive_func_155 = zero
 altclass.zero = zero
 class Vars(_coconut.object):
     var_one = 1
@@ -1785,7 +1802,7 @@ class Vars(_coconut.object):
                 else:
                     del globs[name]
 
-# Starred Data
+# Complex Data
 
 class Tuple(_coconut.collections.namedtuple("Tuple", "elems"), _coconut.object):
     __slots__ = ()
@@ -1818,7 +1835,7 @@ class Pred(_coconut.collections.namedtuple("Pred", "name args"), _coconut.object
     def _make(cls, iterable, new=_coconut.tuple.__new__, len=_coconut.len):
         result = new(cls, iterable)
         if len(result) < 1:
-            raise _coconut.TypeError("Expected at least 2 arguments, got %d" % len(result))
+            raise _coconut.TypeError("Expected at least 1 argument(s), got %d" % len(result))
         return result
     def _asdict(self):
         return _coconut.OrderedDict((f, _coconut.getattr(self, f)) for f in self._fields)
@@ -1833,7 +1850,6 @@ class Pred(_coconut.collections.namedtuple("Pred", "name args"), _coconut.object
     def args(self):
         return self[1:]
 
-
 class Quant(_coconut.collections.namedtuple("Quant", "name var args"), _coconut.object):
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
@@ -1843,7 +1859,7 @@ class Quant(_coconut.collections.namedtuple("Quant", "name var args"), _coconut.
     def _make(cls, iterable, new=_coconut.tuple.__new__, len=_coconut.len):
         result = new(cls, iterable)
         if len(result) < 2:
-            raise _coconut.TypeError("Expected at least 2 arguments, got %d" % len(result))
+            raise _coconut.TypeError("Expected at least 2 argument(s), got %d" % len(result))
         return result
     def _asdict(self):
         return _coconut.OrderedDict((f, _coconut.getattr(self, f)) for f in self._fields)
@@ -1859,7 +1875,61 @@ class Quant(_coconut.collections.namedtuple("Quant", "name var args"), _coconut.
         return self[2:]
 
 
+class Point(_coconut.collections.namedtuple("Point", "x y"), _coconut.object):
+    __slots__ = ()
+    __ne__ = _coconut.object.__ne__
+    def __new__(_cls, x=0, y=0):
+        return _coconut.tuple.__new__(_cls, (x, y))
+
+class RadialVector(_coconut.collections.namedtuple("RadialVector", "mag angle"), _coconut.object):
+    __slots__ = ()
+    __ne__ = _coconut.object.__ne__
+    def __new__(_cls, mag, angle=0):
+        return _coconut.tuple.__new__(_cls, (mag, angle))
+
+
+class ABC(_coconut.collections.namedtuple("ABC", "a b c"), _coconut.object):
+    __slots__ = ()
+    __ne__ = _coconut.object.__ne__
+    def __new__(_cls, a, b=1, *c):
+        return _coconut.tuple.__new__(_cls, (a, b) + c)
+    @_coconut.classmethod
+    def _make(cls, iterable, new=_coconut.tuple.__new__, len=_coconut.len):
+        result = new(cls, iterable)
+        if len(result) < 1:
+            raise _coconut.TypeError("Expected at least 1 argument(s), got %d" % len(result))
+        return result
+    def _asdict(self):
+        return _coconut.OrderedDict((f, _coconut.getattr(self, f)) for f in self._fields)
+    def __repr__(self):
+        return "ABC(a={a!r}, b={b!r}, *c={c!r})".format(**self._asdict())
+    def _replace(_self, **kwds):
+        result = _self._make(_coconut.tuple(_coconut.map(kwds.pop, ("a", "b"), _self)) + kwds.pop("c", self.c))
+        if kwds:
+            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+        return result
+    @_coconut.property
+    def c(self):
+        return self[2:]
+
+
 # Type-Checking Tests
 
 any_to_ten = lambda *args, **kwargs: 10  # type: _coconut.typing.Callable[..., int]
 none_to_ten = lambda: 10  # type: _coconut.typing.Callable[[], int]
+
+@_coconut_tco
+def int_map(f,  # type: _coconut.typing.Callable[[int], int]
+     xs  # type: _coconut.typing.Sequence[int]
+    ):
+# type: (...) -> _coconut.typing.Sequence[int]
+    return _coconut_tail_call(list, map(f, xs))
+
+# Context managers
+
+@_coconut_tco
+def context_produces(out):
+    @contextmanager
+    def manager():
+        yield out
+    return _coconut_tail_call(manager)

@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x35f8487e
+# __coconut_hash__ = 0xc5c1ad1d
 
-# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: -----------------------------------------------------------
 
 from .util import *
 
@@ -32,7 +32,7 @@ def suite_test():
     assert (len)(_coconut.set(("a", 5))) == 2
     assert _coconut.operator.mul(2, swap2(_coconut_minus)(2, 5)) == 6 == _coconut.operator.mul(2, swap2_(_coconut_minus)(2, 5))
     assert all(same((1, 2, 3), [1, 2, 3]))
-    assert (list)(chain2((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
+    assert (list)(chain2((f() for f in (lambda: 1, lambda: 2)), (f() for f in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
     assert _coconut.functools.partial(threeple, 1, 2)(3) == (1, 2, 3)
     assert (product)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
@@ -62,11 +62,11 @@ def suite_test():
         assert (tuple)((qsort)(to_sort)) == (tuple)((sorted)(to_sort))
     assert _coconut_igetitem(repeat(3), 2) == 3 == _coconut_igetitem(repeat_(3), 2)
     assert sum_(_coconut_igetitem(repeat(1), _coconut.slice(None, 5))) == 5 == sum_(_coconut_igetitem(repeat_(1), _coconut.slice(None, 5)))
-    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
+    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
     assert (sum_)(((lambda s: map(_coconut.functools.partial(_coconut.operator.getitem, s), (1, 3, 5))))("ABCDEFG")) == "BDF"
     assert (list)(_coconut_igetitem(N(), _coconut.slice(10, 15))) == [10, 11, 12, 13, 14] == (list)(_coconut_igetitem(N_(), _coconut.slice(10, 15)))
     assert ((list)(takewhile(_coconut.functools.partial(_coconut.operator.gt, 5), N())) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(0, 10), _coconut.slice(None, 5, None))))
-    assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
+    assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
     assert (list)(_coconut_igetitem(add(repeat(1), N()), _coconut.slice(None, 5))) == [1, 2, 3, 4, 5] == (list)(_coconut_igetitem(add(repeat(1), N_()), _coconut.slice(None, 5)))
     assert sum(_coconut_igetitem(_coconut_igetitem(N(), _coconut.slice(5, None)), _coconut.slice(None, 5))) == 35 == sum(_coconut_igetitem(_coconut_igetitem(N_(), _coconut.slice(5, None)), _coconut.slice(None, 5)))
     assert (list)(_coconut.functools.partial(_coconut_igetitem, N())(slice(5, 10))) == [5, 6, 7, 8, 9] == _coconut.functools.partial(_coconut.operator.getitem, list(range(0, 15)))(slice(5, 10))
@@ -91,6 +91,7 @@ def suite_test():
     assert triangle(3, 4, 5).is_right()
     assert _coconut.getattr(triangle(3, 4, 5), "is_right")
     assert (_coconut.operator.methodcaller("is_right"))(triangle(3, 4, 5))
+    assert (triangle(3, 4, 5)).is_right()
     def test_factorial(factorial, test_none=True):
         assert factorial(0) == 1 == factorial(1)
         assert factorial(3) == 6
@@ -240,7 +241,7 @@ def suite_test():
     assert pattern_abs(0) == 0 == pattern_abs_(0)
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
     assert _coconut.operator.eq(vector(1, 2), vector(1, 2))
-    assert (_coconut.operator.methodcaller("__eq__", other=vector(1, 2)))(vector(1, 2))
+    assert (vector(1, 2)).__eq__(other=vector(1, 2))
     assert (tuple)(_coconut_igetitem(fib(), _coconut.slice(1, 4))) == (1, 2, 3)
     assert (sum)(filter(lambda i: i % 2 == 0, takewhile(lambda i: i < 4000000, fib()))) == 4613732
     assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
@@ -323,8 +324,12 @@ def suite_test():
     assert Elems(1, 2, 3) != Elems(1, 2)
     assert (repr)(fmap(times2, map(plus1, (1, 2, 3)))) == (repr)(map(_coconut_compose(plus1, times2), (1, 2, 3)))
     assert (repr)(fmap(plus1, reversed((1, 2, 3)))) == (repr)((reversed)(map(plus1, (1, 2, 3))))
-    assert ident[1:2, 2:3] == (slice(1, 2), slice(2, 3)) == (_coconut.operator.itemgetter(_coconut.slice(1, 2), _coconut.slice(2, 3)))(ident)
-    assert ident.method(*(1,), **{"a": 2}) == ((1,), {"a": 2}) == (_coconut.operator.methodcaller("method", *(1,), **{"a": 2}))(ident)
+    assert identity[1:2, 2:3] == (slice(1, 2), slice(2, 3))
+    assert (identity)[_coconut.slice(1, 2), _coconut.slice(2, 3)] == (slice(1, 2), slice(2, 3))
+    assert (_coconut.operator.itemgetter(_coconut.slice(1, 2), _coconut.slice(2, 3)))(identity) == (slice(1, 2), slice(2, 3))
+    assert identity.method(*(1,), **{"a": 2}) == ((1,), {"a": 2})
+    assert (_coconut.operator.methodcaller("method", *(1,), **{"a": 2}))(identity) == ((1,), {"a": 2})
+    assert (identity).method(*(1,), **{"a": 2}) == ((1,), {"a": 2})
     assert container(1) == container(1)
     assert not container(1) != container(1)
     assert container(1) != container(2)
@@ -395,7 +400,12 @@ def suite_test():
     assert fmap(lambda _=None: _ + 1, Pred(0, 1, 2)) == Pred(1, 2, 3)
     assert fmap(lambda _=None: _ + 1, Quant(0, 1, 2)) == Quant(1, 2, 3)
     a = Nest()
-    assert a.b.c.d == "data" == (_coconut.operator.attrgetter("b.c.d"))(a)
+    assert a.b.c.d == "data"
+    assert (_coconut.operator.attrgetter("b.c.d"))(a) == "data"
+    assert (a).b.c.d == "data"
+    assert a.b.c.m() == "method"
+    assert (_coconut_compose(_coconut.operator.attrgetter("b.c"), _coconut.operator.methodcaller("m")))(a) == "method"
+    assert ((a).b.c).m() == "method"
     assert (list)(tco_chain([1, 2, 3])) == ["last"]
     assert (list)(map(tuple, partition([1, 2, 3], 2))) == [(1,), (3, 2)] == (list)(map(tuple, partition_([1, 2, 3], 2)))
     assert myreduce(_coconut.operator.add, (1, 2, 3)) == 6
@@ -411,9 +421,75 @@ def suite_test():
     assert (tuple)(starmap(toprint, map(range, range(1, 5)))) == ('0', '0 1', '0 1 2', '0 1 2 3')
     assert (tuple)(fmap(_coconut.operator.methodcaller("strip", " 0"), starmap(toprint, map(range, range(1, 5))))) == ("", "1", "1 2", "1 2 3")
     assert (len)(starmap(toprint, ())) == 0
-    assert (_coconut.operator.itemgetter(0))(starmap(toprint, [(1, 2)])) == "1 2"
-    assert (list)((_coconut.operator.itemgetter(_coconut.slice(1, None)))(starmap(toprint, [(1, 2), (2, 3), (3, 4)]))) == ["2 3", "3 4"]
+    assert (starmap(toprint, [(1, 2)]))[0] == "1 2"
+    assert (list)((starmap(toprint, [(1, 2), (2, 3), (3, 4)]))[_coconut.slice(1, None)]) == ["2 3", "3 4"]
     assert none_to_ten() == 10 == any_to_ten(1, 2, 3)
+    assert int_map(plus1_, range(5)) == [1, 2, 3, 4, 5]
+    assert still_ident.__doc__ == "docstring"
+    with context_produces(1) as one:
+        with context_produces(2) as two:
+            assert one == 1
+            assert two == 2
+    assert raise_exc() if 1 is None else 1 == 1
+    try:
+        assert raise_exc() if None is None else None
+    except Exception as err:
+        assert str(err) == "raise_exc"
+    else:
+        assert False
+    p = Point()
+    assert p.x == 0 == p.y
+    assert repr(p) == "Point(x=0, y=0)"
+    p = Point(1)
+    assert p.x == 1
+    assert p.y == 0
+    assert repr(p) == "Point(x=1, y=0)"
+    p = Point(2, 3)
+    assert p.x == 2
+    assert p.y == 3
+    assert repr(p) == "Point(x=2, y=3)"
+    try:
+        RadialVector()
+    except TypeError:
+        pass
+    else:
+        assert False
+    rv = RadialVector(1)
+    assert rv.mag == 1
+    assert rv.angle == 0
+    assert repr(rv) == "RadialVector(mag=1, angle=0)"
+    try:
+        ABC()
+    except TypeError:
+        pass
+    else:
+        assert False
+    abc = ABC(2)
+    assert abc.a == 2
+    assert abc.b == 1
+    assert abc.c == ()
+    assert repr(abc) == "ABC(a=2, b=1, *c=())"
+    abc = ABC(3, 4, 5)
+    assert abc.a == 3
+    assert abc.b == 4
+    assert abc.c == (5,)
+    assert repr(abc) == "ABC(a=3, b=4, *c=(5,))"
+    abc = ABC(5, 6, 7, 8)
+    assert abc.a == 5
+    assert abc.b == 6
+    assert abc.c == (7, 8)
+    assert repr(abc) == "ABC(a=5, b=6, *c=(7, 8))"
+    v = vector2(3, 4)
+    assert repr(v) == "vector2(x=3, y=4)"
+    assert abs(v) == 5
+    try:
+        v.x = 2
+    except AttributeError:
+        pass
+    else:
+        assert False
+    v = vector2()
+    assert repr(v) == "vector2(x=0, y=0)"
     return True
 
 def tco_test():

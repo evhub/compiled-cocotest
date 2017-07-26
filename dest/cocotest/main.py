@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x7100ee12
+# __coconut_hash__ = 0x1458137c
 
-# Compiled with Coconut version 1.2.3-post_dev12 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
 
-# Coconut Header: --------------------------------------------------------------
+# Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
-# Compiled Coconut: ------------------------------------------------------------
+# Compiled Coconut: -----------------------------------------------------------
 
 import sys
 
@@ -58,7 +58,7 @@ def main_test():
     def backslash_test():
         return lambda x: x
     assert 1 == 1 == backslash_test()(1)
-    assert (
+    assert True is (
             "hello"
          == "hello" == 
             'hello'
@@ -72,11 +72,13 @@ def main_test():
     class one_line_class(_coconut.object):
         pass
     assert isinstance(one_line_class(), one_line_class)
-    assert ((_coconut.operator.attrgetter("join"))(""))(["1", "2", "3"]) == "123" == ((_coconut.functools.partial(_coconut.getattr, ""))("join"))(["1", "2", "3"])
+    assert (_coconut.operator.attrgetter("join"))("")(["1", "2", "3"]) == "123"
+    assert (("").join)(["1", "2", "3"]) == "123"
+    assert ((_coconut.functools.partial(_coconut.getattr, ""))("join"))(["1", "2", "3"]) == "123"
     assert (_coconut.functools.partial(_coconut.operator.getitem, [1, 2, 3]))(1) == 2 == (_coconut.functools.partial(_coconut_igetitem, [1, 2, 3]))(1)
     assert (_coconut.functools.partial(_coconut.operator.getitem, "123"))(1) == "2" == (_coconut.functools.partial(_coconut_igetitem, "123"))(1)
-    assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: -1, lambda: 0)), lambda: range(1, 5))))) == [-1, 0, 1, 2, 3, 4]
-    assert (list)(_coconut.itertools.chain.from_iterable((_coconut_lazy_item() for _coconut_lazy_item in (lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1,)), lambda: (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 2,)))))) == [1, 2]
+    assert (list)(_coconut.itertools.chain.from_iterable((f() for f in (lambda: (f() for f in (lambda: -1, lambda: 0)), lambda: range(1, 5))))) == [-1, 0, 1, 2, 3, 4]
+    assert (list)(_coconut.itertools.chain.from_iterable((f() for f in (lambda: (f() for f in (lambda: 1,)), lambda: (f() for f in (lambda: 2,)))))) == [1, 2]
     assert not isinstance(map(_coconut.functools.partial(_coconut.operator.add, 2), [1, 2, 3]), list)
     assert not isinstance(range(10), list)
     assert isinstance(10**100, int)
@@ -145,32 +147,11 @@ def main_test():
         import __builtin__ as builtins
     else:
         import builtins
-    if _coconut_sys.version_info < (3,):
-        import email.MIMEBase as _coconut_import
-        try:
-            email
-        except:
-            email = _coconut.imp.new_module("email")
-        else:
-            if not _coconut.isinstance(email, _coconut.types.ModuleType):
-                email = _coconut.imp.new_module("email")
-        try:
-            email.mime
-        except:
-            email.mime = _coconut.imp.new_module("email.mime")
-        else:
-            if not _coconut.isinstance(email.mime, _coconut.types.ModuleType):
-                email.mime = _coconut.imp.new_module("email.mime")
-        email.mime.base = _coconut_import
-    else:
-        import email.mime.base
+    import email.mime.base
     assert q.Queue
     assert builtins.len([1, 1]) == 2
     assert email.mime.base
-    if _coconut_sys.version_info < (3,):
-        import email.MIMEBase as mimebase
-    else:
-        from email.mime import base as mimebase
+    from email.mime import base as mimebase
     assert mimebase
     from_err = TypeError()
     try:
@@ -213,14 +194,14 @@ def main_test():
     assert (tuple)(range(5)[1:]) == (1, 2, 3, 4) == (tuple)(_coconut_igetitem(range(5), _coconut.slice(1, None)))
     assert (tuple)(range(10)[-3:-1]) == (7, 8) == (tuple)(_coconut_igetitem(range(10), _coconut.slice(-3, -1)))
     assert (tuple)(_coconut_igetitem(map(abs, (1, -2, -5, 2)), _coconut.slice(None, None))) == (1, 2, 5, 2)
-    assert _coconut_igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)), -1) == 2
-    assert (tuple)(_coconut_igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), _coconut.slice(-2, None))) == (2, 3)
-    assert (tuple)(_coconut_igetitem((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), _coconut.slice(None, -2))) == (0, 1)
-    assert _coconut_igetitem(map(_coconut.operator.add, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1) == 22 == map(_coconut.operator.add, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)))[-1]
+    assert _coconut_igetitem((f() for f in (lambda: 1, lambda: 2)), -1) == 2
+    assert (tuple)(_coconut_igetitem((f() for f in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), _coconut.slice(-2, None))) == (2, 3)
+    assert (tuple)(_coconut_igetitem((f() for f in (lambda: 0, lambda: 1, lambda: 2, lambda: 3)), _coconut.slice(None, -2))) == (0, 1)
+    assert _coconut_igetitem(map(_coconut.operator.add, (f() for f in (lambda: 10, lambda: 20)), (f() for f in (lambda: 1, lambda: 2))), -1) == 22 == map(_coconut.operator.add, (f() for f in (lambda: 10, lambda: 20)), (f() for f in (lambda: 1, lambda: 2)))[-1]
     assert _coconut_igetitem(map(lambda x: x + 1, range(10**9)), -1) == 10**9 == _coconut_igetitem(count(), 10**9)
     assert (tuple)(_coconut_igetitem(count(), _coconut.slice(10, 15))) == (10, 11, 12, 13, 14) == (tuple)(count()[10:15])
     assert (tuple)(zip((1, 2), (3, 4))) == ((1, 3), (2, 4)) == (tuple)(_coconut_igetitem(zip((1, 2), (3, 4)), _coconut.slice(None, None)))
-    assert (tuple)(_coconut_igetitem(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2))), -1)) == (20, 2) == (tuple)(zip((_coconut_lazy_item() for _coconut_lazy_item in (lambda: 10, lambda: 20)), (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 1, lambda: 2)))[-1])
+    assert (tuple)(_coconut_igetitem(zip((f() for f in (lambda: 10, lambda: 20)), (f() for f in (lambda: 1, lambda: 2))), -1)) == (20, 2) == (tuple)(zip((f() for f in (lambda: 10, lambda: 20)), (f() for f in (lambda: 1, lambda: 2)))[-1])
     assert (tuple)(_coconut_igetitem(zip(count(), count()), 10**9)) == (10**9, 10**9) == (tuple)(zip(count(), count())[10**9])
     assert _coconut_igetitem(count(1.5, 0.5), 0) == 1.5 == _coconut_igetitem((1.5, 2, 2.5, 3), 0)
     assert (tuple)(_coconut_igetitem(count(1.5, 0.5), _coconut.slice(1, 3))) == (2, 2.5) == (tuple)(_coconut_igetitem((1.5, 2, 2.5, 3), _coconut.slice(1, 3)))
@@ -307,7 +288,7 @@ def main_test():
     assert count(1, 3)[1] == 4
     assert (len)(map(lambda x: x, [1, 2])) == 2
     assert repr("hello") == "'hello'" == ascii("hello")
-    assert (_coconut.operator.methodcaller("index", 1))(count(1, 3)) == 0
+    assert (count(1, 3)).index(1) == 0 == (_coconut.operator.methodcaller("index", 1))(count(1, 3))
     assert _coconut_igetitem(count(1).__copy__(), 0) == 1
     assert _coconut_igetitem(map(_coconut.operator.add, count(1), count(1)).__copy__(), 0) == 2
     assert (tuple)(_coconut_igetitem(zip(count(1), count(1)).__copy__(), 0)) == (1, 1)
@@ -319,7 +300,9 @@ def main_test():
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-5, -8))) == [5, 6]
     assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9]
     assert (_coconut.operator.itemgetter(1))(range(1, 5)) == 2 == (_coconut.functools.partial(_coconut_igetitem, index=1))(range(1, 5))
+    assert (range(1, 5))[1] == 2 == _coconut_igetitem(range(1, 5), 1)
     assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 5)))(range(10))) == [0, 1, 2, 3, 4] == (list)((_coconut.functools.partial(_coconut_igetitem, index=_coconut.slice(None, 5)))(range(10)))
+    assert (list)((range(10))[_coconut.slice(None, 5)]) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(10), _coconut.slice(None, 5)))
     def _coconut_lambda_0(x):
         y = x
     assert (list)(map(_coconut_lambda_0, range(10))) == [None] * 10
@@ -456,11 +439,11 @@ def main_test():
 
     assert (tuple)((reversed)((reversed)(range(10)))) == (tuple)(range(10))
     assert (len)((reversed)(range(10))) == 10
-    assert (_coconut.operator.itemgetter(1))((reversed)(range(10))) == 8
-    assert (_coconut.operator.itemgetter(-1))((reversed)(range(10))) == 0
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(None, -1)))((reversed)(range(10)))) == (tuple)((reversed)(range(1, 10)))
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(1, None)))((reversed)(range(10)))) == (tuple)((reversed)(range(9)))
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(2, -3)))((reversed)(range(10)))) == (tuple)((reversed)(range(3, 8)))
+    assert ((reversed)(range(10)))[1] == 8
+    assert ((reversed)(range(10)))[-1] == 0
+    assert (tuple)(((reversed)(range(10)))[_coconut.slice(None, -1)]) == (tuple)((reversed)(range(1, 10)))
+    assert (tuple)(((reversed)(range(10)))[_coconut.slice(1, None)]) == (tuple)((reversed)(range(9)))
+    assert (tuple)(((reversed)(range(10)))[_coconut.slice(2, -3)]) == (tuple)((reversed)(range(3, 8)))
     assert 5 in ((reversed)(range(10)))
     assert ((reversed)(range(10))).count(3) == 1
     assert ((reversed)(range(10))).count(10) == 0
@@ -469,11 +452,11 @@ def main_test():
     range10 = (list)(range(10))
     assert (reversed)((reversed)(range10)) == range10
     assert (len)((reversed)(range10)) == 10
-    assert (_coconut.operator.itemgetter(1))((reversed)(range10)) == 8
-    assert (_coconut.operator.itemgetter(-1))((reversed)(range10)) == 0
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(None, -1)))((reversed)(range10))) == (tuple)((reversed)(range(1, 10)))
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(1, None)))((reversed)(range10))) == (tuple)((reversed)(range(9)))
-    assert (tuple)((_coconut.operator.itemgetter(_coconut.slice(2, -3)))((reversed)(range10))) == (tuple)((reversed)(range(3, 8)))
+    assert ((reversed)(range10))[1] == 8
+    assert ((reversed)(range10))[-1] == 0
+    assert (tuple)(((reversed)(range10))[_coconut.slice(None, -1)]) == (tuple)((reversed)(range(1, 10)))
+    assert (tuple)(((reversed)(range10))[_coconut.slice(1, None)]) == (tuple)((reversed)(range(9)))
+    assert (tuple)(((reversed)(range10))[_coconut.slice(2, -3)]) == (tuple)((reversed)(range(3, 8)))
     assert 5 in ((reversed)(range10))
     assert ((reversed)(range10)).count(3) == 1
     assert ((reversed)(range10)).count(10) == 0
@@ -482,10 +465,10 @@ def main_test():
     assert (list)((enumerate)(range(1, 3))) == [(0, 1), (1, 2)]
     assert (list)(enumerate(range(2), start=1)) == [(1, 0), (2, 1)]
     assert (len)((enumerate)(range(10))) == 10
-    assert (_coconut.operator.itemgetter(1))((enumerate)(range(10))) == (1, 1)
-    assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 1)))((enumerate)(range(10)))) == [(0, 0)]
-    assert (list)((_coconut.operator.itemgetter(_coconut.slice(1, 3)))((enumerate)(range(10)))) == [(1, 1), (2, 2)]
-    assert (list)((_coconut.operator.itemgetter(_coconut.slice(-1, None)))((enumerate)(range(10)))) == [(9, 9)]
+    assert ((enumerate)(range(10)))[1] == (1, 1)
+    assert (list)(((enumerate)(range(10)))[_coconut.slice(None, 1)]) == [(0, 0)]
+    assert (list)(((enumerate)(range(10)))[_coconut.slice(1, 3)]) == [(1, 1), (2, 2)]
+    assert (list)(((enumerate)(range(10)))[_coconut.slice(-1, None)]) == [(9, 9)]
     assert (tuple)(range(3, 0, -1)) == (3, 2, 1)
     assert (tuple)(range(10, 0, -1)[9:1:-1]) == tuple(range(10, 0, -1))[9:1:-1]
     assert count(1)[1:] == count(2)
@@ -498,7 +481,7 @@ def main_test():
     assert fmap(lambda k, v: (k + 1, v + "!"), {1: "2", 2: "3"}) == {2: "2!", 3: "3!"}
     assert fmap(lambda _=None: _ + 1, _coconut.set((1, 2, 3))) == _coconut.set((2, 3, 4))
     assert fmap(_coconut.functools.partial(_coconut.operator.add, [0]), [[1, 2, 3]]) == [[0, 1, 2, 3]]
-    assert (tuple)(fmap(lambda _=None: _ + 1, range(3))) == (1, 2, 3) == (tuple)(fmap(lambda _=None: _ + 1, (_coconut_lazy_item() for _coconut_lazy_item in (lambda: 0, lambda: 1, lambda: 2))))
+    assert (tuple)(fmap(lambda _=None: _ + 1, range(3))) == (1, 2, 3) == (tuple)(fmap(lambda _=None: _ + 1, (f() for f in (lambda: 0, lambda: 1, lambda: 2))))
     assert issubclass(int, py_int)
     class pyobjsub(py_object): pass
     class objsub(object): pass
@@ -587,18 +570,66 @@ def main_test():
 
     assert a == 4
     assert _ is None
+    a = 1,
+    assert a == (1,)
+    (x,) = a
+    assert x == 1 == a[0]
+    assert (10,)[0] == 10
+    x, x = 1, 2
+    assert x == 2
+    if _coconut_sys.version_info < (3,):
+        from StringIO import StringIO
+    else:
+        from io import StringIO
+    if _coconut_sys.version_info < (3,):
+        from cStringIO import StringIO as BytesIO
+    else:
+        from io import BytesIO
+    s = StringIO("derp")
+    assert s.read() == "derp"
+    b = BytesIO(b"herp")
+    assert b.read() == b"herp"
+    assert 2 if 1 is None else 1 == 1 == _coconut_none_coalesce(1, 2)
+    assert 2 if None is None else None == 2 == _coconut_none_coalesce(None, 2)
+    timeout = None
+    local_timeout = 60
+    global_timeout = 300
+    def ret_timeout():
+        return timeout
+    def ret_local_timeout():
+        return local_timeout
+    def ret_global_timeout():
+        return global_timeout
+    assert (lambda _coconut_none_coalesce_item: global_timeout if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(local_timeout) if timeout is None else timeout == 60
+    assert (lambda _coconut_none_coalesce_item: (lambda _coconut_none_coalesce_item: ret_global_timeout() if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_local_timeout()) if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_timeout()) == 60
+    local_timeout = None
+    assert (lambda _coconut_none_coalesce_item: global_timeout if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(local_timeout) if timeout is None else timeout == 300
+    assert (lambda _coconut_none_coalesce_item: (lambda _coconut_none_coalesce_item: ret_global_timeout() if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_local_timeout()) if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_timeout()) == 300
+    timeout = 10 if timeout is None else timeout
+    assert timeout == 10
+    global_timeout = 10 if global_timeout is None else global_timeout
+    assert global_timeout == 300
+    assert (not True if None is None else None) is False
+    assert 1 == 1 if None is None else None
+    assert 'foo' in ['foo', 'bar'] if None is None else None
+    assert 3 == 1 + (2 if None is None else None)
+    requested_quantity = 0
+    default_quantity = 1
+    price = 100
+    assert 0 == ((lambda _coconut_none_coalesce_item: default_quantity if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(requested_quantity)) * price
+    assert (_coconut_compose(_coconut.operator.itemgetter(_coconut.slice(1, None)), _coconut.operator.itemgetter(1)))(range(10)) == 2 == ((range(10))[_coconut.slice(1, None)])[1]
     return True
 
 @_coconut_tco
 def tco_func():
     while True:
-        if tco_func is _coconut_recursive_func_5:
+        if tco_func is _coconut_recursive_func_8:
             continue
         else:
             return _coconut_tail_call(tco_func)
         return None
 
-_coconut_recursive_func_5 = tco_func
+_coconut_recursive_func_8 = tco_func
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
