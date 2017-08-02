@@ -93,14 +93,14 @@ def main_test():
     assert 3.14e-10j == 3.14e-10j
     _coconut_match_check = False
     _coconut_match_to = {"text": "abc", "tags": [1, 2, 3]}
+    _coconut_sentinel = _coconut.object()
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to.get("text", _coconut_sentinel)
-        _coconut_match_key_1 = _coconut_match_to.get("tags", _coconut_sentinel)
-        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_key_1) >= 1):
-            text = _coconut_match_key_0
-            rest = _coconut.list(_coconut_match_key_1[1:])
-            first = _coconut_match_key_1[0]
+        _coconut_match_temp_0 = _coconut_match_to.get("text", _coconut_sentinel)
+        _coconut_match_temp_1 = _coconut_match_to.get("tags", _coconut_sentinel)
+        if (_coconut_match_temp_0 is not _coconut_sentinel) and (_coconut_match_temp_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_1, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_temp_1) >= 1):
+            text = _coconut_match_temp_0
+            rest = _coconut.list(_coconut_match_temp_1[1:])
+            first = _coconut_match_temp_1[0]
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -549,11 +549,11 @@ def main_test():
     assert 3 == (lambda x, y: x + y)(1, 2)
     _coconut_match_check = False
     _coconut_match_to = {"a": 2, "b": 3}
+    _coconut_sentinel = _coconut.object()
     if _coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to.get("a", _coconut_sentinel)
-        if _coconut_match_key_0 is not _coconut_sentinel:
-            a = _coconut_match_key_0
+        _coconut_match_temp_0 = _coconut_match_to.get("a", _coconut_sentinel)
+        if _coconut_match_temp_0 is not _coconut_sentinel:
+            a = _coconut_match_temp_0
             rest = dict((k, v) for k, v in _coconut_match_to.items() if k not in set(("a",)))
             _coconut_match_check = True
     if not _coconut_match_check:
@@ -567,11 +567,11 @@ def main_test():
     _ = None
     _coconut_match_check = False
     _coconut_match_to = {"a": 4, "b": 5}
+    _coconut_sentinel = _coconut.object()
     if _coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to.get("a", _coconut_sentinel)
-        if _coconut_match_key_0 is not _coconut_sentinel:
-            a = _coconut_match_key_0
+        _coconut_match_temp_0 = _coconut_match_to.get("a", _coconut_sentinel)
+        if _coconut_match_temp_0 is not _coconut_sentinel:
+            a = _coconut_match_temp_0
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'match {"a": a **_} = {"a": 4, "b": 5}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))

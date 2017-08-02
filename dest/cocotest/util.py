@@ -793,13 +793,13 @@ def classify_sequence(value):
 def dictpoint(value):
     _coconut_match_check = False
     _coconut_match_to = value
+    _coconut_sentinel = _coconut.object()
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to.get("x", _coconut_sentinel)
-        _coconut_match_key_1 = _coconut_match_to.get("y", _coconut_sentinel)
-        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)):
-            x = _coconut_match_key_0
-            y = _coconut_match_key_1
+        _coconut_match_temp_0 = _coconut_match_to.get("x", _coconut_sentinel)
+        _coconut_match_temp_1 = _coconut_match_to.get("y", _coconut_sentinel)
+        if (_coconut_match_temp_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut_match_temp_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_1, int)):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
             _coconut_match_check = True
     if _coconut_match_check:
         return (x, y)
@@ -1060,13 +1060,13 @@ def expl_ident(x):
 def dictpoint_(value):
     _coconut_match_check = False
     _coconut_match_to = value
+    _coconut_sentinel = _coconut.object()
     if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to.get("x", _coconut_sentinel)
-        _coconut_match_key_1 = _coconut_match_to.get("y", _coconut_sentinel)
-        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)):
-            x = _coconut_match_key_0
-            y = _coconut_match_key_1
+        _coconut_match_temp_0 = _coconut_match_to.get("x", _coconut_sentinel)
+        _coconut_match_temp_1 = _coconut_match_to.get("y", _coconut_sentinel)
+        if (_coconut_match_temp_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut_match_temp_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_1, int)):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
@@ -1077,13 +1077,13 @@ def dictpoint_(value):
     return x, y
 def dictpoint__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
+    _coconut_sentinel = _coconut.object()
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
-        _coconut_sentinel = _coconut.object()
-        _coconut_match_key_0 = _coconut_match_to_args[0].get("x", _coconut_sentinel)
-        _coconut_match_key_1 = _coconut_match_to_args[0].get("y", _coconut_sentinel)
-        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)) and (not _coconut_match_to_kwargs):
-            x = _coconut_match_key_0
-            y = _coconut_match_key_1
+        _coconut_match_temp_0 = _coconut_match_to_args[0].get("x", _coconut_sentinel)
+        _coconut_match_temp_1 = _coconut_match_to_args[0].get("y", _coconut_sentinel)
+        if (_coconut_match_temp_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_0, int)) and (_coconut_match_temp_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_temp_1, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_temp_0
+            y = _coconut_match_temp_1
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
