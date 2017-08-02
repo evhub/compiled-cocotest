@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xc5c1ad1d
+# __coconut_hash__ = 0x2046e34f
 
-# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -406,6 +406,8 @@ def suite_test():
     assert a.b.c.m() == "method"
     assert (_coconut_compose(_coconut.operator.attrgetter("b.c"), _coconut.operator.methodcaller("m")))(a) == "method"
     assert ((a).b.c).m() == "method"
+    assert (lambda x: None if x is None else (lambda x: None if x is None else (lambda x: None if x is None else (lambda x: None if x is None else x())(x.m))(x.c))(x.b))(a) == "method"
+    assert (lambda x: None if x is None else x.derp.herp)(a.b.c.none) is None
     assert (list)(tco_chain([1, 2, 3])) == ["last"]
     assert (list)(map(tuple, partition([1, 2, 3], 2))) == [(1,), (3, 2)] == (list)(map(tuple, partition_([1, 2, 3], 2)))
     assert myreduce(_coconut.operator.add, (1, 2, 3)) == 6

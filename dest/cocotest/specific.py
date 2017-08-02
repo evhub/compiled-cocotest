@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xfedee477
+# __coconut_hash__ = 0x624bfc93
 
-# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -15,6 +15,11 @@ from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: -----------------------------------------------------------
+
+if _coconut_sys.version_info < (3,):
+    from StringIO import StringIO
+else:
+    from io import StringIO
 
 from .util import mod
 
@@ -36,3 +41,6 @@ def non_py32_test():
     assert {range(8): True}[range(8)]
     assert range(1, 2) == range(1, 2)
     assert range(1, 2) != range(3, 4)
+    fakefile = StringIO()
+    print("herpaderp", file=fakefile, flush=True)
+    assert fakefile.getvalue() == "herpaderp\n"

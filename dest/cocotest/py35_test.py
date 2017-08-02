@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x3b7490bf
+# __coconut_hash__ = 0x76afe584
 
-# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -29,7 +29,7 @@ def py35_test():
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
             iters = _coconut.list(_coconut_match_to_args[0][1:])
             func = _coconut_match_to_args[0][0]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async def async_map_2([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -43,7 +43,7 @@ def py35_test():
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
             iters = _coconut.list(_coconut_match_to_args[0][1:])
             func = _coconut_match_to_args[0][0]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'async match def async_map_3([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -57,7 +57,7 @@ def py35_test():
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
             iters = _coconut.list(_coconut_match_to_args[0][1:])
             func = _coconut_match_to_args[0][0]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match async def async_map_4([func] + iters) = parallel_map(func, *iters)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))

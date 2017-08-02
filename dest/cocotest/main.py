@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x1458137c
+# __coconut_hash__ = 0xe3458e5d
 
-# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -50,7 +50,8 @@ def main_test():
     assert (list)(map(_coconut.functools.partial(pow, 2), (range)(0, 5))) == [1, 2, 4, 8, 16]
     iter1 = range(0, 10)
     iter1, iter2 = tee(iter1)
-    assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == (list)(_coconut_igetitem(iter2, _coconut.slice(2, 8)))
+    assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == [2, 3, 4, 5, 6, 7] == (list)(_coconut_igetitem(iter1, slice(2, 8)))
+    assert (list)(_coconut_igetitem(iter2, _coconut.slice(2, 8))) == [2, 3, 4, 5, 6, 7] == (list)(_coconut_igetitem(iter2, slice(2, 8)))
     data = 5
     assert data == 5
     data = 3
@@ -92,11 +93,15 @@ def main_test():
     assert 3.14e-10j == 3.14e-10j
     _coconut_match_check = False
     _coconut_match_to = {"text": "abc", "tags": [1, 2, 3]}
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2) and ("text" in _coconut_match_to) and ("tags" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["tags"], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to["tags"]) >= 1):
-        text = _coconut_match_to["text"]
-        rest = _coconut.list(_coconut_match_to["tags"][1:])
-        first = _coconut_match_to["tags"][0]
-        _coconut_match_check = True
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to.get("text", _coconut_sentinel)
+        _coconut_match_key_1 = _coconut_match_to.get("tags", _coconut_sentinel)
+        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_key_1) >= 1):
+            text = _coconut_match_key_0
+            rest = _coconut.list(_coconut_match_key_1[1:])
+            first = _coconut_match_key_1[0]
+            _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '{"text": text, "tags": [first] + rest} = {"text": "abc", "tags": [1, 2, 3]}'
@@ -222,7 +227,7 @@ def main_test():
     get_int = lambda: int
     _coconut_match_check = False
     _coconut_match_to = 5
-    if (_coconut.isinstance(_coconut_match_to, get_int())):
+    if _coconut.isinstance(_coconut_match_to, get_int()):
         x = _coconut_match_to
         _coconut_match_check = True
     if not _coconut_match_check:
@@ -289,7 +294,7 @@ def main_test():
     assert (len)(map(lambda x: x, [1, 2])) == 2
     assert repr("hello") == "'hello'" == ascii("hello")
     assert (count(1, 3)).index(1) == 0 == (_coconut.operator.methodcaller("index", 1))(count(1, 3))
-    assert _coconut_igetitem(count(1).__copy__(), 0) == 1
+    assert _coconut_igetitem(count(1).__copy__(), 0) == 1 == _coconut_igetitem(count(1), 0)
     assert _coconut_igetitem(map(_coconut.operator.add, count(1), count(1)).__copy__(), 0) == 2
     assert (tuple)(_coconut_igetitem(zip(count(1), count(1)).__copy__(), 0)) == (1, 1)
     assert (all)(map(lambda t: isinstance(t, count), tee(count())))
@@ -297,8 +302,8 @@ def main_test():
     assert (all)(map(lambda t: isinstance(t, list), tee([1, 2, 3])))
     assert (lambda _=None: 5)() == 5
     assert (lambda _=None: _[0])([1, 2, 3]) == 1
-    assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-5, -8))) == [5, 6]
-    assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9]
+    assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-5, -8))) == [5, 6] == (list)(_coconut_igetitem(iter(range(10)), slice(-5, -8)))
+    assert (list)(_coconut_igetitem(iter(range(10)), _coconut.slice(-2, None))) == [8, 9] == (list)(_coconut_igetitem(iter(range(10)), slice(-2, None)))
     assert (_coconut.operator.itemgetter(1))(range(1, 5)) == 2 == (_coconut.functools.partial(_coconut_igetitem, index=1))(range(1, 5))
     assert (range(1, 5))[1] == 2 == _coconut_igetitem(range(1, 5), 1)
     assert (list)((_coconut.operator.itemgetter(_coconut.slice(None, 5)))(range(10))) == [0, 1, 2, 3, 4] == (list)((_coconut.functools.partial(_coconut_igetitem, index=_coconut.slice(None, 5)))(range(10)))
@@ -376,9 +381,9 @@ def main_test():
     assert (lambda x: 2 / x)(4) == 1 / 2
     _coconut_match_check = False
     _coconut_match_to = range(10)
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         _coconut_match_temp_0 = _coconut.list(_coconut_match_to)
-        if (_coconut.len(_coconut_match_temp_0) >= 2):
+        if _coconut.len(_coconut_match_temp_0) >= 2:
             b = _coconut_match_temp_0[1:-1]
             a = _coconut_match_temp_0[0]
             c = _coconut_match_temp_0[-1]
@@ -394,7 +399,7 @@ def main_test():
     assert c == 9
     _coconut_match_check = False
     _coconut_match_to = range(10)
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         _coconut_match_temp_0 = _coconut.list(_coconut_match_to)
         if (_coconut.len(_coconut_match_temp_0) >= 2) and (_coconut_match_temp_0[0] == _coconut_match_temp_0[-1]):
             b = _coconut_match_temp_0[1:-1]
@@ -418,7 +423,7 @@ def main_test():
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
             xs = _coconut.list(_coconut_match_to_args[0][1:])
             x = _coconut_match_to_args[0][0]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'assert (def ([x] + xs) -> x, xs) <| range(5) == (0, [1,2,3,4])'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -544,10 +549,13 @@ def main_test():
     assert 3 == (lambda x, y: x + y)(1, 2)
     _coconut_match_check = False
     _coconut_match_to = {"a": 2, "b": 3}
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and ("a" in _coconut_match_to):
-        a = _coconut_match_to["a"]
-        rest = dict((k, v) for (k, v) in _coconut_match_to.items() if k not in set(("a",)))
-        _coconut_match_check = True
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to.get("a", _coconut_sentinel)
+        if _coconut_match_key_0 is not _coconut_sentinel:
+            a = _coconut_match_key_0
+            rest = dict((k, v) for k, v in _coconut_match_to.items() if k not in set(("a",)))
+            _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'match {"a": a, **rest} = {"a": 2, "b": 3}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match {"a": a, **rest} = {"a": 2, "b": 3}'
@@ -559,9 +567,12 @@ def main_test():
     _ = None
     _coconut_match_check = False
     _coconut_match_to = {"a": 4, "b": 5}
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and ("a" in _coconut_match_to):
-        a = _coconut_match_to["a"]
-        _coconut_match_check = True
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to.get("a", _coconut_sentinel)
+        if _coconut_match_key_0 is not _coconut_sentinel:
+            a = _coconut_match_key_0
+            _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'match {"a": a **_} = {"a": 4, "b": 5}\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = 'match {"a": a **_} = {"a": 4, "b": 5}'
@@ -591,14 +602,17 @@ def main_test():
     assert b.read() == b"herp"
     assert 2 if 1 is None else 1 == 1 == _coconut_none_coalesce(1, 2)
     assert 2 if None is None else None == 2 == _coconut_none_coalesce(None, 2)
-    timeout = None
-    local_timeout = 60
-    global_timeout = 300
+    timeout = None  # type: _coconut.typing.Optional[int]
+    local_timeout = 60  # type: _coconut.typing.Optional[int]
+    global_timeout = 300  # type: int
     def ret_timeout():
+# type: (...) -> _coconut.typing.Optional[int]
         return timeout
     def ret_local_timeout():
+# type: (...) -> _coconut.typing.Optional[int]
         return local_timeout
     def ret_global_timeout():
+# type: (...) -> int
         return global_timeout
     assert (lambda _coconut_none_coalesce_item: global_timeout if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(local_timeout) if timeout is None else timeout == 60
     assert (lambda _coconut_none_coalesce_item: (lambda _coconut_none_coalesce_item: ret_global_timeout() if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_local_timeout()) if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(ret_timeout()) == 60
@@ -613,11 +627,18 @@ def main_test():
     assert 1 == 1 if None is None else None
     assert 'foo' in ['foo', 'bar'] if None is None else None
     assert 3 == 1 + (2 if None is None else None)
-    requested_quantity = 0
-    default_quantity = 1
+    requested_quantity = 0  # type: _coconut.typing.Optional[int]
+    default_quantity = 1  # type: int
     price = 100
     assert 0 == ((lambda _coconut_none_coalesce_item: default_quantity if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(requested_quantity)) * price
     assert (_coconut_compose(_coconut.operator.itemgetter(_coconut.slice(1, None)), _coconut.operator.itemgetter(1)))(range(10)) == 2 == ((range(10))[_coconut.slice(1, None)])[1]
+    assert (lambda x: None if x is None else x.herp(derp))(None) is None
+    assert (lambda x: None if x is None else x[herp].derp)(None) is None
+    assert (lambda x: None if x is None else x(derp)[herp])(None) is None
+    assert (lambda x: None if x is None else _coconut.functools.partial(x, herp)(derp))(None) is None
+    assert "a b c" == ((lambda _coconut_none_coalesce_item: "not gonna happen" if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(_coconut.functools.partial(_coconut.getattr, " ")))("join")("abc")
+    a = None  # type: _coconut.typing.Optional[_coconut.typing.Sequence[int]]
+    assert a is None
     return True
 
 @_coconut_tco

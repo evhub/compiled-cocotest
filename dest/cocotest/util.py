@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xb4ddf303
+# __coconut_hash__ = 0xd22b8981
 
-# Compiled with Coconut version 1.2.3-post_dev31 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -68,7 +68,7 @@ product = _coconut.functools.partial(reduce, _coconut.operator.mul)
 @_coconut_tco
 def zipwith(f, *args):
     return _coconut_tail_call(map, lambda items: f(*items), zip(*args))
-zipsum = _coconut_compose(zip, _coconut.functools.partial(map, sum))
+zipsum = _coconut_compose(zip, _coconut.functools.partial(map, sum))  # type: _coconut.typing.Callable[[_coconut.typing.Iterable[_coconut.typing.Iterable[int]]], _coconut.typing.Iterable[int]]
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_compose(ident, ident)
 @_coconut_decorator_0
@@ -112,6 +112,7 @@ add = _coconut.functools.partial(zipwith, _coconut.operator.add)
 # Quick-Sorts:
 def qsort1(l  # type: _coconut.typing.Sequence[int]
     ):
+# type: (...) -> _coconut.typing.Sequence[int]
     '''Non-Functional Quick Sort.'''
     if len(l) == 0:
         return []
@@ -128,6 +129,7 @@ def qsort1(l  # type: _coconut.typing.Sequence[int]
         return qsort1(smalls) + [split] + qsort1(larges)
 def qsort2(l  # type: _coconut.typing.Sequence[int]
     ):
+# type: (...) -> _coconut.typing.Sequence[int]
     """Functional Quick Sort."""
     if not l:
         return []
@@ -135,7 +137,9 @@ def qsort2(l  # type: _coconut.typing.Sequence[int]
         head, tail = l[0], l[1:]  # Python Pattern-Matching
         return (qsort2([x for x in tail if x <= head]) + [head] + qsort2([x for x in tail if x > head]))
 @_coconut_tco
-def qsort3(l):
+def qsort3(l  # type: _coconut.typing.Iterable[int]
+    ):
+# type: (...) -> _coconut.typing.Iterable[int]
     """Iterator Quick Sort."""
     try:
         tail, tail_ = (tee)((iter)(l))
@@ -146,6 +150,7 @@ def qsort3(l):
         return _coconut_tail_call(iter, ())
 def qsort4(l  # type: _coconut.typing.Sequence[int]
     ):
+# type: (...) -> _coconut.typing.Sequence[int]
     """Match Quick Sort."""
     _coconut_match_check = False
     _coconut_match_to = l
@@ -162,14 +167,16 @@ def qsort4(l  # type: _coconut.typing.Sequence[int]
     if _coconut_match_check:
         return (qsort4([x for x in tail if x <= head]) + [head] + qsort4([x for x in tail if x > head]))
 @_coconut_tco
-def qsort5(l):
+def qsort5(l  # type: _coconut.typing.Iterable[int]
+    ):
+# type: (...) -> _coconut.typing.Iterable[int]
     """Iterator Match Quick Sort."""
     _coconut_match_check = False
     _coconut_match_to = l
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         tail = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             head = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -207,10 +214,10 @@ def preN(it):
 def map_iter(func, args):
     _coconut_match_check = False
     _coconut_match_to = args
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         xs = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -279,7 +286,7 @@ def is_odd(n):
 def is_even_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_even_(0) = True'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -296,7 +303,7 @@ def is_even_(n):
 def is_odd_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def is_odd_(0) = False'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -320,10 +327,10 @@ def tco_chain(it):
 def partition(items, pivot, lprefix=[], rprefix=[]):
     _coconut_match_check = False
     _coconut_match_to = items
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         tail = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             head = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -333,7 +340,7 @@ def partition(items, pivot, lprefix=[], rprefix=[]):
             return _coconut_tail_call(partition, tail, pivot, lprefix, _coconut.itertools.chain.from_iterable((f() for f in (lambda: [head], lambda: rprefix))))
     if not _coconut_match_check:
         _coconut_match_to = items
-        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
             _coconut_match_check = True
         if _coconut_match_check:
             return lprefix, rprefix
@@ -343,19 +350,19 @@ partition_ = recursive_iterator(partition)
 def myreduce(func, items):
     _coconut_match_check = False
     _coconut_match_to = items
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         tail1 = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail1, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             first = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
         _coconut_match_to = tail1
-        if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+        if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
             tail2 = _coconut.iter(_coconut_match_to)
             _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail2, _coconut.slice(None, 1)))
-            if (_coconut.len(_coconut_match_temp_0) == 1):
+            if _coconut.len(_coconut_match_temp_0) == 1:
                 second = _coconut_match_temp_0[0]
                 _coconut_match_check = True
         if _coconut_match_check:
@@ -384,7 +391,8 @@ class vector(_coconut.collections.namedtuple("vector", "x y"), _coconut.object):
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
     @_coconut_tco
-    def __new__(cls, x, y=None):
+    def __new__(cls, x, y=None  # type: _coconut.typing.Optional[int]
+    ):
         _coconut_match_check = False
         _coconut_match_to = x
         if (_coconut.isinstance(_coconut_match_to, vector)) and (_coconut.len(_coconut_match_to) == 2):
@@ -459,13 +467,13 @@ class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object
 def factorial1(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut_match_to == 0):
+    if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, int)):
+    if _coconut.isinstance(_coconut_match_to, int):
         n = _coconut_match_to
         _coconut_match_check = True
     if _coconut_match_check and not (n > 0):
@@ -475,14 +483,14 @@ def factorial1(value):
 def factorial2(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut_match_to == 0):
+    if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     else:
         _coconut_match_check = False
         _coconut_match_to = value
-        if (_coconut.isinstance(_coconut_match_to, int)):
+        if _coconut.isinstance(_coconut_match_to, int):
             n = _coconut_match_to
             _coconut_match_check = True
         if _coconut_match_check and not (n > 0):
@@ -495,13 +503,13 @@ def factorial2(value):
 def factorial3(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut_match_to == 0):
+    if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, int)):
+    if _coconut.isinstance(_coconut_match_to, int):
         n = _coconut_match_to
         _coconut_match_check = True
     if _coconut_match_check and not (n > 0):
@@ -525,13 +533,13 @@ def factorial3(value):
 def factorial4(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut_match_to == 0):
+    if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (_coconut.isinstance(_coconut_match_to, int)):
+        if _coconut.isinstance(_coconut_match_to, int):
             n = _coconut_match_to
             _coconut_match_check = True
         if _coconut_match_check and not (n > 0):
@@ -541,13 +549,13 @@ def factorial4(value):
 def factorial5(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut_match_to == 0):
+    if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
         _coconut_match_to = value
-        if (_coconut.isinstance(_coconut_match_to, int)):
+        if _coconut.isinstance(_coconut_match_to, int):
             n = _coconut_match_to
             _coconut_match_check = True
         if _coconut_match_check and not (n > 0):
@@ -564,7 +572,7 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 n = _coconut_match_temp_0
                 _coconut_match_check = True
         if not _coconut_match_check:
@@ -585,7 +593,7 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) == 1) and (_coconut_match_to_args[0] == 0):
         _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc")
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             acc = _coconut_match_temp_0
             _coconut_match_check = True
     if not _coconut_match_check:
@@ -602,7 +610,7 @@ def fact(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
         _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc")
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             n = _coconut_match_temp_0
             acc = _coconut_match_temp_1
             _coconut_match_check = True
@@ -617,7 +625,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1) and (_coconut_match_to_args[0] == 0):
         _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             acc = _coconut_match_temp_0
             _coconut_match_check = True
     if not _coconut_match_check:
@@ -652,7 +660,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 def classify(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, tuple)):
+    if _coconut.isinstance(_coconut_match_to, tuple):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -683,7 +691,7 @@ def classify(value):
         return "tuple"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, list)):
+    if _coconut.isinstance(_coconut_match_to, list):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -714,7 +722,7 @@ def classify(value):
         return "list"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, dict)):
+    if _coconut.isinstance(_coconut_match_to, dict):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -727,7 +735,7 @@ def classify(value):
             return "dict"
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, (set, frozenset))):
+    if _coconut.isinstance(_coconut_match_to, (set, frozenset)):
         _coconut_match_check = True
     if _coconut_match_check:
         _coconut_match_check = False
@@ -785,10 +793,14 @@ def classify_sequence(value):
 def dictpoint(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["y"], int)):
-        x = _coconut_match_to["x"]
-        y = _coconut_match_to["y"]
-        _coconut_match_check = True
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to.get("x", _coconut_sentinel)
+        _coconut_match_key_1 = _coconut_match_to.get("y", _coconut_sentinel)
+        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)):
+            x = _coconut_match_key_0
+            y = _coconut_match_key_1
+            _coconut_match_check = True
     if _coconut_match_check:
         return (x, y)
     else:
@@ -844,7 +856,7 @@ def duplicate_first2(value):
         l = _coconut_match_to
         xs = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -859,7 +871,7 @@ def duplicate_first3(value):
         l = _coconut_match_to
         xs = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(xs, _coconut.slice(None, 1)))
-        if (_coconut.len(_coconut_match_temp_0) == 1):
+        if _coconut.len(_coconut_match_temp_0) == 1:
             x = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
@@ -1048,10 +1060,14 @@ def expl_ident(x):
 def dictpoint_(value):
     _coconut_match_check = False
     _coconut_match_to = value
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2) and ("x" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["x"], int)) and ("y" in _coconut_match_to) and (_coconut.isinstance(_coconut_match_to["y"], int)):
-        x = _coconut_match_to["x"]
-        y = _coconut_match_to["y"]
-        _coconut_match_check = True
+    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to) == 2):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to.get("x", _coconut_sentinel)
+        _coconut_match_key_1 = _coconut_match_to.get("y", _coconut_sentinel)
+        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)):
+            x = _coconut_match_key_0
+            y = _coconut_match_key_1
+            _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'{"x":x is int, "y":y is int} = value\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
         _coconut_match_err.pattern = '{"x":x is int, "y":y is int} = value'
@@ -1061,10 +1077,13 @@ def dictpoint_(value):
     return x, y
 def dictpoint__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to_args[0]) == 2) and ("x" in _coconut_match_to_args[0]) and (_coconut.isinstance(_coconut_match_to_args[0]["x"], int)) and ("y" in _coconut_match_to_args[0]) and (_coconut.isinstance(_coconut_match_to_args[0]["y"], int)):
-        x = _coconut_match_to_args[0]["x"]
-        y = _coconut_match_to_args[0]["y"]
-        if (not _coconut_match_to_kwargs):
+    if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Mapping)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
+        _coconut_sentinel = _coconut.object()
+        _coconut_match_key_0 = _coconut_match_to_args[0].get("x", _coconut_sentinel)
+        _coconut_match_key_1 = _coconut_match_to_args[0].get("y", _coconut_sentinel)
+        if (_coconut_match_key_0 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_0, int)) and (_coconut_match_key_1 is not _coconut_sentinel) and (_coconut.isinstance(_coconut_match_key_1, int)) and (not _coconut_match_to_kwargs):
+            x = _coconut_match_key_0
+            y = _coconut_match_key_1
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " '\'def dictpoint__({"x":x is int, "y":y is int}):\'' " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1094,7 +1113,7 @@ def last_two_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 2):
         a = _coconut_match_to_args[0][-2]
         b = _coconut_match_to_args[0][-1]
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def last_two_(_ + [a, b]):'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1108,7 +1127,7 @@ def htsplit(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
         tail = _coconut.list(_coconut_match_to_args[0][1:])
         head = _coconut_match_to_args[0][0]
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'match def htsplit([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1122,7 +1141,7 @@ def htsplit_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
         tail = _coconut.list(_coconut_match_to_args[0][1:])
         head = _coconut_match_to_args[0][0]
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
         _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def htsplit_([head] + tail) = [head, tail]'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1206,9 +1225,9 @@ class lazy(_coconut.object):
 def is_empty(i):
     _coconut_match_check = False
     _coconut_match_to = i
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         _coconut_match_temp_0 = _coconut.tuple(_coconut_match_to)
-        if (_coconut.len(_coconut_match_temp_0) == 0):
+        if _coconut.len(_coconut_match_temp_0) == 0:
             _coconut_match_check = True
     if _coconut_match_check:
         return True
@@ -1217,7 +1236,7 @@ def is_empty(i):
 def is_one(i):
     _coconut_match_check = False
     _coconut_match_to = i
-    if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable)):
+    if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         _coconut_match_temp_0 = _coconut.tuple(_coconut_match_to)
         if (_coconut.len(_coconut_match_temp_0) == 1) and (_coconut_match_temp_0[0] == 1):
             _coconut_match_check = True
@@ -1248,6 +1267,7 @@ class Nest(_coconut.object):
             d = "data"
             def m(self):
                 return "method"
+            none = None
         c = C()
     b = B()
 
@@ -1392,7 +1412,7 @@ def pattern_abs(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             x = _coconut_match_temp_0
             _coconut_match_check = True
     if _coconut_match_check and not (x < 0):
@@ -1412,7 +1432,7 @@ def pattern_abs_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             x = _coconut_match_temp_0
             _coconut_match_check = True
     if _coconut_match_check and not (x < 0):
@@ -1433,6 +1453,7 @@ def pattern_abs_(x):
 @recursive_iterator
 @_coconut_tco
 def fib():
+# type: (...) -> _coconut.typing.Iterable[int]
     return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (1, 1), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 @recursive_iterator
@@ -1476,7 +1497,9 @@ def sieve(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 # "Assignment function" definitions
 
-def double_plus_one(x):
+def double_plus_one(x  # type: int
+    ):
+# type: (...) -> int
     x *= 2
     return x + 1
 
@@ -1488,7 +1511,7 @@ def assign_func_1(f, x, y):
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
             a = _coconut_match_to_args[0][0]
             b = _coconut_match_to_args[0][1]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) = f(a, b)'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1507,7 +1530,7 @@ def assign_func_2(f, x, y):
         if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) == 2):
             a = _coconut_match_to_args[0][0]
             b = _coconut_match_to_args[0][1]
-            if (not _coconut_match_to_kwargs):
+            if not _coconut_match_to_kwargs:
                 _coconut_match_check = True
         if not _coconut_match_check:
             _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def inner_assign_func((a, b)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
@@ -1605,7 +1628,7 @@ def fact_(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (1 <= _coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "acc" in _coconut_match_to_kwargs)) <= 1) and (_coconut_match_to_args[0] == 0):
         _coconut_match_temp_0 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("acc") if "acc" in _coconut_match_to_kwargs else 1
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             acc = _coconut_match_temp_0
             _coconut_match_check = True
     if not _coconut_match_check:
@@ -1655,7 +1678,7 @@ def x_as_y(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "y" in _coconut_match_to_kwargs, "x" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("y") if "y" in _coconut_match_to_kwargs else _coconut_match_to_kwargs.pop("x")
-        if (not _coconut_match_to_kwargs):
+        if not _coconut_match_to_kwargs:
             y = _coconut_match_temp_0
             x = _coconut_match_temp_0
             _coconut_match_check = True
@@ -1703,7 +1726,7 @@ def x_is_int_def_0(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 def head_tail_def_none(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to_args) <= 1):
+    if _coconut.len(_coconut_match_to_args) <= 1:
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else [None]
         if (_coconut.isinstance(_coconut_match_temp_0, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_temp_0) >= 1) and (not _coconut_match_to_kwargs):
             tail = _coconut.list(_coconut_match_temp_0[1:])
@@ -1719,7 +1742,7 @@ def head_tail_def_none(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 def kwd_only_x_is_int_def_0(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
-    if (_coconut.len(_coconut_match_to_args) == 0):
+    if _coconut.len(_coconut_match_to_args) == 0:
         _coconut_match_temp_0 = _coconut_match_to_kwargs.pop("x") if "x" in _coconut_match_to_kwargs else 0
         if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
             x = _coconut_match_temp_0
