@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xbee6f5be
+# __coconut_hash__ = 0xd1d1d0de
 
-# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev40 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -10,7 +10,7 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_NamedTuple, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
@@ -44,14 +44,13 @@ assert (factorial)(3) == 6
 
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
-    _coconut_match_check = False
     _coconut_match_to = n
+    _coconut_match_check = False
     if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_to = n
         if _coconut.isinstance(_coconut_match_to, int):
             x = _coconut_match_to
             _coconut_match_check = True
@@ -114,7 +113,7 @@ def factorial(n):
 
     except MatchError:
         pass
-    else:
+    else:  # in Coconut, if, match, and try are allowed after else
         if x > 0:  # in Coconut, if, match, and try are allowed after else
             return x * factorial(x - 1)
     raise TypeError("the argument to factorial must be an integer >= 0")
@@ -137,14 +136,13 @@ assert (factorial)(3) == 6
 
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
-    _coconut_match_check = False
     _coconut_match_to = n
+    _coconut_match_check = False
     if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_to = n
         if _coconut.isinstance(_coconut_match_to, int):
             _coconut_match_check = True
         if _coconut_match_check and not (n > 0):
@@ -175,14 +173,13 @@ def factorial(n, acc=1):
     def _coconut_mock_func(n, acc=1): return n, acc
     while True:
         """Compute n! where n is an integer >= 0."""
-        _coconut_match_check = False
         _coconut_match_to = n
+        _coconut_match_check = False
         if _coconut_match_to == 0:
             _coconut_match_check = True
         if _coconut_match_check:
             return acc
         if not _coconut_match_check:
-            _coconut_match_to = n
             if _coconut.isinstance(_coconut_match_to, int):
                 _coconut_match_check = True
             if _coconut_match_check and not (n > 0):
@@ -217,14 +214,13 @@ assert (factorial)(3) == 6
 @_coconut_tco
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
-    _coconut_match_check = False
     _coconut_match_to = n
+    _coconut_match_check = False
     if _coconut_match_to == 0:
         _coconut_match_check = True
     if _coconut_match_check:
         return 1
     if not _coconut_match_check:
-        _coconut_match_to = n
         if _coconut.isinstance(_coconut_match_to, int):
             _coconut_match_check = True
         if _coconut_match_check and not (n > 0):
@@ -266,6 +262,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 @addpattern(factorial)
 @_coconut_tco
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
@@ -280,7 +277,6 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
-    """Compute n! where n is an integer >= 0."""
     return _coconut_tail_call(reduce, _coconut.operator.mul, range(1, n + 1))
 
 # Test cases:
@@ -314,6 +310,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 @addpattern(factorial)
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
@@ -328,7 +325,6 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
-    """Compute n! where n is an integer >= 0."""
     return n * factorial(n - 1)
 
 # Test cases:
@@ -362,6 +358,7 @@ def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 
 @addpattern(quick_sort)
 def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+    """Sort the input sequence using the quick sort algorithm."""
     _coconut_match_check = False
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
         tail = _coconut.list(_coconut_match_to_args[0][1:])
@@ -374,7 +371,6 @@ def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
-    """Sort the input sequence using the quick sort algorithm."""
     return (quick_sort([x for x in tail if x < head]) + [head] + quick_sort([x for x in tail if x >= head]))
 
 # Test cases:
@@ -395,8 +391,8 @@ def quick_sort(l):
             head = _coconut_match_temp_0[0]
             _coconut_match_check = True
     if _coconut_match_check:
-        tail, tail_ = tee(tail)
-        _coconut_yield_from = (_coconut.itertools.chain.from_iterable((f() for f in (lambda: quick_sort((x for x in tail if x < head)), lambda: (head,), lambda: quick_sort((x for x in tail_ if x >= head))))))
+        tail = reiterable(tail)
+        _coconut_yield_from = (_coconut.itertools.chain.from_iterable((f() for f in (lambda: quick_sort((x for x in tail if x < head)), lambda: (head,), lambda: quick_sort((x for x in tail if x >= head))))))
         for _coconut_yield_item in _coconut_yield_from:
             yield _coconut_yield_item
 
@@ -461,7 +457,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check:
             return v  # vector(v) where v is a vector should return v
         else:
-            return _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
+            return _coconut_tail_call(makedata, cls, *pts)  # accesses base constructor
 
 # Test cases:
 assert (str)(vector(1, 2, 3)) == "vector(*pts=(1, 2, 3))"
@@ -499,13 +495,14 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check:
             return v  # vector(v) where v is a vector should return v
         else:
-            return _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
+            return _coconut_tail_call(makedata, cls, *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
         return _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)(map(_coconut_partial(pow, {1: 2}, 2), self.pts)))
     @_coconut_tco
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Add two vectors together."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -521,10 +518,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Add two vectors together."""
         return _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Subtract one vector from another."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -540,7 +537,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Subtract one vector from another."""
         return _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
     def __neg__(self):
@@ -634,13 +630,14 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check:
             return v  # vector(v) where v is a vector should return v
         else:
-            return _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
+            return _coconut_tail_call(makedata, cls, *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
         return _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)(map(_coconut_partial(pow, {1: 2}, 2), self.pts)))
     @_coconut_tco
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Add two vectors together."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -656,10 +653,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Add two vectors together."""
         return _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Subtract one vector from another."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -675,7 +672,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Subtract one vector from another."""
         return _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
     def __neg__(self):
@@ -751,13 +747,14 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check:
             return v  # vector(v) where v is a vector should return v
         else:
-            return _coconut_tail_call((datamaker(cls)), *pts)  # accesses base constructor
+            return _coconut_tail_call(makedata, cls, *pts)  # accesses base constructor
     @_coconut_tco
     def __abs__(self):
         """Return the magnitude of the vector."""
         return _coconut_tail_call((_coconut_partial(pow, {1: 0.5}, 2)), (sum)(map(_coconut_partial(pow, {1: 2}, 2), self.pts)))
     @_coconut_tco
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Add two vectors together."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -773,10 +770,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Add two vectors together."""
         return _coconut_tail_call((vector), *map(_coconut.operator.add, self.pts, other_pts))
     @_coconut_tco
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        """Subtract one vector from another."""
         _coconut_match_check = False
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
@@ -792,7 +789,6 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
 
-        """Subtract one vector from another."""
         return _coconut_tail_call((vector), *map(_coconut_minus, self.pts, other_pts))
     @_coconut_tco
     def __neg__(self):

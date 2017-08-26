@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xe3458e5d
+# __coconut_hash__ = 0x6e62a919
 
-# Compiled with Coconut version 1.2.3-post_dev34 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev40 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -10,13 +10,13 @@ from __future__ import print_function, absolute_import, unicode_literals, divisi
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_compose, _coconut_back_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
+from __coconut__ import _coconut, _coconut_NamedTuple, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
 _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: -----------------------------------------------------------
 
-import sys
+sys = _coconut_sys
 
 def main_test():
     """Basic no-dependency tests."""
@@ -48,10 +48,11 @@ def main_test():
     assert repr(3) == "3" == ascii(3)
     assert _coconut.operator.mul(2, _coconut_minus(2, 5)) == -6
     assert (list)(map(_coconut.functools.partial(pow, 2), (range)(0, 5))) == [1, 2, 4, 8, 16]
-    iter1 = range(0, 10)
-    iter1, iter2 = tee(iter1)
-    assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == [2, 3, 4, 5, 6, 7] == (list)(_coconut_igetitem(iter1, slice(2, 8)))
-    assert (list)(_coconut_igetitem(iter2, _coconut.slice(2, 8))) == [2, 3, 4, 5, 6, 7] == (list)(_coconut_igetitem(iter2, slice(2, 8)))
+    range10 = range(0, 10)
+    reiter_range10 = reiterable(range10)
+    reiter_iter_range10 = reiterable(iter(range10))
+    for iter1, iter2 in [tee(range10), tee(iter(range10)), (reiter_range10, reiter_range10), (reiter_iter_range10, reiter_iter_range10),]:
+        assert (list)(_coconut_igetitem(iter1, _coconut.slice(2, 8))) == [2, 3, 4, 5, 6, 7] == (list)(_coconut_igetitem(iter2, slice(2, 8))), (iter1, iter2)
     data = 5
     assert data == 5
     data = 3
@@ -249,12 +250,12 @@ def main_test():
     assert (tuple)(parallel_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(parallel_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, parallel_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(parallel_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(parallel_map(_coconut_forward_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
     assert repr(concurrent_map(_coconut_minus, range(5))).startswith("concurrent_map(")
     assert (tuple)(concurrent_map(_coconut_minus, range(5))) == (0, -1, -2, -3, -4) == (tuple)(_coconut_igetitem(concurrent_map(_coconut.functools.partial(map, _coconut_minus), (range(5),)), 0))
     assert (tuple)(map(tuple, concurrent_map(zip, (range(2),), (range(2),)))) == (((0, 0), (1, 1)),)
     assert (tuple)(map(_coconut.operator.add, *(range(0, 5), range(5, 10)))) == (5, 7, 9, 11, 13)
-    assert (tuple)(concurrent_map(_coconut_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
+    assert (tuple)(concurrent_map(_coconut_forward_compose(_coconut.functools.partial(_coconut.operator.add, 1), _coconut.functools.partial(_coconut.operator.mul, 2)), range(5))) == (2, 4, 6, 8, 10)
     assert 0 in range(1)
     assert range(1).count(0) == 1
     assert 2 in range(5)
@@ -370,9 +371,14 @@ def main_test():
     class abc(_coconut.collections.namedtuple("abc", "xyz"), _coconut.object):
         __slots__ = ()
         __ne__ = _coconut.object.__ne__
-    assert abc(10).xyz == 10
+    class abc_(_coconut_NamedTuple("abc_", [("xyz", 'int')]), _coconut.object):
+        __slots__ = ()
+        __ne__ = _coconut.object.__ne__
+    assert abc(10).xyz == 10 == abc_(10).xyz
     assert issubclass(abc, object)
+    assert issubclass(abc_, object)
     assert isinstance(abc(10), object)
+    assert isinstance(abc_(10), object)
     class aclass(_coconut.object): pass
     assert issubclass(aclass, object)
     assert isinstance(aclass(), object)
@@ -588,11 +594,11 @@ def main_test():
     assert (10,)[0] == 10
     x, x = 1, 2
     assert x == 2
-    if _coconut_sys.version_info < (3,):
+    if _coconut_sys.version_info < (2, 7):
         from StringIO import StringIO
     else:
         from io import StringIO
-    if _coconut_sys.version_info < (3,):
+    if _coconut_sys.version_info < (2, 7):
         from cStringIO import StringIO as BytesIO
     else:
         from io import BytesIO
@@ -631,7 +637,7 @@ def main_test():
     default_quantity = 1  # type: int
     price = 100
     assert 0 == ((lambda _coconut_none_coalesce_item: default_quantity if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(requested_quantity)) * price
-    assert (_coconut_compose(_coconut.operator.itemgetter(_coconut.slice(1, None)), _coconut.operator.itemgetter(1)))(range(10)) == 2 == ((range(10))[_coconut.slice(1, None)])[1]
+    assert (_coconut_forward_compose(_coconut.operator.itemgetter(_coconut.slice(1, None)), _coconut.operator.itemgetter(1)))(range(10)) == 2 == ((range(10))[_coconut.slice(1, None)])[1]
     assert (lambda x: None if x is None else x.herp(derp))(None) is None
     assert (lambda x: None if x is None else x[herp].derp)(None) is None
     assert (lambda x: None if x is None else x(derp)[herp])(None) is None
@@ -639,6 +645,14 @@ def main_test():
     assert "a b c" == ((lambda _coconut_none_coalesce_item: "not gonna happen" if _coconut_none_coalesce_item is None else _coconut_none_coalesce_item)(_coconut.functools.partial(_coconut.getattr, " ")))("join")("abc")
     a = None  # type: _coconut.typing.Optional[_coconut.typing.Sequence[int]]
     assert a is None
+    assert ((reiterable)((iter)(range(5))))[1] == 1
+    assert (list)(fmap(lambda _=None: _ + 1, (reiterable)(range(5)))) == [1, 2, 3, 4, 5]
+    assert (repr)(_coconut_base_compose(_coconut.operator.add, (_coconut.operator.add, True))) == "<built-in function add> ..*> <built-in function add>"
+    assert (list)(scan(_coconut.operator.add, [1, 2, 3, 4, 5])) == [1, 3, 6, 10, 15]
+    assert (list)(scan(_coconut.operator.mul, [1, 2, 3, 4, 5])) == [1, 2, 6, 24, 120]
+    input_data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]
+    assert (list)(scan(_coconut.operator.mul, input_data)) == [3, 12, 72, 144, 144, 1296, 0, 0, 0, 0]
+    assert (list)(scan(max, input_data)) == [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]
     return True
 
 @_coconut_tco
@@ -648,8 +662,8 @@ def tco_func():
             continue
         else:
             return _coconut_tail_call(tco_func)
-        return None
 
+        return None
 _coconut_recursive_func_8 = tco_func
 def main(*args):
     """Asserts arguments and executes tests."""
