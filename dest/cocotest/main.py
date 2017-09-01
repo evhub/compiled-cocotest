@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x6e62a919
+# __coconut_hash__ = 0xb6e7d0a4
 
-# Compiled with Coconut version 1.2.3-post_dev40 [Colonel]
+# Compiled with Coconut version 1.2.3-post_dev41 [Colonel]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -473,6 +473,15 @@ def main_test():
     assert ((reversed)(range10)).count(10) == 0
     assert ((reversed)(range10)).index(3)
 
+    assert (list)(groupsof(1, range(1, 11))) == [(1,), (2,), (3,), (4,), (5,), (6,), (7,), (8,), (9,), (10,)]
+    assert (list)(groupsof(2, range(1, 11))) == [(1, 2), (3, 4), (5, 6), (7, 8), (9, 10)]
+    assert (list)(groupsof(2.5, range(1, 11))) == [(1, 2), (3, 4), (5, 6), (7, 8), (9, 10)]
+    assert (list)(groupsof(3, range(1, 11))) == [(1, 2, 3), (4, 5, 6), (7, 8, 9), (10,)]
+    assert (list)(groupsof(4, range(1, 11))) == [(1, 2, 3, 4), (5, 6, 7, 8), (9, 10)]
+    assert_raises(lambda: groupsof("A", range(1, 11)), TypeError)
+    assert_raises(lambda: groupsof(0, range(1, 11)), ValueError)
+    assert_raises(lambda: groupsof(-1, range(1, 11)), ValueError)
+
     assert (list)((enumerate)(range(1, 3))) == [(0, 1), (1, 2)]
     assert (list)(enumerate(range(2), start=1)) == [(1, 0), (2, 1)]
     assert (len)((enumerate)(range(10))) == 10
@@ -665,6 +674,15 @@ def tco_func():
 
         return None
 _coconut_recursive_func_8 = tco_func
+def assert_raises(c, exc):
+    """Test whether callable c raises an exception of type exc."""
+    try:
+        c()
+    except exc:
+        return True
+    else:
+        raise AssertionError("%s failed to raise %s exception" % (c, exc))
+
 def main(*args):
     """Asserts arguments and executes tests."""
     assert all(args)
