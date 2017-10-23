@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x44e41522
+# __coconut_hash__ = 0xfa6cb8eb
 
-# Compiled with Coconut version 1.3.0-post_dev1 [Dead Parrot]
+# Compiled with Coconut version 1.3.0-post_dev6 [Dead Parrot]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -170,9 +170,9 @@ assert (factorial)(3) == 6
 
 @_coconut_tco
 def factorial(n, acc=1):
+    """Compute n! where n is an integer >= 0."""
     def _coconut_mock_func(n, acc=1): return n, acc
     while True:
-        """Compute n! where n is an integer >= 0."""
         _coconut_match_to = n
         _coconut_match_check = False
         if _coconut_match_to == 0:

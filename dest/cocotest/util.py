@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x47e6db78
+# __coconut_hash__ = 0x62d25575
 
-# Compiled with Coconut version 1.3.0-post_dev1 [Dead Parrot]
+# Compiled with Coconut version 1.3.0-post_dev6 [Dead Parrot]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -51,17 +51,17 @@ sqplus1_1 = _coconut_forward_compose((square), sqplus1_1)  # type: ignore
 plus1sq_2 = lambda x: (square)((plus1)(x))
 sqplus1_2 = lambda x: (plus1)((square)(x))
 
-plus1sq_3 = _coconut_base_compose(plus1, (square, False))  # type: ignore
+plus1sq_3 = _coconut_base_compose(plus1, (square, False))
 sqplus1_3 = plus1
 sqplus1_3 = _coconut_forward_compose((square), sqplus1_3)  # type: ignore
 
-plus1sq_4 = _coconut_base_compose(plus1, (square, False))  # type: ignore
+plus1sq_4 = _coconut_base_compose(plus1, (square, False))
 sqplus1_4 = square
 sqplus1_4 = _coconut_forward_compose(sqplus1_4, (plus1))  # type: ignore
 
-square_times2_plus1 = _coconut_base_compose(square, (times2, False), (plus1, False))  # type: ignore
-square_times2_plus1_ = _coconut_base_compose(square, (times2, False), (plus1, False))  # type: ignore
-plus1_cube = _coconut_base_compose(plus1, (lambda x: x**3, False))  # type: ignore
+square_times2_plus1 = _coconut_base_compose(square, (times2, False), (plus1, False))
+square_times2_plus1_ = _coconut_base_compose(square, (times2, False), (plus1, False))
+plus1_cube = _coconut_base_compose(plus1, (lambda x: x**3, False))
 
 @_coconut_tco
 def plus1_all(*args):
@@ -75,11 +75,11 @@ def times2_all(*args):
 
 plus1sq_all = _coconut_base_compose(plus1_all, (square_all, True))
 sqplus1_all = plus1_all
-sqplus1_all = _coconut_forward_star_compose((square_all), sqplus1_all)  # type: ignore
+sqplus1_all = _coconut_forward_star_compose((square_all), sqplus1_all)
 
 plus1sq_all_ = _coconut_base_compose(plus1_all, (square_all, True))
 sqplus1_all_ = square_all
-sqplus1_all_ = _coconut_forward_star_compose(sqplus1_all_, (plus1_all))  # type: ignore
+sqplus1_all_ = _coconut_forward_star_compose(sqplus1_all_, (plus1_all))
 
 square_times2_plus1_all = _coconut_base_compose(square_all, (times2_all, True), (plus1_all, True))
 square_times2_plus1_all_ = _coconut_base_compose(square_all, (times2_all, True), (plus1_all, True))
@@ -98,7 +98,7 @@ def zipwith(f, *args):
 @_coconut_tco
 def zipwith_(f, *args):
     return _coconut_tail_call(_coconut_forward_compose(zip, _coconut.functools.partial(starmap, f)), *args)
-zipsum = _coconut_forward_compose(zip, _coconut.functools.partial(map, sum))  # type: _coconut.typing.Callable[[_coconut.typing.Iterable[_coconut.typing.Iterable[int]]], _coconut.typing.Iterable[int]]
+zipsum = _coconut_forward_compose(zip, _coconut.functools.partial(map, sum))  # type: ignore
 ident = lambda x: x
 _coconut_decorator_0 = _coconut_forward_compose(ident, ident)
 @_coconut_decorator_0
@@ -289,6 +289,7 @@ def next_mul_of(n, x):
 _coconut_recursive_func_29 = next_mul_of
 @_coconut_tco
 def collatz(n):
+    """this is a docstring"""
     while True:
         if n == 1:
             return True
@@ -309,6 +310,7 @@ def collatz(n):
 _coconut_recursive_func_30 = collatz
 @_coconut_tco
 def recurse_n_times(n):
+    """this is a docstring"""
     while True:
         if not n:
             return True
@@ -1540,7 +1542,6 @@ def pattern_abs_(x):  # type: ignore
 @recursive_iterator
 @_coconut_tco
 def fib():
-# type: (...) -> _coconut.typing.Iterable[int]
     return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: (1, 1), lambda: map(_coconut.operator.add, fib(), _coconut_igetitem(fib(), _coconut.slice(1, None))))))
 
 @recursive_iterator
@@ -2124,6 +2125,12 @@ def int_map(f,  # type: _coconut.typing.Callable[[int], int]
     ):
 # type: (...) -> _coconut.typing.Sequence[int]
     return _coconut_tail_call(list, map(f, xs))
+
+@_coconut_tco
+def sum_list_range(n  # type: int
+    ):
+# type: (...) -> int
+    return _coconut_tail_call(sum, [i for i in range(1, n)])
 
 # Context managers
 

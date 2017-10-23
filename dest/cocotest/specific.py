@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0x4a32c06c
+# __coconut_hash__ = 0x9dc93f6f
 
-# Compiled with Coconut version 1.3.0-post_dev1 [Dead Parrot]
+# Compiled with Coconut version 1.3.0-post_dev6 [Dead Parrot]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -16,10 +16,10 @@ _coconut_sys.path.remove(_coconut_file_path)
 
 # Compiled Coconut: -----------------------------------------------------------
 
-if _coconut_sys.version_info < (2, 7):
-    from StringIO import StringIO
-else:
-    from io import StringIO
+if _coconut_sys.version_info < (2, 7):  # type: ignore
+    from StringIO import StringIO  # type: ignore
+else:  # type: ignore
+    from io import StringIO  # type: ignore
 
 from .util import mod
 

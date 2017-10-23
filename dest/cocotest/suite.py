@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xb7e5393e
+# __coconut_hash__ = 0x88881193
 
-# Compiled with Coconut version 1.3.0-post_dev1 [Dead Parrot]
+# Compiled with Coconut version 1.3.0-post_dev6 [Dead Parrot]
 
 # Coconut Header: -------------------------------------------------------------
 
@@ -65,7 +65,7 @@ def suite_test():
     assert _coconut_igetitem(repeat(3), 2) == 3 == _coconut_igetitem(repeat_(3), 2)
     assert sum_(_coconut_igetitem(repeat(1), _coconut.slice(None, 5))) == 5 == sum_(_coconut_igetitem(repeat_(1), _coconut.slice(None, 5)))
     assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
-    assert (sum_)(((lambda s: map(_coconut.functools.partial(_coconut.operator.getitem, s), (1, 3, 5))))("ABCDEFG")) == "BDF"
+    assert (sum_)(((lambda s: map(_coconut.functools.partial(_coconut.operator.getitem, s), (1, 3, 5))))("ABCDEFG")) == "BDF"  # type: ignore
     assert (list)(_coconut_igetitem(N(), _coconut.slice(10, 15))) == [10, 11, 12, 13, 14] == (list)(_coconut_igetitem(N_(), _coconut.slice(10, 15)))
     assert ((list)(takewhile(_coconut.functools.partial(_coconut.operator.gt, 5), N())) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(0, 10), _coconut.slice(None, 5, None))))
     assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
@@ -80,8 +80,8 @@ def suite_test():
     assert collatz(27)
     assert preop(1, 2).add() == 3
     assert (abs)(vector(3, 4)) == 5 == (abs)(vector_with_id(3, 4, 1))
-    assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.getattr, v), ("x", "y"))))(vector(1, 2))) == (1, 2)
-    assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.operator.getitem, v), (0, 1))))((vector(1, 2).transform)(vector(3, 1)))) == (4, 3)
+    assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.getattr, v), ("x", "y"))))(vector(1, 2))) == (1, 2)  # type: ignore
+    assert (tuple)(((lambda v: map(_coconut.functools.partial(_coconut.operator.getitem, v), (0, 1))))((vector(1, 2).transform)(vector(3, 1)))) == (4, 3)  # type: ignore
     assert (vector(1, 2).__eq__)(vector(1, 2))
     assert not (vector(3, 4).__eq__)(vector(1, 2))
     assert not (vector(1, 2).__eq__)((1, 2))
@@ -510,7 +510,8 @@ def suite_test():
         assert False
     v = vector2()
     assert repr(v) == "vector2(x=0, y=0)"
-    assert factorial.__doc__ == "this is a docstring" == iadd.__doc__
+    for obj in (factorial, iadd, collatz, recurse_n_times):
+        assert obj.__doc__ == "this is a docstring", obj
     assert list_type((f() for f in (lambda: 1, lambda: 2))) == "at least 2"
     assert list_type((f() for f in (lambda: 1,))) == "at least 1"
     assert list_type(_coconut.iter(())) == "empty"
@@ -539,6 +540,7 @@ def suite_test():
     assert (list)(square_times2_plus1_all(1, 2)) == [3, 9] == (list)(square_times2_plus1_all_(1, 2))
     assert (list)(plus1_square_times2_all(1, 2)) == [8, 18] == (list)(plus1_square_times2_all_(1, 2))
     assert plus1sqsum_all(1, 2) == 13 == plus1sqsum_all_(1, 2)
+    assert sum_list_range(10) == 45
     return True
 
 def tco_test():
