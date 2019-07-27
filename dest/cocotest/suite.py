@@ -1,22 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xba03e4ac
+# __coconut_hash__ = 0x2855ff4c
 
-# Compiled with Coconut version 1.3.1 [Dead Parrot]
+# Compiled with Coconut version 1.4.1 [Ernest Scribbler]
 
 # Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
+_coconut_cached_module = _coconut_sys.modules.get(str("__coconut__"))
+if _coconut_cached_module is not None and _coconut_os_path.dirname(_coconut_cached_module.__file__) != _coconut_file_path:
+    del _coconut_sys.modules[str("__coconut__")]
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_NamedTuple, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
-_coconut_sys.path.remove(_coconut_file_path)
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_forward_dubstar_compose, _coconut_back_dubstar_compose, _coconut_pipe, _coconut_back_pipe, _coconut_star_pipe, _coconut_back_star_pipe, _coconut_dubstar_pipe, _coconut_back_dubstar_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial, _coconut_get_function_match_error, _coconut_base_pattern_func, _coconut_addpattern, _coconut_sentinel, _coconut_assert
+if _coconut_sys.version_info >= (3,):
+    _coconut_sys.path.pop(0)
 
 # Compiled Coconut: -----------------------------------------------------------
 
-from .util import *
+from .util import *  # type: ignore
 
 def suite_test():
     """Executes the main test suite."""
@@ -32,16 +36,16 @@ def suite_test():
     assert (len)(_coconut.set(("a", 5))) == 2
     assert _coconut.operator.mul(2, swap2(_coconut_minus)(2, 5)) == 6 == _coconut.operator.mul(2, swap2_(_coconut_minus)(2, 5))
     assert all(same((1, 2, 3), [1, 2, 3]))
-    assert (list)(chain2((f() for f in (lambda: 1, lambda: 2)), (f() for f in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
+    assert (list)(chain2((_coconut_func() for _coconut_func in (lambda: 1, lambda: 2)), (_coconut_func() for _coconut_func in (lambda: 3, lambda: 4)))) == [1, 2, 3, 4]
     assert _coconut.functools.partial(threeple, 1, 2)(3) == (1, 2, 3)
     assert (product)((range)(1, 5)) == 24
     assert plus1(4) == 5 == plus1_(4)
     assert (plus1)(2) == 3 == plus1(2)
-    assert plus1(plus1(5)) == 7 == _coconut_forward_compose(plus1, plus1)(5)
+    assert plus1(plus1(5)) == 7 == (_coconut_forward_compose(plus1, plus1))(5)
     assert (sqrt)(16) == 4 == (sqrt_)(16)
     assert (square)(3) == 9
     def test_sqplus1_plus1sq(sqplus1, plus1sq, parallel=True):
-        assert sqplus1(3) == 10 == _coconut_forward_compose(square, plus1)(3), sqplus1
+        assert sqplus1(3) == 10 == (_coconut_forward_compose(square, plus1))(3), sqplus1
         if parallel:
             assert (tuple)(parallel_map(sqplus1, range(3))) == (1, 2, 5), sqplus1
         assert (plus1sq)(3) == 16, plus1sq
@@ -59,16 +63,19 @@ def suite_test():
     assert (list)(zipsum([1, 2, 3], [10, 20, 30])) == [11, 22, 33]
     assert clean("   ab cd ef   ") == "ab cd ef" == (clean)("   ab cd ef   ")
     assert ((add2)(2))(3) == 5
-    for qsort in [qsort1, qsort2, qsort3, qsort4, qsort5, qsort6]:
+    qsorts = [qsort1, qsort2, qsort3, qsort4, qsort5, qsort6, qsort7, qsort8]
+    for qsort in qsorts:
         to_sort = rand_list(10)
         assert (tuple)((qsort)(to_sort)) == (tuple)((sorted)(to_sort)), qsort
+    to_sort = rand_list(10)
+    assert (list)(parallel_map(_coconut_base_compose(_coconut.functools.partial(_coconut_pipe, to_sort), (tuple, 0)), qsorts)) == [(tuple)((sorted)(to_sort))] * len(qsorts)
     assert _coconut_igetitem(repeat(3), 2) == 3 == _coconut_igetitem(repeat_(3), 2)
     assert sum_(_coconut_igetitem(repeat(1), _coconut.slice(None, 5))) == 5 == sum_(_coconut_igetitem(repeat_(1), _coconut.slice(None, 5)))
-    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
+    assert (sum_(takewhile(lambda x: x < 5, N())) == 10 == (sum)(_coconut_igetitem(dropwhile(_coconut.functools.partial(_coconut.operator.gt, 0), (_coconut.itertools.chain.from_iterable((_coconut_func() for _coconut_func in (lambda: range(-10, 0), lambda: N()))))), _coconut.slice(None, 5))))
     assert (sum_)(((lambda s: map(_coconut.functools.partial(_coconut.operator.getitem, s), (1, 3, 5))))("ABCDEFG")) == "BDF"  # type: ignore
     assert (list)(_coconut_igetitem(N(), _coconut.slice(10, 15))) == [10, 11, 12, 13, 14] == (list)(_coconut_igetitem(N_(), _coconut.slice(10, 15)))
     assert ((list)(takewhile(_coconut.functools.partial(_coconut.operator.gt, 5), N())) == [0, 1, 2, 3, 4] == (list)(_coconut_igetitem(range(0, 10), _coconut.slice(None, 5, None))))
-    assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((f() for f in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
+    assert (sum)(_coconut_igetitem((_coconut.itertools.chain.from_iterable((_coconut_func() for _coconut_func in (lambda: range(-10, 0), lambda: N())))), _coconut.slice(5, 15))) == -5 == (sum)(_coconut_igetitem(chain(range(-10, 0), N()), _coconut.slice(5, 15)))
     assert (list)(_coconut_igetitem(add(repeat(1), N()), _coconut.slice(None, 5))) == [1, 2, 3, 4, 5] == (list)(_coconut_igetitem(add_(repeat(1), N_()), _coconut.slice(None, 5)))
     assert sum(_coconut_igetitem(_coconut_igetitem(N(), _coconut.slice(5, None)), _coconut.slice(None, 5))) == 35 == sum(_coconut_igetitem(_coconut_igetitem(N_(), _coconut.slice(5, None)), _coconut.slice(None, 5)))
     assert (list)(_coconut.functools.partial(_coconut_igetitem, N())(slice(5, 10))) == [5, 6, 7, 8, 9] == _coconut.functools.partial(_coconut.operator.getitem, list(range(0, 15)))(slice(5, 10))
@@ -90,6 +97,8 @@ def suite_test():
     assert not vector(1, 2) == (1, 2)
     assert not vector(2, 3) != vector(2, 3)
     assert vector(1, 2) != (1, 2)
+    assert vector(1, 2) + vector(2, 3) == vector(3, 5)
+    assert vector(1, 2) + 1 == vector(2, 3)
     assert triangle(3, 4, 5).is_right()
     assert _coconut.getattr(triangle(3, 4, 5), "is_right")
     assert (_coconut.operator.methodcaller("is_right"))(triangle(3, 4, 5))
@@ -244,9 +253,10 @@ def suite_test():
     assert pattern_abs(-4) == 4 == pattern_abs_(-4)
     assert _coconut.operator.eq(vector(1, 2), vector(1, 2))
     assert (vector(1, 2)).__eq__(other=vector(1, 2))
-    assert (tuple)(_coconut_igetitem(fib(), _coconut.slice(1, 4))) == (1, 2, 3)
-    assert (sum)(filter(lambda i: i % 2 == 0, takewhile(lambda i: i < 4000000, fib()))) == 4613732
+    assert (tuple)(_coconut_igetitem(fibs(), _coconut.slice(1, 4))) == (1, 2, 3)
+    assert (sum)(filter(lambda i: i % 2 == 0, takewhile(lambda i: i < 4000000, fibs()))) == 4613732
     assert (list)(_coconut_igetitem(loop([1, 2]), _coconut.slice(None, 4))) == [1, 2] * 2
+    assert (tuple)(_coconut_igetitem(parallel_map(_coconut_forward_compose(loop, _coconut.functools.partial(_coconut_igetitem, index=_coconut.slice(None, 2)), list), ([1], [2])), _coconut.slice(None, 2))) == ([1, 1], [2, 2])
     def _coconut_lambda_0(_=None):
         return mod
     assert (_coconut_lambda_0)()(5, 3) == 2
@@ -255,7 +265,7 @@ def suite_test():
     assert 15 == assign_func_1(_coconut.operator.mul, 3, 5)
     assert 15 == assign_func_2(_coconut.operator.mul, 3, 5)
     assert 20 == _coconut_back_compose(_coconut.functools.partial(minus, 2), _coconut.functools.partial(mul, 2), _coconut.functools.partial(plus, 1))(10)
-    assert 20 == _coconut_forward_compose(_coconut.functools.partial(plus, 1), _coconut.functools.partial(mul, 2), _coconut.functools.partial(minus, 2))(10)
+    assert 20 == (_coconut_forward_compose(_coconut.functools.partial(plus, 1), _coconut.functools.partial(mul, 2), _coconut.functools.partial(minus, 2)))(10)
     assert does_raise_exc(raise_exc)
     assert ret_none(10) is None
     assert (_coconut_partial(ret_args_kwargs, {0: 1, 3: 4}, 5, *(6, 7), a="k"))(*(2, 3, 5)) == ((1, 2, 3, 4, 5, 6, 7), {"a": "k"})
@@ -332,6 +342,8 @@ def suite_test():
     assert identity.method(*(1,), **{"a": 2}) == ((1,), {"a": 2})
     assert (_coconut.operator.methodcaller("method", *(1,), **{"a": 2}))(identity) == ((1,), {"a": 2})
     assert (identity).method(*(1,), **{"a": 2}) == ((1,), {"a": 2})
+    assert identity[1] == 1
+    assert identity[1,] == (1,)
     assert container(1) == container(1)
     assert not container(1) != container(1)
     assert container(1) != container(2)
@@ -340,20 +352,21 @@ def suite_test():
     assert not container_(1) != container_(1)
     assert container_(1) != container_(2)
     assert not container_(1) == container_(2)
-    t = Tuple(1, 2)
-    assert repr(t) == "Tuple(*elems=(1, 2))"
+    t = Tuple_(1, 2)
+    assert repr(t) == "Tuple_(*elems=(1, 2))"
     assert t.elems == (1, 2)
     assert isinstance(t.elems, tuple)
-    assert fmap(lambda _=None: _ + 1, t) == Tuple(2, 3)
-    _coconut_match_check = False
+    assert fmap(lambda _=None: _ + 1, t) == Tuple_(2, 3)
     _coconut_match_to = t
-    if (_coconut.isinstance(_coconut_match_to, Tuple)) and (_coconut.len(_coconut_match_to) == 2):
+    _coconut_match_check = False
+    if (_coconut.isinstance(_coconut_match_to, Tuple_)) and (_coconut.len(_coconut_match_to) == 2):
         x = _coconut_match_to[0]
         y = _coconut_match_to[1]
         _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Tuple(x, y) = t'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
-        _coconut_match_err.pattern = 'Tuple(x, y) = t'
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to)
+        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Tuple_(x, y) = t'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
+        _coconut_match_err.pattern = 'Tuple_(x, y) = t'
         _coconut_match_err.value = _coconut_match_to
         raise _coconut_match_err
 
@@ -366,14 +379,15 @@ def suite_test():
     assert repr(p_) in ("Pred_(name='name', *args=(1, 2))", "Pred_(name=u'name', *args=(1, 2))")
     for Pred_test, p_test in [(Pred, p), (Pred_, p_)]:
         assert isinstance(p_test.args, tuple)
-        _coconut_match_check = False
         _coconut_match_to = p_test
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, Pred_test)) and (_coconut.len(_coconut_match_to) >= 1):
             name = _coconut_match_to[0]
             args = _coconut_match_to[1:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Pred_test(name, *args) = p_test'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to)
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Pred_test(name, *args) = p_test'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'Pred_test(name, *args) = p_test'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -389,15 +403,16 @@ def suite_test():
     assert repr(q_) in ("Quant_(name='name', var='var', *args=(1, 2))", "Quant_(name=u'name', var=u'var', *args=(1, 2))")
     for Quant_test, q_test in [(Quant, q), (Quant_, q_)]:
         assert isinstance(q_test.args, tuple)
-        _coconut_match_check = False
         _coconut_match_to = q_test
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, Quant_test)) and (_coconut.len(_coconut_match_to) >= 2):
             name = _coconut_match_to[0]
             var = _coconut_match_to[1]
             args = _coconut_match_to[2:]
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Quant_test(name, var, *args) = q_test'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to)
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'Quant_test(name, var, *args) = q_test'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'Quant_test(name, var, *args) = q_test'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -414,7 +429,7 @@ def suite_test():
     assert (_coconut.operator.attrgetter("b.c.d"))(a) == "data"
     assert (a).b.c.d == "data"
     assert a.b.c.m() == "method"
-    assert (_coconut_base_compose(_coconut.operator.attrgetter("b.c"), (_coconut.operator.methodcaller("m"), False)))(a) == "method"
+    assert (_coconut_base_compose(_coconut.operator.attrgetter("b.c"), (_coconut.operator.methodcaller("m"), 0)))(a) == "method"
     assert ((a).b.c).m() == "method"
     assert (lambda x: None if x is None else (lambda x: None if x is None else (lambda x: None if x is None else (lambda x: None if x is None else x())(x.m))(x.c))(x.b))(a) == "method"
     assert (lambda x: None if x is None else x.derp.herp)(a.b.c.none) is None
@@ -424,11 +439,11 @@ def suite_test():
     assert recurse_n_times(10000)
     assert fake_recurse_n_times(10000)
     a = A()
-    assert _coconut_forward_compose(a.true, _coconut.operator.not_)() is False
+    assert (_coconut_forward_compose(a.true, _coconut.operator.not_))() is False
     assert 10 % 4 % 3 == 2 == (mod)((mod)(10, 4), 3)
     assert square_times2_plus1(3) == 19 == square_times2_plus1_(3)
     assert plus1_cube(2) == 27
-    assert (repr)(_coconut_base_compose(square, (times2, False), (plus1, False))) == (repr)(_coconut_base_compose(square, ((_coconut_base_compose(times2, (plus1, False))), False)))
+    assert (repr)(_coconut_base_compose(square, (times2, 0), (plus1, 0))) == (repr)(_coconut_base_compose(square, ((_coconut_base_compose(times2, (plus1, 0))), 0)))
     assert (tuple)(starmap(toprint, map(range, range(1, 5)))) == ('0', '0 1', '0 1 2', '0 1 2 3')
     assert (tuple)(fmap(_coconut.operator.methodcaller("strip", " 0"), starmap(toprint, map(range, range(1, 5))))) == ("", "1", "1 2", "1 2 3")
     assert (len)(starmap(toprint, ())) == 0
@@ -441,9 +456,11 @@ def suite_test():
         with context_produces(2) as two:
             assert one == 1
             assert two == 2
-    assert raise_exc() if 1 is None else 1 == 1
+    with (context_produces(1)) as one:
+        assert one == 1
+    assert (raise_exc() if 1 is None else 1) == 1
     try:
-        assert raise_exc() if None is None else None
+        assert (raise_exc() if None is None else None)
     except Exception as err:
         assert str(err) == "raise_exc"
     else:
@@ -512,27 +529,27 @@ def suite_test():
     assert repr(v) == "vector2(x=0, y=0)"
     for obj in (factorial, iadd, collatz, recurse_n_times):
         assert obj.__doc__ == "this is a docstring", obj
-    assert list_type((f() for f in (lambda: 1, lambda: 2))) == "at least 2"
-    assert list_type((f() for f in (lambda: 1,))) == "at least 1"
+    assert list_type((_coconut_func() for _coconut_func in (lambda: 1, lambda: 2))) == "at least 2"
+    assert list_type((_coconut_func() for _coconut_func in (lambda: 1,))) == "at least 1"
     assert list_type(_coconut.iter(())) == "empty"
     cnt = counter()
     _coconut_match_to = cnt.inc()
-    _coconut_match_check = False
+    _coconut_case_check_0 = False
     if _coconut_match_to == 1:
-        _coconut_match_check = True
-    if _coconut_match_check:
+        _coconut_case_check_0 = True
+    if _coconut_case_check_0:
         assert False
-    if not _coconut_match_check:
+    if not _coconut_case_check_0:
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 0):
-            _coconut_match_check = True
-        if _coconut_match_check:
+            _coconut_case_check_0 = True
+        if _coconut_case_check_0:
             assert False
-    if not _coconut_match_check:
+    if not _coconut_case_check_0:
         if _coconut_match_to is None:
-            _coconut_match_check = True
-        if _coconut_match_check:
+            _coconut_case_check_0 = True
+        if _coconut_case_check_0:
             pass
-    if not _coconut_match_check:
+    if not _coconut_case_check_0:
         assert False
     assert cnt.count == 1
     assert (list)(plus1sq_all(1, 2, 3)) == [4, 9, 16] == (list)(plus1sq_all_(1, 2, 3))
@@ -541,6 +558,89 @@ def suite_test():
     assert (list)(plus1_square_times2_all(1, 2)) == [8, 18] == (list)(plus1_square_times2_all_(1, 2))
     assert plus1sqsum_all(1, 2) == 13 == plus1sqsum_all_(1, 2)
     assert sum_list_range(10) == 45
+    assert sum2([3, 4]) == 7
+    assert ridiculously_recursive(300) == 201666561657114122540576123152528437944095370972927688812965354745141489205495516550423117825 == ridiculously_recursive_(300)
+    assert [fib(n) for n in range(16)] == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+    assert fib.cache_info().hits == 28
+    assert ((_coconut_back_compose)(plus1, lambda x: x * 2))(4) == 9
+    assert (list)(join_pairs1([(1, [2]), (1, [3])]).items()) == [(1, [2, 3])]
+    assert (list)(join_pairs2([(1, [2]), (1, [3])]).items()) == [(1, [3, 2])]
+    assert return_in_loop(10)
+    assert methtest().meth(5) == 5
+    assert methtest().tail_call_meth(3) == 3
+    def test_match_error_addpattern(*_coconut_match_to_args, **_coconut_match_to_kwargs):
+        _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
+        if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "x" in _coconut_match_to_kwargs)) == 1):
+            _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("x")
+            if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
+                x = _coconut_match_temp_0
+                _coconut_match_check = True
+        if not _coconut_match_check:
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def test_match_error_addpattern(x is int): raise MatchError()'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
+            _coconut_match_err.pattern = 'def test_match_error_addpattern(x is int): raise MatchError()'
+            _coconut_match_err.value = _coconut_match_to_args
+            raise _coconut_match_err
+
+        raise MatchError()
+    @addpattern(test_match_error_addpattern)
+    def test_match_error_addpattern(x):
+        return x
+    try:
+        test_match_error_addpattern(0)
+    except MatchError as err:  # must not be caught inside addpattern
+        assert err
+    else:
+        assert False
+
+    assert (ret_args_kwargs)(**dict(a=1, b=2)) == ((), dict(a=1, b=2)) == _coconut_dubstar_pipe(dict(a=1, b=2), ret_args_kwargs)
+    x = dict(a=1, b=2)
+    x = (ret_args_kwargs)(**x)
+    assert x == ((), dict(a=1, b=2))
+
+    assert (ret_args_kwargs)(**{"a": 1, "b": 2}) == ((), {"a": 1, "b": 2}) == _coconut_back_dubstar_pipe(ret_args_kwargs, {"a": 1, "b": 2})
+    f = ret_args_kwargs
+    f = f(**({"a": 1, "b": 2}))
+    assert f == ((), {"a": 1, "b": 2})
+
+    ret_dict = lambda _=None: dict(x=2)
+
+    assert (_coconut_base_compose(ret_dict, (_coconut.functools.partial(ret_args_kwargs, 1), 2)))() == ((1,), dict(x=2)) == (_coconut_forward_dubstar_compose(ret_dict, _coconut.functools.partial(ret_args_kwargs, 1)))()
+    x = ret_dict
+    x = _coconut_forward_dubstar_compose(x, (_coconut.functools.partial(ret_args_kwargs, 1)))
+    assert x() == ((1,), dict(x=2))
+
+    assert (_coconut_base_compose(ret_dict, (_coconut.functools.partial(ret_args_kwargs, 1), 2)))() == ((1,), dict(x=2)) == (_coconut_back_dubstar_compose(_coconut.functools.partial(ret_args_kwargs, 1), ret_dict))()
+    f = _coconut.functools.partial(ret_args_kwargs, 1)
+    f = _coconut_forward_dubstar_compose((ret_dict), f)
+    assert f() == ((1,), dict(x=2))
+
+    assert fmap(lambda _=None: _ + 1, data1(1)) == data1(2)
+    assert data1(1).x == 1
+    assert fmap(lambda _=None: _ + 1, data2(1)) == data2(2)
+    try:
+        data2("a")
+    except MatchError as err:
+        assert err
+    else:
+        assert False
+    assert data3(1, 2, 3).xs == (1, 2, 3)
+    assert data4(x=1, y=2).kws == dict(x=1, y=2)
+    assert data5(1, 2, "3").__doc__ == "docstring"
+    assert data5(1, 2, "3").attr == 1
+    try:
+        data5(1, 2, 3)
+    except MatchError as err:
+        assert err
+    else:
+        assert False
+    assert issubclass(data6, BaseClass)
+    assert namedpt("a", 3, 4).mag() == 5
+    t = descriptor_test()
+    assert t.lam() == t
+    assert t.comp() == (t,)
+    assert (list)(_coconut_igetitem(t.N(), _coconut.slice(None, 2))) == [(t, 0), (t, 1)]
     return True
 
 def tco_test():

@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# __coconut_hash__ = 0xa0f8915c
+# __coconut_hash__ = 0xce1629f8
 
-# Compiled with Coconut version 1.3.1 [Dead Parrot]
+# Compiled with Coconut version 1.4.1 [Ernest Scribbler]
 
 # Coconut Header: -------------------------------------------------------------
 
 from __future__ import print_function, absolute_import, unicode_literals, division
 import sys as _coconut_sys, os.path as _coconut_os_path
 _coconut_file_path = _coconut_os_path.dirname(_coconut_os_path.abspath(__file__))
+_coconut_cached_module = _coconut_sys.modules.get(str("__coconut__"))
+if _coconut_cached_module is not None and _coconut_os_path.dirname(_coconut_cached_module.__file__) != _coconut_file_path:
+    del _coconut_sys.modules[str("__coconut__")]
 _coconut_sys.path.insert(0, _coconut_file_path)
-from __coconut__ import _coconut, _coconut_NamedTuple, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_pipe, _coconut_star_pipe, _coconut_back_pipe, _coconut_back_star_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial
 from __coconut__ import *
-_coconut_sys.path.remove(_coconut_file_path)
+from __coconut__ import _coconut, _coconut_MatchError, _coconut_tail_call, _coconut_tco, _coconut_igetitem, _coconut_base_compose, _coconut_forward_compose, _coconut_back_compose, _coconut_forward_star_compose, _coconut_back_star_compose, _coconut_forward_dubstar_compose, _coconut_back_dubstar_compose, _coconut_pipe, _coconut_back_pipe, _coconut_star_pipe, _coconut_back_star_pipe, _coconut_dubstar_pipe, _coconut_back_dubstar_pipe, _coconut_bool_and, _coconut_bool_or, _coconut_none_coalesce, _coconut_minus, _coconut_map, _coconut_partial, _coconut_get_function_match_error, _coconut_base_pattern_func, _coconut_addpattern, _coconut_sentinel, _coconut_assert
+if _coconut_sys.version_info >= (3,):
+    _coconut_sys.path.pop(0)
 
 # Compiled Coconut: -----------------------------------------------------------
 
@@ -45,20 +49,20 @@ assert (factorial)(3) == 6
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_to = n
-    _coconut_match_check = False
+    _coconut_case_check_0 = False
     if _coconut_match_to == 0:
-        _coconut_match_check = True
-    if _coconut_match_check:
+        _coconut_case_check_0 = True
+    if _coconut_case_check_0:
         return 1
-    if not _coconut_match_check:
+    if not _coconut_case_check_0:
         if _coconut.isinstance(_coconut_match_to, int):
             x = _coconut_match_to
-            _coconut_match_check = True
-        if _coconut_match_check and not (x > 0):
-            _coconut_match_check = False
-        if _coconut_match_check:
+            _coconut_case_check_0 = True
+        if _coconut_case_check_0 and not (x > 0):
+            _coconut_case_check_0 = False
+        if _coconut_case_check_0:
             return x * factorial(x - 1)
-    if not _coconut_match_check:
+    if not _coconut_case_check_0:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
 # Test cases:
@@ -82,12 +86,13 @@ def factorial(n):
     try:
 # The only value that can be assigned to 0 is 0, since 0 is an
 # immutable constant; thus, this assignment fails if n is not 0.
-        _coconut_match_check = False
         _coconut_match_to = n
+        _coconut_match_check = False
         if _coconut_match_to == 0:
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'0 = n'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to)
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'0 = n'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = '0 = n'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
@@ -100,21 +105,22 @@ def factorial(n):
 # This attempts to assign n to x, which has been declared to be
 # an int; since only an int can be assigned to an int, this
 # fails if n is not an int.
-        _coconut_match_check = False
         _coconut_match_to = n
+        _coconut_match_check = False
         if _coconut.isinstance(_coconut_match_to, int):
             x = _coconut_match_to
             _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'x is int = n'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to)
+            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'x is int = n'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'x is int = n'
             _coconut_match_err.value = _coconut_match_to
             raise _coconut_match_err
 
     except MatchError:
         pass
-    else:  # in Coconut, if, match, and try are allowed after else
-        if x > 0:  # in Coconut, if, match, and try are allowed after else
+    else:  # in Coconut, statements can be nested on the same line
+        if x > 0:  # in Coconut, statements can be nested on the same line
             return x * factorial(x - 1)
     raise TypeError("the argument to factorial must be an integer >= 0")
 
@@ -137,19 +143,19 @@ assert (factorial)(3) == 6
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_to = n
-    _coconut_match_check = False
+    _coconut_case_check_1 = False
     if _coconut_match_to == 0:
-        _coconut_match_check = True
-    if _coconut_match_check:
+        _coconut_case_check_1 = True
+    if _coconut_case_check_1:
         return 1
-    if not _coconut_match_check:
+    if not _coconut_case_check_1:
         if _coconut.isinstance(_coconut_match_to, int):
-            _coconut_match_check = True
-        if _coconut_match_check and not (n > 0):
-            _coconut_match_check = False
-        if _coconut_match_check:
+            _coconut_case_check_1 = True
+        if _coconut_case_check_1 and not (n > 0):
+            _coconut_case_check_1 = False
+        if _coconut_case_check_1:
             return n * factorial(n - 1)
-    if not _coconut_match_check:
+    if not _coconut_case_check_1:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
 # Test cases:
@@ -174,23 +180,28 @@ def factorial(n, acc=1):
     def _coconut_mock_func(n, acc=1): return n, acc
     while True:
         _coconut_match_to = n
-        _coconut_match_check = False
+        _coconut_case_check_2 = False
         if _coconut_match_to == 0:
-            _coconut_match_check = True
-        if _coconut_match_check:
+            _coconut_case_check_2 = True
+        if _coconut_case_check_2:
             return acc
-        if not _coconut_match_check:
+        if not _coconut_case_check_2:
             if _coconut.isinstance(_coconut_match_to, int):
-                _coconut_match_check = True
-            if _coconut_match_check and not (n > 0):
-                _coconut_match_check = False
-            if _coconut_match_check:
-                if factorial is _coconut_recursive_func_4:
+                _coconut_case_check_2 = True
+            if _coconut_case_check_2 and not (n > 0):
+                _coconut_case_check_2 = False
+            if _coconut_case_check_2:
+                try:
+                    _coconut_is_recursive = factorial is _coconut_recursive_func_4
+                except _coconut.NameError:
+                    _coconut_is_recursive = False
+                if _coconut_is_recursive:
                     n, acc = _coconut_mock_func(n - 1, acc * n)
                     continue
                 else:
                     return _coconut_tail_call(factorial, n - 1, acc * n)
-        if not _coconut_match_check:
+
+        if not _coconut_case_check_2:
             raise TypeError("the argument to factorial must be an integer >= 0")
 
 # Test cases:
@@ -215,19 +226,19 @@ assert (factorial)(3) == 6
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_to = n
-    _coconut_match_check = False
+    _coconut_case_check_3 = False
     if _coconut_match_to == 0:
-        _coconut_match_check = True
-    if _coconut_match_check:
+        _coconut_case_check_3 = True
+    if _coconut_case_check_3:
         return 1
-    if not _coconut_match_check:
+    if not _coconut_case_check_3:
         if _coconut.isinstance(_coconut_match_to, int):
-            _coconut_match_check = True
-        if _coconut_match_check and not (n > 0):
-            _coconut_match_check = False
-        if _coconut_match_check:
+            _coconut_case_check_3 = True
+        if _coconut_case_check_3 and not (n > 0):
+            _coconut_case_check_3 = False
+        if _coconut_case_check_3:
             return _coconut_tail_call(reduce, _coconut.operator.mul, range(1, n + 1))
-    if not _coconut_match_check:
+    if not _coconut_case_check_3:
         raise TypeError("the argument to factorial must be an integer >= 0")
 
 # Test cases:
@@ -248,11 +259,13 @@ assert (factorial)(3) == 6
 
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
         if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def factorial(0) = 1'
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
@@ -264,6 +277,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
         if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
@@ -272,7 +286,8 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if _coconut_match_check and not (n > 0):
         _coconut_match_check = False
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def factorial(n is int if n > 0) ='
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
@@ -297,11 +312,13 @@ assert (factorial)(3) == 6
 
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut_match_to_args[0] == 0):
         if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def factorial(0) = 1'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def factorial(0) = 1'
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
@@ -312,6 +329,7 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     """Compute n! where n is an integer >= 0."""
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) <= 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "n" in _coconut_match_to_kwargs)) == 1):
         _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("n")
         if (_coconut.isinstance(_coconut_match_temp_0, int)) and (not _coconut_match_to_kwargs):
@@ -320,7 +338,8 @@ def factorial(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     if _coconut_match_check and not (n > 0):
         _coconut_match_check = False
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def factorial(n is int if n > 0) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def factorial(n is int if n > 0) ='
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
@@ -345,11 +364,13 @@ assert (factorial)(3) == 6
 
 def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) == 0):
         if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def quick_sort([]) = []'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def quick_sort([]) = []'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def quick_sort([]) = []'
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
@@ -360,20 +381,24 @@ def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
 def quick_sort(*_coconut_match_to_args, **_coconut_match_to_kwargs):
     """Sort the input sequence using the quick sort algorithm."""
     _coconut_match_check = False
+    _coconut_FunctionMatchError = _coconut_get_function_match_error()
     if (_coconut.len(_coconut_match_to_args) == 1) and (_coconut.isinstance(_coconut_match_to_args[0], _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to_args[0]) >= 1):
         tail = _coconut.list(_coconut_match_to_args[0][1:])
         head = _coconut_match_to_args[0][0]
         if not _coconut_match_to_kwargs:
             _coconut_match_check = True
     if not _coconut_match_check:
-        _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def quick_sort([head] + tail) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+        _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+        _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def quick_sort([head] + tail) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
         _coconut_match_err.pattern = 'def quick_sort([head] + tail) ='
         _coconut_match_err.value = _coconut_match_to_args
         raise _coconut_match_err
 
-    return (quick_sort([x for x in tail if x < head]) + [head] + quick_sort([x for x in tail if x >= head]))
+    left = [x for x in tail if x < head]
+    right = [x for x in tail if x >= head]
 
 # Test cases:
+    return quick_sort(left) + [head] + quick_sort(right)
 assert (quick_sort)([]) == []
 assert (quick_sort)([3]) == [3]
 assert (quick_sort)([0, 1, 2, 3, 4]) == [0, 1, 2, 3, 4]
@@ -382,8 +407,8 @@ assert (quick_sort)([3, 0, 4, 2, 1]) == [0, 1, 2, 3, 4]
 
 def quick_sort(l):
     """Sort the input iterator using the quick sort algorithm."""
-    _coconut_match_check = False
     _coconut_match_to = l
+    _coconut_match_check = False
     if _coconut.isinstance(_coconut_match_to, _coconut.abc.Iterable):
         tail = _coconut.iter(_coconut_match_to)
         _coconut_match_temp_0 = _coconut.tuple(_coconut_igetitem(tail, _coconut.slice(None, 1)))
@@ -392,13 +417,15 @@ def quick_sort(l):
             _coconut_match_check = True
     if _coconut_match_check:
         tail = reiterable(tail)
-        _coconut_yield_from = (_coconut.itertools.chain.from_iterable((f() for f in (lambda: quick_sort((x for x in tail if x < head)), lambda: (head,), lambda: quick_sort((x for x in tail if x >= head))))))
+        left = (x for x in tail if x < head)
+        right = (x for x in tail if x >= head)
+# By yielding nothing if the match falls through, we implicitly return an empty iterator.
+
+# Test cases:
+        _coconut_yield_from = _coconut.itertools.chain.from_iterable((_coconut_func() for _coconut_func in (lambda: quick_sort(left), lambda: [head], lambda: quick_sort(right))))
         for _coconut_yield_item in _coconut_yield_from:
             yield _coconut_yield_item
 
-# We implicitly return an empty iterator here if the match falls through.
-
-# Test cases:
 assert (list)((quick_sort)([])) == []
 assert (list)((quick_sort)([3])) == [3]
 assert (list)((quick_sort)([0, 1, 2, 3, 4])) == [0, 1, 2, 3, 4]
@@ -409,6 +436,10 @@ class vector2(_coconut.collections.namedtuple("vector2", "x y"), _coconut.object
     """Immutable 2-vector."""
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
+    def __eq__(self, other):
+        return self.__class__ is other.__class__ and _coconut.tuple.__eq__(self, other)
+    def __hash__(self):
+        return _coconut.tuple.__hash__(self) ^ hash(self.__class__)
     def __abs__(self):
         """Return the magnitude of the 2-vector."""
         return (self.x**2 + self.y**2)**0.5
@@ -429,6 +460,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
+    def __eq__(self, other):
+        return self.__class__ is other.__class__ and _coconut.tuple.__eq__(self, other)
+    def __hash__(self):
+        return _coconut.tuple.__hash__(self) ^ hash(self.__class__)
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -441,7 +476,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def _replace(_self, **kwds):
         result = self._make(kwds.pop("pts", _self))
         if kwds:
-            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+            raise _coconut.ValueError("Got unexpected field names: " + _coconut.repr(kwds.keys()))
         return result
     @_coconut.property
     def pts(self):
@@ -449,8 +484,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        _coconut_match_check = False
         _coconut_match_to = pts
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
             v = _coconut_match_to[0]
             _coconut_match_check = True
@@ -467,6 +502,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
+    def __eq__(self, other):
+        return self.__class__ is other.__class__ and _coconut.tuple.__eq__(self, other)
+    def __hash__(self):
+        return _coconut.tuple.__hash__(self) ^ hash(self.__class__)
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -479,7 +518,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def _replace(_self, **kwds):
         result = self._make(kwds.pop("pts", _self))
         if kwds:
-            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+            raise _coconut.ValueError("Got unexpected field names: " + _coconut.repr(kwds.keys()))
         return result
     @_coconut.property
     def pts(self):
@@ -487,8 +526,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        _coconut_match_check = False
         _coconut_match_to = pts
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
             v = _coconut_match_to[0]
             _coconut_match_check = True
@@ -504,6 +543,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Add two vectors together."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -513,7 +553,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -523,6 +564,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Subtract one vector from another."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -532,7 +574,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -545,8 +588,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
-        _coconut_match_check = False
         _coconut_match_to = other
+        _coconut_match_check = False
         if _coconut.isinstance(_coconut_match_to, vector):
             other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
@@ -582,7 +625,7 @@ assert (list)(diagonal_line(1)) == [(0, 1), (1, 0)]
 
 @_coconut_tco
 def linearized_plane(n=0):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_func() for _coconut_func in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 
 # Note: these tests use $[] notation, which we haven't introduced yet
 #  but will introduce later in this case study; for now, just run the
@@ -602,6 +645,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
+    def __eq__(self, other):
+        return self.__class__ is other.__class__ and _coconut.tuple.__eq__(self, other)
+    def __hash__(self):
+        return _coconut.tuple.__hash__(self) ^ hash(self.__class__)
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -614,7 +661,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def _replace(_self, **kwds):
         result = self._make(kwds.pop("pts", _self))
         if kwds:
-            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+            raise _coconut.ValueError("Got unexpected field names: " + _coconut.repr(kwds.keys()))
         return result
     @_coconut.property
     def pts(self):
@@ -622,8 +669,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        _coconut_match_check = False
         _coconut_match_to = pts
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
             v = _coconut_match_to[0]
             _coconut_match_check = True
@@ -639,6 +686,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Add two vectors together."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -648,7 +696,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -658,6 +707,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Subtract one vector from another."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -667,7 +717,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -680,8 +731,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
-        _coconut_match_check = False
         _coconut_match_to = other
+        _coconut_match_check = False
         if _coconut.isinstance(_coconut_match_to, vector):
             other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
@@ -699,7 +750,7 @@ def diagonal_line(n):
     return _coconut_tail_call(map, lambda i: (i, n - i), range(n + 1))
 @_coconut_tco
 def linearized_plane(n=0):
-    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (f() for f in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
+    return _coconut_tail_call(_coconut.itertools.chain.from_iterable, (_coconut_func() for _coconut_func in (lambda: diagonal_line(n), lambda: linearized_plane(n + 1))))
 @_coconut_tco
 def vector_field():
     return _coconut_tail_call(starmap, vector, linearized_plane())
@@ -719,6 +770,10 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     """Immutable n-vector."""
     __slots__ = ()
     __ne__ = _coconut.object.__ne__
+    def __eq__(self, other):
+        return self.__class__ is other.__class__ and _coconut.tuple.__eq__(self, other)
+    def __hash__(self):
+        return _coconut.tuple.__hash__(self) ^ hash(self.__class__)
     def __new__(_cls, *pts):
         return _coconut.tuple.__new__(_cls, pts)
     @_coconut.classmethod
@@ -731,7 +786,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def _replace(_self, **kwds):
         result = self._make(kwds.pop("pts", _self))
         if kwds:
-            raise _coconut.ValueError("Got unexpected field names: %r" % kwds.keys())
+            raise _coconut.ValueError("Got unexpected field names: " + _coconut.repr(kwds.keys()))
         return result
     @_coconut.property
     def pts(self):
@@ -739,8 +794,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __new__(cls, *pts):
         """Create a new vector from the given pts."""
-        _coconut_match_check = False
         _coconut_match_to = pts
+        _coconut_match_check = False
         if (_coconut.isinstance(_coconut_match_to, _coconut.abc.Sequence)) and (_coconut.len(_coconut_match_to) == 1) and (_coconut.isinstance(_coconut_match_to[0], vector)):
             v = _coconut_match_to[0]
             _coconut_match_check = True
@@ -756,6 +811,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __add__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Add two vectors together."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -765,7 +821,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __add__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -775,6 +832,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     def __sub__(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         """Subtract one vector from another."""
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) == 2) and ("self" not in _coconut_match_to_kwargs) and (_coconut.isinstance(_coconut_match_to_args[1], vector)):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             other_pts = _coconut_match_to_args[1][0:]
@@ -784,7 +842,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
         if _coconut_match_check and not (len(other_pts) == len(self.pts)):
             _coconut_match_check = False
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def __sub__(self, vector(*other_pts)                 if len(other_pts) == len(self.pts)) ='
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
@@ -797,8 +856,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def __mul__(self, other):
         """Scalar multiplication and dot product."""
-        _coconut_match_check = False
         _coconut_match_to = other
+        _coconut_match_check = False
         if _coconut.isinstance(_coconut_match_to, vector):
             other_pts = _coconut_match_to[0:]
             _coconut_match_check = True
@@ -819,6 +878,7 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
     @_coconut_tco
     def angle(*_coconut_match_to_args, **_coconut_match_to_kwargs):
         _coconut_match_check = False
+        _coconut_FunctionMatchError = _coconut_get_function_match_error()
         if (_coconut.len(_coconut_match_to_args) <= 2) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 0, "self" in _coconut_match_to_kwargs)) == 1) and (_coconut.sum((_coconut.len(_coconut_match_to_args) > 1, "other" in _coconut_match_to_kwargs)) == 1):
             _coconut_match_temp_0 = _coconut_match_to_args[0] if _coconut.len(_coconut_match_to_args) > 0 else _coconut_match_to_kwargs.pop("self")
             _coconut_match_temp_1 = _coconut_match_to_args[1] if _coconut.len(_coconut_match_to_args) > 1 else _coconut_match_to_kwargs.pop("other")
@@ -827,7 +887,8 @@ class vector(_coconut.collections.namedtuple("vector", "pts"), _coconut.object):
                 other = _coconut_match_temp_1
                 _coconut_match_check = True
         if not _coconut_match_check:
-            _coconut_match_err = _coconut_MatchError("pattern-matching failed for " "'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'" " in " + _coconut.repr(_coconut.repr(_coconut_match_to_args)))
+            _coconut_match_val_repr = _coconut.repr(_coconut_match_to_args)
+            _coconut_match_err = _coconut_FunctionMatchError("pattern-matching failed for " "'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'" " in " + (_coconut_match_val_repr if _coconut.len(_coconut_match_val_repr) <= 500 else _coconut_match_val_repr[:500] + "..."))
             _coconut_match_err.pattern = 'def angle(self, other is vector) = math.acos(self.unit() * other.unit())'
             _coconut_match_err.value = _coconut_match_to_args
             raise _coconut_match_err
